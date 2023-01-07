@@ -2,7 +2,7 @@
 
     <div class="footer-row dfsb">
         <div class="footer-row-image-container">
-            <a href="" class="footer-row-link"><img src="/sztamas-bmszc2023/components/img/logovariations/brobaits_logo-dark.png" alt="brobaits-logo"></a>
+            <a href="" class="footer-row-link"><img src="/sztamas-bmszc2023/img/logovariations/brobaits_logo-dark.png" alt="brobaits-logo"></a>
         </div>
         <div class="footer-row-link-container">
             <a href="" class="footer-row-link">Sütik</a>

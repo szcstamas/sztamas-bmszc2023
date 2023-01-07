@@ -9,3 +9,19 @@
     justify-content: center;
     align-items: center;
 }
+
+@media screen and (max-width: 560px) {
+    @mixin dFlex() {
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    @mixin maxWidth() {
+        max-width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}

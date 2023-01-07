@@ -18,6 +18,7 @@ error_reporting(E_ALL);
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
         <?php include('styles/style.css'); ?>
     </style>
@@ -28,14 +29,14 @@ error_reporting(E_ALL);
 
         <div class="header-row dfsb">
             <div class="header-row-image-container">
-                <a href="" class="header-row-link"><img src="/sztamas-bmszc2023/components/img/logovariations/brobaits_logo-dark.png" alt="brobaits-logo"></a>
+                <a href="/sztamas-bmszc2023/" class="header-row-link"><img src="/sztamas-bmszc2023/img/logovariations/brobaits_logo-dark.png" alt="brobaits-logo"></a>
             </div>
             <div class="header-row-link-container">
-                <a href="" class="header-row-link">Főoldal</a>
-                <a href="" class="header-row-link">Pelleteink</a>
-                <a href="" class="header-row-link">Partnereink</a>
-                <a href="" class="header-row-link">Kapcsolat</a>
-                <a href="" class="header-row-link">Rólunk</a>
+                <a href="/sztamas-bmszc2023/" class="header-row-link">Főoldal</a>
+                <a href="/sztamas-bmszc2023/pellets.php" class="header-row-link">Pelleteink</a>
+                <a href="/sztamas-bmszc2023/partners.php" class="header-row-link">Partnereink</a>
+                <a href="/sztamas-bmszc2023/contact.php" class="header-row-link">Kapcsolat</a>
+                <a href="/sztamas-bmszc2023/about.php" class="header-row-link">Rólunk</a>
             </div>
             <div class="header-row-social-container">
                 <a href="" class="header-row-link"><i class="bi bi-cart-fill"></i></a>

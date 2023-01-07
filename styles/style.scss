@@ -107,6 +107,66 @@ a {
     }
 }
 
+.section {
+    padding: 6rem 0;
+
+    .section-text-button {
+        @include dFlex();
+        flex-direction: column;
+        text-align: left;
+        align-items: flex-start;
+        gap: 2rem;
+        width: 55%;
+    }
+
+
+}
+
+.button-green {
+    @include dFlex();
+    text-transform: uppercase;
+    background-color: #65A850;
+    color: #fff;
+    padding: 1rem;
+    appearance: none;
+    border: none;
+    outline: none;
+    gap: 1rem;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+
+    span,
+    i {
+        color: #fff;
+    }
+}
+
+.title-firstline {
+    font-family: 'Bebas Neue', Arial, Helvetica, sans-serif;
+    font-size: 50px;
+    letter-spacing: 2px;
+    color: #000;
+    text-transform: uppercase;
+}
+
+.title-big-green-brobaits {
+    margin-top: -40px;
+}
+
+.greenbg {
+    background-color: #65A850;
+}
+
+.section-paragraph-gray {
+    color: #777777;
+    line-height: 24px;
+}
+
+.maxw {
+    @include maxWidth();
+}
+
 .dfsb {
     display: flex;
     justify-content: space-between;
