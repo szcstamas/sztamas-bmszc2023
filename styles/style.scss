@@ -8,6 +8,11 @@
     color: #272727;
 }
 
+*::selection {
+    background-color: #65A850;
+    color: #fff;
+}
+
 body {
     background-color: #fff;
 }
@@ -118,8 +123,6 @@ a {
         gap: 2rem;
         width: 55%;
     }
-
-
 }
 
 .button-green,
@@ -190,8 +193,48 @@ a {
     line-height: 24px;
 }
 
+.admin-login-error {
+    @include dFlex();
+    flex-direction: column;
+    gap: 2rem;
+    align-items: flex-start !important;
+}
+
 .maxw {
     @include maxWidth();
+}
+
+.admin-section {
+
+    input[type=text],
+    input[type=password] {
+        border: none;
+        outline: none;
+        background: #efefef;
+        padding: 1rem;
+        width: 400px;
+        transition: all .1s ease-in-out;
+
+        &:focus,
+        &:active {
+            padding: 1.5rem 2rem;
+        }
+    }
+}
+
+.dfc {
+    @include dFlex();
+    gap: 1rem;
+    justify-content: center !important;
+    align-items: flex-start !important;
+}
+
+.dfcc {
+    @include dFlex();
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center !important;
+    align-items: flex-start !important;
 }
 
 .dfsb {
