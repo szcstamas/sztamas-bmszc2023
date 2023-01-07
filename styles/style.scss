@@ -1,0 +1,114 @@
+@import 'mixins';
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'DM Sans', Arial, Helvetica, sans-serif;
+    color: #272727;
+}
+
+body {
+    background-color: #fff;
+}
+
+a {
+    text-decoration: none;
+
+}
+
+.header {
+    padding: .5rem 0;
+    border-bottom: 1px solid #65A850;
+
+    .header-row {
+        @include maxWidth();
+    }
+
+    .header-row-image-container {
+        img {
+            width: 200px;
+        }
+    }
+
+    .header-row-link-container,
+    .header-row-social-container {
+        @include dFlex();
+        gap: 4rem;
+    }
+
+    .header-row-social-container {
+
+        gap: 2rem !important;
+
+        .header-row-link {
+            @include dFlex();
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            background-color: #fff;
+            color: #272727;
+            width: 40px;
+            height: 40px;
+        }
+    }
+}
+
+.footer {
+    border-bottom: 1px solid #65A850;
+
+    .footer-row {
+        @include maxWidth();
+        padding: 2rem 0;
+
+        &:nth-child(2) {
+            max-width: 100% !important;
+            background-color: #F8F8F8;
+            text-align: center;
+            text-transform: uppercase;
+            padding: 1rem 0;
+
+            .footer-row-second-p {
+                color: #9F9F9F;
+            }
+        }
+    }
+
+    .footer-row-image-container {
+        img {
+            width: 200px;
+        }
+    }
+
+    .footer-row-link-container,
+    .footer-row-social-container {
+        @include dFlex();
+        gap: 4rem;
+    }
+
+    .footer-row-link-container {
+        a {
+            color: #65A850;
+        }
+    }
+
+    .footer-row-social-container {
+
+        gap: 2rem !important;
+
+        .footer-row-link {
+            @include dFlex();
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            background-color: #fff;
+            color: #272727;
+            width: 40px;
+            height: 40px;
+        }
+    }
+}
+
+.dfsb {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
