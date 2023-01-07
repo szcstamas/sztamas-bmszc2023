@@ -122,7 +122,8 @@ a {
 
 }
 
-.button-green {
+.button-green,
+.button-white {
     @include dFlex();
     text-transform: uppercase;
     background-color: #65A850;
@@ -142,12 +143,33 @@ a {
     }
 }
 
+.button-white {
+    background-color: #fff;
+    color: #272727;
+
+    span,
+    i {
+        color: #272727;
+    }
+}
+
 .title-firstline {
     font-family: 'Bebas Neue', Arial, Helvetica, sans-serif;
     font-size: 50px;
     letter-spacing: 2px;
     color: #000;
     text-transform: uppercase;
+}
+
+.title-secondline-h1 {
+    font-family: 'Bebas Neue', Arial, Helvetica, sans-serif;
+    font-size: 180px;
+    line-height: 150px;
+    letter-spacing: 5px;
+}
+
+.whitecolor {
+    color: #fff;
 }
 
 .title-big-green-brobaits {
@@ -160,6 +182,11 @@ a {
 
 .section-paragraph-gray {
     color: #777777;
+    line-height: 24px;
+}
+
+.section-paragraph-white {
+    color: #fff;
     line-height: 24px;
 }
 

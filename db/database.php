@@ -1,4 +1,7 @@
 <?php
+
+require_once("model/product.php");
+
 class Database
 {
 
@@ -16,7 +19,7 @@ class Database
     {
 
         //az összes olyan termék kiválasztása amiből több van mint 0, és még nem törölték (nincsen valid dátum beállítva a deleted_at propertynél)
-        $sql = "SELECT * FROM `product` WHERE `in_stock` > 0 AND `deleted_at` = '0000-00-00 00:00:00';";
+        $sql = "SELECT * FROM `products` WHERE `quantity` > 0 AND `deletedAt` = '0000-00-00 00:00:00';";
 
         //csatlakozás az adatbázishoz, majd az sql parancs elküldése
         $result = self::$conn->prepare($sql);
@@ -24,8 +27,26 @@ class Database
         $result->execute();
         //ebben a tömbben fognak eltárolódni a fetchelt termékek
         $products = [];
-        // $data = $result->fetchAll();
+        //kapott sql-adat fetchelése
+        $data = $result->fetchAll();
 
-        // return $products;
+        //adatok megjelenítése (a kapott tömbön keresztül loopol)
+        foreach ($data as $row) {
+            switch ($row["category"]) {
+                case "pellet": {
+                        $products[] = new Product($row["id"], $row["name"], $row["description"], $row["image"], $row["price"], $row["quantity"], $row["onStock"], $row["weight"], $row["unitPrice"], $row["unitSize"], $row["flavour"], $row["colour"], $row["components"], $row["category"], $row["preFishes"], $row["discount"], $row["createdAt"], $row["deletedAt"]);
+                        break;
+                    }
+                case "feed": {
+                        $products[] = new Product($row["id"], $row["name"], $row["description"], $row["image"], $row["price"], $row["quantity"], $row["onStock"], $row["weight"], $row["unitPrice"], $row["unitSize"], $row["flavour"], $row["colour"], $row["components"], $row["category"], $row["preFishes"], $row["discount"], $row["createdAt"], $row["deletedAt"]);
+                        break;
+                    }
+                default: {
+                        echo "Ismeretlen kategória!";
+                    }
+            }
+        }
+
+        return $products;
     }
 }
