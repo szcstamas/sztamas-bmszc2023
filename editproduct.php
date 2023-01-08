@@ -128,33 +128,33 @@ if (
   <section class='section maxw admin-section admin-login-error'>
     <div class="dfc">
       <h1>Termék szerkesztése</h1>
-      <p class="text-danger"><?= $error ?></p>
+      <p style="color: red;"><?= $error ?></p>
     </div>
     <!--az enctype az image feltöltése miatt kell, máskülönben nem adhatunk hozzá képet-->
     <form class="product-form-grid" method="POST" enctype="multipart/form-data">
       <div class="product-form-container">
         <label for="id" class="product-form-label">ID</label>
-        <input type="id" id="id" style="opacity:0.5;pointer-event:none;" class="product-form-input" readonly name="id" value="<?= $product->id ?>">
+        <input type="id" id="id" style="opacity:0.5;pointer-events:none;" class="product-form-input" readonly name="id" value="<?= $product->id ?>">
       </div>
       <div class="product-form-container">
         <label for="name" class="product-form-label">Név</label>
         <input type="name" id="name" class="product-form-input" name="name" value="<?= $product->name ?>">
       </div>
       <div class="product-form-container">
-        <label for="price" class="product-form-label">Ár</label>
+        <label for="price" class="product-form-label">Ár(Ft)</label>
         <input type="number" id="price" class="product-form-input" name="price" value="<?= $product->price ?>">
       </div>
       <div class="product-form-container">
-        <label for="unitPrice" class="product-form-label">Ár/kg</label>
+        <label for="unitPrice" class="product-form-label">Ár(Ft/kg)</label>
         <input type="number" id="unitPrice" class="product-form-input" name="unitPrice" value="<?= $product->unitPrice ?>">
       </div>
       <div class="product-form-container">
         <label for="description" class="product-form-label">Leírás</label>
-        <textarea type="text" id="description" class="product-form-input product-form-desc" name="description"> <?= htmlspecialchars($product->description) ?></textarea>
+        <textarea type="text" id="description" class="product-form-input product-form-desc" name="description"><?= htmlspecialchars($product->description) ?></textarea>
       </div>
       <div class="product-form-container">
         <label for="createdAt" class="product-form-label">Feltöltve ekkor</label>
-        <input type="text" readonly id="createdAt" style="opacity:0.5;pointer-event:none;" class="product-form-input" value="<?= $product->createdAt ?>">
+        <input type="text" readonly id="createdAt" style="opacity:0.5;pointer-events:none;" class="product-form-input" value="<?= $product->createdAt ?>">
       </div>
       <div class="product-form-container">
         <label for="image" class="product-form-label">Kép</label>
@@ -169,18 +169,28 @@ if (
         <input type="number" id="quantity" class="product-form-input" name="quantity" value="<?= $product->quantity ?>">
       </div>
       <div class="product-form-container">
-        <label for="weight" class="product-form-label">Súly</label>
+        <label for="weight" class="product-form-label">Súly(g)</label>
         <input type="number" id="weight" class="product-form-input" name="weight" value="<?= $product->weight ?>">
       </div>
       <div class="product-form-container">
-        <label for="unitSize" class="product-form-label">Szemcsék mérete</label>
-        <select class="product-select" name="unitSize">
-          <option value="2-6" <?= $product->unitSize == "2-6" ? "selected" : "" ?>>2-6</option>
-          <option value="4-8" <?= $product->unitSize == "4-8" ? "selected" : "" ?>>4-8</option>
-          <option value="6-8" <?= $product->unitSize == "6-8" ? "selected" : "" ?>>6-8</option>
-          <option value="10-12" <?= $product->unitSize == "10-12" ? "selected" : "" ?>>10-12</option>
-          <option value="14-16" <?= $product->unitSize == "14-16" ? "selected" : "" ?>>14-16</option>
-        </select>
+        <?php if ($product->category == "feed") : ?>
+          <label for="unitSize" class="product-form-label">Szemcsék mérete</label>
+          <select class="product-select" name="unitSize">
+            <option value="por állag" <?= $product->unitSize == "por állag" ? "selected" : "" ?>>por állag</option>
+            <option value="apró szemcsék" <?= $product->unitSize == "apró szemcsék" ? "selected" : "" ?>>apró szemcsék</option>
+            <option value="közepes méretű" <?= $product->unitSize == "közepes méretű" ? "selected" : "" ?>>közepes méretű</option>
+            <option value="durván rostált" <?= $product->unitSize == "durván rostált" ? "selected" : "" ?>>durván rostált</option>
+          </select>
+        <?php elseif ($product->category == "pellet") : ?>
+          <label for="unitSize" class="product-form-label">Pelletek mérete</label>
+          <select class="product-select" name="unitSize">
+            <option value="2-6" <?= $product->unitSize == "2-6" ? "selected" : "" ?>>2-6 mm</option>
+            <option value="4-8" <?= $product->unitSize == "4-8" ? "selected" : "" ?>>4-8 mm</option>
+            <option value="6-8" <?= $product->unitSize == "6-8" ? "selected" : "" ?>>6-8 mm</option>
+            <option value="10-12" <?= $product->unitSize == "10-12" ? "selected" : "" ?>>10-12 mm</option>
+            <option value="14-16" <?= $product->unitSize == "14-16" ? "selected" : "" ?>>14-16 mm</option>
+          </select>
+        <?php endif ?>
       </div>
       <div class="product-form-container">
         <label for="flavour" class="product-form-label">Íz</label>
@@ -199,7 +209,7 @@ if (
         <input type="text" id="preFishes" class="product-form-input" name="preFishes" value="<?= $product->preFishes ?>">
       </div>
       <div class="product-form-container">
-        <label for="discount" class="product-form-label">Aktuális kedvezmény</label>
+        <label for="discount" class="product-form-label">Aktuális kedvezmény(%)</label>
         <input type="number" id="discount" class="product-form-input" name="discount" value="<?= $product->discount ?>">
       </div>
       <?php if ($product->category == "pellet") : ?>

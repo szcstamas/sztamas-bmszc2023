@@ -1,200 +1,198 @@
+<?php ob_start(); ?>
+<?php session_start(); ?>
 <?php require_once("components/header.php") ?>
 
 <?php
 
 $error = "";
-
-require_once("model/camera.php");
-require_once("model/monitor.php");
-require_once("model/clothing.php");
+require_once("model/product.php");
 require_once("db/database.php");
 
-if (
-  isset($_SERVER['PHP_AUTH_USER']) &&
-  isset($_SERVER['PHP_AUTH_PW']) &&
-  $_SERVER['PHP_AUTH_USER'] == "admin" &&
-  $_SERVER['PHP_AUTH_PW'] == "webshop123"
-) {
-} else {
-  header('WWW-Authenticate: Basic realm="webshop"');
-  header('HTTP/1.0 401 Unauthorized');
-  echo 'You cannot access the Admin console';
-  exit();
+//authentikáció
+if (isset($_SESSION["loginAdmin"])) {
+  $user = $_SESSION["loginAdmin"];
 }
 
+//csatlakozás az adatbázishoz 
+Database::connect();
+
+//ha nincs kategória beállítva, akkor az értéke "unknown" lesz (ennek a hatására fogunk egy dropdownt kapni)
 if (isset($_GET["category"])) {
   $category = $_GET["category"];
 } else {
   $category = "unknown";
 }
 
-
 if (
   isset($_POST["name"]) &&
-  isset($_POST["price"]) &&
   isset($_POST["description"]) &&
-  isset($_POST["category"])
+  isset($_POST["price"]) &&
+  isset($_POST["quantity"]) &&
+  isset($_POST["weight"]) &&
+  isset($_POST["unitPrice"]) &&
+  isset($_POST["unitSize"]) &&
+  isset($_POST["flavour"]) &&
+  isset($_POST["colour"]) &&
+  isset($_POST["components"]) &&
+  isset($_POST["category"]) &&
+  isset($_POST["preFishes"])
 ) {
+
   $name = $_POST["name"];
+  $description = $_POST["description"];
+  $price = $_POST["price"];
+  $quantity = $_POST["quantity"];
+  $weight = $_POST["weight"];
+  $quantity = $_POST["quantity"];
+  $unitPrice = $_POST["unitPrice"];
+  $unitSize = $_POST["unitSize"];
+  $flavour = $_POST["flavour"];
+  $colour = $_POST["colour"];
+  $components = $_POST["components"];
+  $category = $_POST["category"];
+  $preFishes = $_POST["preFishes"];
+  $discount = $_POST["discount"];
 
-  if ($_FILES["image"]["size"] != 0) {
-
+  //ha új kép van beállítva az input mezőben és a checkbox NINCS bepipálva
+  if ($_FILES["image"]["size"] != 0 && !isset($_POST['image-delete'])) {
+    //alakítsa át a fájl (vagy kép) nevét a következőre: név(ha van szóköz akkor underscore legyen helyette)_dátum.jpg
     $filename = strtolower(str_replace(" ", "_", $_POST["name"])) . "_" . date('m_d_y_h_i_s') . ".jpg";
 
-    $target = "img/" . $filename;
+    //rakja bele az új képet az img mappán belül található products mappába
+    $target = "img/products/" . $filename;
     move_uploaded_file($_FILES["image"]["tmp_name"], $target);
   } else {
-    $filename = "noimage.jpg";
+    $filename = $product->image;
   }
-
-  $price = $_POST["price"];
-  $description = $_POST["description"];
-  $category = $_POST["category"];
 
   switch ($category) {
-    case "monitor": {
-        $displaySize = $_POST["display-size"];
-        $refreshRate = $_POST["refresh-rate"];
-        $resolutionH = $_POST["resolution-h"];
-        $resolutionV = $_POST["resolution-v"];
+    case "pellet": {
 
-        $newProduct = new Monitor(0, $name, $price, true, $description, $filename, NULL, NULL, $displaySize, $refreshRate, $resolutionH, $resolutionV);
-
+        $newProduct = new Product(0, $name, $description, $filename, $price, $quantity, 1, $weight, $unitPrice, $unitSize, $flavour, $colour, $components, $category, $preFishes, $discount, NULL, NULL);
         break;
       }
-    case "camera": {
-        $resolution = $_POST["resolution"];
-        $ilc = $_POST["ilc"];
-        $weight = $_POST["weight"];
-        $batteryLife = $_POST["battery-life"];
+    case "feed": {
 
-        $newProduct = new Camera(0, $name, $price, true, $description, $filename, NULL, NULL, $resolution, $ilc, $weight, $batteryLife);
-        break;
-      }
-    case "clothing": {
-        $size = $_POST["size"];
-        $colour = $_POST["colour"];
-
-        $newProduct = new Clothing(0, $name, $price, true, $description, $filename, NULL, NULL, $size, $colour);
+        $newProduct = new Product(0, $name, $description, $filename, $price, $quantity, 1, $weight, $unitPrice, $unitSize, $flavour, $colour, $components, $category, $preFishes, $discount, NULL, NULL);
         break;
       }
   }
 
-  Database::connect();
-
-  Database::createProduct($newProduct);
+  Database::createProduct($newProduct, $category);
 
   header("Location: admin.php");
+  ob_end_flush();
   exit();
 }
 
 ?>
 
-<div class="row">
-  <div class="col-md-6 offset-md-3">
-    <div class="card">
-      <div class="card-body">
-        <h1>New Product</h1>
-        <p class="text-danger"><?= $error ?></p>
-        <?php if ($category != "unknown") : ?>
-          <form method="POST" enctype="multipart/form-data">
-            <div class="mb-3">
-              <label for="id" class="form-label">ID</label>
-              <input type="id" id="id" class="form-control" readonly name="id">
-            </div>
-            <div class="mb-3">
-              <label for="name" class="form-label">Name</label>
-              <input type="name" id="name" class="form-control" name="name">
-            </div>
-            <div class="mb-3">
-              <label for="price" class="form-label">Price</label>
-              <input type="number" id="price" class="form-control" name="price">
-            </div>
-            <div class="mb-3">
-              <label for="description" class="form-label">Description</label>
-              <input type="text" id="description" class="form-control" name="description">
-            </div>
-            <div class="mb-3">
-              <label for="created-at" class="form-label">Created At</label>
-              <input type="text" readonly id="created-at" class="form-control">
-            </div>
-            <div class="mb-3">
-              <label for="image" class="form-label">Image</label>
-              <input id="image" type="file" name="image" class="form-control">
-            </div>
-
-
-
-            <hr>
-
-            <?php if ($category == "camera") : ?>
-              <div class="mb-3">
-                <label for="resolution" class="form-label">Resolution</label>
-                <input type="number" id="resolution" class="form-control" name="resolution">
-              </div>
-              <div class="mb-3 form-check">
-                <input type="checkbox" id="ilc" name="ilc" class="form-check-input">
-                <label class="form-check-label" for="ilc">ILC</label>
-              </div>
-              <div class="mb-3">
-                <label for="weight" class="form-label">Weight</label>
-                <input type="number" id="weight" class="form-control" name="weight">
-              </div>
-              <div class="mb-3">
-                <label for="battery-life" class="form-label">Battery Life</label>
-                <input type="number" id="battery-life" class="form-control" name="battery-life">
-              </div>
-            <?php elseif ($category == "monitor") : ?>
-              <div class="mb-3">
-                <label for="display-size" class="form-label">Display Size</label>
-                <input type="number" id="display-size" class="form-control" name="display-size">
-              </div>
-              <div class="mb-3">
-                <label for="refresh-rate" class="form-label">Refresh Rate</label>
-                <input type="number" id="refresh-rate" class="form-control" name="refresh-rate">
-              </div>
-              <div class="mb-3">
-                <label for="resolution-h" class="form-label">Horizontal Resolution</label>
-                <input type="number" id="resolution-hdisplay-size" class="form-control" name="resolution-h">
-              </div>
-              <div class="mb-3">
-                <label for="resolution-v" class="form-label">Vertical Resolution</label>
-                <input type="number" id="resolution-v" class="form-control" name="resolution-v">
-              </div>
-            <?php elseif ($category == "clothing") : ?>
-              <div class="mb-3">
-                <label for="display-size" class="form-label">Size</label>
-                <select class="form-select mb-3" name="size">
-                  <option value="xs">XS</option>
-                  <option value="s">S</option>
-                  <option value="m">M</option>
-                  <option value="l">L</option>
-                  <option value="xl">XL</option>
-                  <option value="xxl">XXL</option>
-                </select>
-              </div>
-              <div class="mb-3">
-                <label for="colour" class="form-label">Colour</label>
-                <input type="text" id="colour" class="form-control" name="colour">
-              </div>
-            <?php endif ?>
-            <input type="hidden" name="category" value="<?= $category ?>">
-            <button type="submit" name="checkout" class="btn btn-primary">Save</button>
-          </form>
-        <?php else : ?>
-          <form method="GET">
-            <select class="form-select mb-3" name="category">
-              <option value="camera">Camera</option>
-              <option value="monitor">Monitor</option>
-              <option value="clothing">Clothing</option>
-            </select>
-            <button type="submit" class="btn btn-primary">Create</button>
-          </form>
-        <?php endif ?>
-      </div>
+<?php if (!isset($_SESSION["loginAdmin"])) : ?>
+  <section class='section maxw admin-section admin-login-error'>
+    <h2>Bejelentkezés szükséges!</h2>
+    <p>A gomb segítségével látogass el a bejelentkezési felületre!</p>
+    <a href='adminlogin.php'><button class='button-green'>bejelentkezés</button></a>
+  </section>
+<?php else : ?>
+  <section class='section maxw admin-section admin-login-error'>
+    <div class="dfc">
+      <h1>Termék szerkesztése</h1>
+      <p class="text-danger"><?= $error ?></p>
     </div>
-  </div>
-</div>
+    <?php if ($category != "unknown") : ?>
+      <!--az enctype az image feltöltése miatt kell, máskülönben nem adhatunk hozzá képet-->
+      <form class="product-form-grid" method="POST" enctype="multipart/form-data">
+        <div class="product-form-container">
+          <label for="id" class="product-form-label">ID</label>
+          <input type="id" id="id" style="opacity:0.5;pointer-events:none;" class="product-form-input" readonly name="id">
+        </div>
+        <div class="product-form-container">
+          <label for="name" class="product-form-label">Név</label>
+          <input type="name" id="name" class="product-form-input" name="name">
+        </div>
+        <div class="product-form-container">
+          <label for="price" class="product-form-label">Ár(Ft)</label>
+          <input type="number" id="price" class="product-form-input" name="price">
+        </div>
+        <div class="product-form-container">
+          <label for="unitPrice" class="product-form-label">Ár(Ft/KG)</label>
+          <input type="number" id="unitPrice" class="product-form-input" name="unitPrice">
+        </div>
+        <div class="product-form-container">
+          <label for="description" class="product-form-label">Leírás</label>
+          <textarea type="text" id="description" class="product-form-input product-form-desc" name="description"></textarea>
+        </div>
+        <div class="product-form-container">
+          <label for="createdAt" class="product-form-label">Feltöltve ekkor</label>
+          <input type="text" readonly id="createdAt" style="opacity:0.5;pointer-events:none;" class="product-form-input">
+        </div>
+        <div class="product-form-container">
+          <label for="image" class="product-form-label">Kép</label>
+          <input id="image" type="file" name="image" class="product-form-input">
+        </div>
+        <div class="product-form-container">
+          <label for="quantity" class="product-form-label">Darabszám</label>
+          <input type="number" id="quantity" class="product-form-input" name="quantity">
+        </div>
+        <div class="product-form-container">
+          <label for="weight" class="product-form-label">Súly(g)</label>
+          <input type="number" id="weight" class="product-form-input" name="weight">
+        </div>
+        <div class="product-form-container">
+          <?php if ($category == "feed") : ?>
+            <label for="unitSize" class="product-form-label">Szemcsék mérete</label>
+            <select class="product-select" name="unitSize">
+              <option value="por állag">por állag</option>
+              <option value="apró szemcsék">apró szemcsék</option>
+              <option value="közepes méretű">közepes méretű</option>
+              <option value="durván rostált">durván rostált</option>
+            </select>
+          <?php elseif ($category == "pellet") : ?>
+            <label for="unitSize" class="product-form-label">Pelletek mérete</label>
+            <select class="product-select" name="unitSize">
+              <option value="2-6">2-6 mm</option>
+              <option value="4-8">4-8 mm</option>
+              <option value="6-8">6-8 mm</option>
+              <option value="10-12">10-12 mm</option>
+              <option value="14-16">14-16 mm</option>
+            </select>
+          <?php endif ?>
+        </div>
+        <div class="product-form-container">
+          <label for="flavour" class="product-form-label">Íz</label>
+          <input type="text" id="flavour" class="product-form-input" name="flavour">
+        </div>
+        <div class="product-form-container">
+          <label for="colour" class="product-form-label">Szín</label>
+          <input type="text" id="colour" class="product-form-input" name="colour">
+        </div>
+        <div class="product-form-container">
+          <label for="components" class="product-form-label">Összetevők</label>
+          <input type="text" id="components" class="product-form-input" name="components">
+        </div>
+        <div class="product-form-container">
+          <label for="preFishes" class="product-form-label">Preferált halfajták</label>
+          <input type="text" id="preFishes" class="product-form-input" name="preFishes">
+        </div>
+        <div class="product-form-container">
+          <label for="discount" class="product-form-label">Aktuális kedvezmény(%)</label>
+          <input type="number" id="discount" class="product-form-input" name="discount">
+        </div>
+        <input type="hidden" name="category" value="<?= $category ?>">
+        <button type="submit" class="button-green product-submit">Save</button>
+      </form>
+    <?php else : ?>
+      <form class="dfcc select-category" method="GET">
+        <label for="category">Kategória kiválasztása</label>
+        <select class="product-select" name="category">
+          <option value="pellet">Pellet feltöltése</option>
+          <option value="feed">Etetőanyag feltöltése</option>
+        </select>
+        <button type="submit" class="button-green">tovább</button>
+      </form>
+    <?php endif ?>
+  </section>
 
-<?php require_once("components/footer.php") ?>
+
+<?php endif ?>
 <?php require_once("components/footer.php") ?>

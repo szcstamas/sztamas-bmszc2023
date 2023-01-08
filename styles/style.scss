@@ -188,6 +188,70 @@ hr {
     padding: 2rem 0;
 }
 
+.subpage-contact-form-container {
+    width: 40%;
+
+    .subpage-contact-form {
+
+        display: inline-grid;
+        border: 2px solid #efefef;
+        grid-gap: 2px;
+        background-color: #efefef;
+        width: 100%;
+
+        div {
+            gap: 2px !important;
+
+            label,
+            input {
+                width: 50%;
+                padding: 1rem;
+                font-size: 1rem;
+                border: none;
+                outline: none;
+                background-color: #fff;
+            }
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 1rem;
+            font-size: 1rem;
+            border: none;
+            outline: none;
+            background-color: #fff;
+        }
+    }
+}
+
+.contact-section-subpage-grid {
+    margin-top: 2rem !important;
+    @include gridResponsiveMaxWidth();
+    border: 2px solid #ccc;
+
+    a+a {
+        border-left: solid 2px #ccc;
+    }
+
+    a {
+        @include dFlex();
+        gap: 1rem;
+        text-align: center;
+        padding: 1rem;
+        transition: all .1s ease-in-out;
+
+        &:hover {
+            background-color: #f2f2f2;
+            color: #65A850;
+
+            i {
+                color: #65A850;
+            }
+        }
+    }
+}
+
 .button-green,
 .button-white,
 .button-gray {
@@ -227,6 +291,29 @@ hr {
     span,
     i {
         color: #272727;
+    }
+}
+
+.button-border {
+    @include dFlex();
+    text-transform: uppercase;
+    background-color: #fff;
+    color: #65A850;
+    padding: 1rem;
+    appearance: none;
+    border: none;
+    outline: none;
+    gap: 1rem;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    -webkit-box-shadow: inset 0px 0px 0px 2px #65A850;
+    -moz-box-shadow: inset 0px 0px 0px 2px #65A850;
+    box-shadow: inset 0px 0px 0px 2px #65A850;
+
+    span,
+    i {
+        color: #65A850;
     }
 }
 
@@ -467,6 +554,16 @@ hr {
         &:hover {
             background-color: #457436;
         }
+    }
+}
+
+.select-category {
+    select {
+        font-size: 1.2rem;
+        border: 1px solid #65A850;
+        background-color: #fff;
+        color: #272727;
+        padding: 1rem;
     }
 }
 

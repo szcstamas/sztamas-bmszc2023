@@ -139,6 +139,30 @@ class Database
         return $result;
     }
 
+    public static function restockProductById($id)
+    {
+        $sql = "UPDATE `products` SET `quantity` = 50 WHERE `products`.`id` = $id";
+
+        //csatlakozás az adatbázishoz, majd az sql parancs elküldése
+        $result = self::$conn->prepare($sql);
+        //sql parancs végrehajtása
+        $result->execute();
+
+        return $result;
+    }
+
+    public static function createProduct($product, $category)
+    {
+        $onStock = self::boolToSQL($product->onStock);
+
+        $sql = "INSERT INTO `products` (`name`, `description`, `image`, `price`, `quantity`, `onStock`, `weight`, `unitPrice`, `unitSize`, `flavour`, `colour`, `components`, `category`, `preFishes`, `discount`, `createdAt`) VALUES ('$product->name', '$product->description', '$product->image', '$product->price', '$product->quantity', '$onStock', '$product->weight', '$product->unitPrice', '$product->unitSize', '$product->flavour', '$product->colour', '$product->components', '$category', '$product->preFishes', '$product->discount', current_timestamp());";
+
+        $result = self::$conn->prepare($sql);
+        $result->execute();
+
+        return $result;
+    }
+
     public static function updateProduct($product)
     {
         $onStock = self::boolToSQL($product->onStock);

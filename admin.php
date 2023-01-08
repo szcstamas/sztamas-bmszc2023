@@ -40,6 +40,15 @@ if (isset($_GET["recoverproduct"])) {
   exit();
 }
 
+//if recoverproduct is set in url, call recoverProductById from db.php
+if (isset($_GET["restockproduct"])) {
+  $restockProductId = $_GET["restockproduct"];
+  Database::restockProductById($restockProductId);
+  header("Location: admin.php");
+  ob_end_flush();
+  exit();
+}
+
 //if deleteorder is set in url, call deleteOrderById from db.php
 if (isset($_GET["deleteorder"])) {
   $deleteOrderId = $_GET["deleteorder"];
@@ -90,11 +99,11 @@ $products = Database::getAllProductsOnAdmin();
             <th>ID</th>
             <th>Név</th>
             <th>Leírás részlete</th>
-            <th>Ár</th>
+            <th>Ár(Ft)</th>
             <th>Darabszám</th>
             <th>Elérhető?</th>
-            <th>Súly</th>
-            <th>Ár/kg</th>
+            <th>Súly(g)</th>
+            <th>Ár(Ft/kg)</th>
             <th class="admin-product-action">Termék szerkesztése</th>
           </tr>
           <tr>
@@ -104,7 +113,7 @@ $products = Database::getAllProductsOnAdmin();
             </td>
             <td><?= $product->name ?></td>
             <td>
-              <div style="height:100px; overflow:hidden"><?= $product->description ?></div>
+              <div style="height:100px; overflow:scroll;"><?= $product->description ?></div>
             </td>
             <td><?= $product->price ?></td>
             <td><?= $product->quantity ?></td>
@@ -125,6 +134,21 @@ $products = Database::getAllProductsOnAdmin();
             <i class='bi bi-trash'></i>
           </a>
           <a class='admin-btn' title='Recover item' href='?recoverproduct=$product->id'>
+            <i class='bi bi-arrow-clockwise'></i>
+          </a>
+          </div>
+          ";
+              } else if ($product->quantity === 0) {
+                echo "
+          <div class='dffc'>
+                <span style='margin-right:10px;color: #dc3545;'>Elfogyott</span>
+          <a class='admin-btn' role='link' aria-disabled='true' style='opacity:0.5;cursor:default;'>
+            <i class='bi bi-pencil'></i>
+          </a>
+          <a class='admin-btn' role='link' aria-disabled='true' style='opacity:0.5;cursor:default;'>
+            <i class='bi bi-trash'></i>
+          </a>
+          <a class='admin-btn' title='Alapértelmezett árufeltöltés(50)' href='?restockproduct=$product->id'>
             <i class='bi bi-arrow-clockwise'></i>
           </a>
           </div>
@@ -152,7 +176,7 @@ $products = Database::getAllProductsOnAdmin();
             <th>Összetevők</th>
             <th>Kategória</th>
             <th>Preferált halak</th>
-            <th>Aktuális kedvezmény</th>
+            <th>Aktuális kedvezmény(%)</th>
             <th>Hozzáadás dátuma</th>
             <th>Törlés dátuma</th>
           </tr>
