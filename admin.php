@@ -107,7 +107,7 @@ $products = Database::getAllProductsOnAdmin();
             </td>
             <td><?= $product->price ?></td>
             <td><?= $product->quantity ?></td>
-            <td><?= $product->onStock == 1 ? "Yes" : "No" ?></td>
+            <td><?= $product->onStock == 1 ? "Igen" : "Nem" ?></td>
             <td><?= $product->weight ?></td>
             <td><?= $product->unitPrice ?></td>
             <td style="text-align:right;">

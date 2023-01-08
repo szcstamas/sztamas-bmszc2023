@@ -273,6 +273,79 @@ hr {
     }
 }
 
+.product-form-grid {
+    @include gridResponsive();
+    gap: 1rem;
+    padding: 1rem;
+    background-color: #f2f2f2;
+
+    .product-form-container {
+
+        @include dFlex();
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 1rem;
+        background-color: #fff;
+        padding: 1rem;
+
+        .product-form-desc {
+            max-height: 150px;
+            overflow: scroll;
+        }
+
+        input,
+        select,
+        textarea {
+            font-size: 16px;
+            height: 100%;
+            width: 100% !important;
+            border: none;
+            outline: none;
+            background: #efefef;
+            padding: 1rem;
+            transition: all .1s ease-in-out;
+
+            &:focus,
+            &:active {
+                padding: 1rem 2rem;
+            }
+
+            &:hover {
+                background: #d8d8d8;
+            }
+        }
+
+        #image-delete {
+            width: 40px !important;
+            height: 40px;
+        }
+
+        .product-check-label {
+            background: transparent;
+            color: #272727;
+            padding: 0;
+        }
+
+        label {
+            padding: 1rem;
+            background-color: #65A850;
+            color: #fff;
+            width: 100%;
+        }
+    }
+
+    .product-submit {
+        -webkit-box-shadow: inset 0px 0px 0px 20px #fff;
+        -moz-box-shadow: inset 0px 0px 0px 20px #fff;
+        box-shadow: inset 0px 0px 0px 20px #fff;
+        transition: all .1s ease-in-out;
+
+        &:hover {
+            background-color: #457436;
+        }
+    }
+}
+
 .dffc {
     @include dFlex();
     gap: 1rem;

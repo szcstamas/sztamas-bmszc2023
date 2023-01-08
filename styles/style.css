@@ -341,6 +341,101 @@ hr {
   box-shadow: inset 0px 0px 0px 2px #65A850;
 }
 
+.product-form-grid {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(300px, 1fr))[auto-fit];
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  width: 100%;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #f2f2f2;
+}
+
+.product-form-grid .product-form-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start !important;
+      -ms-flex-align: start !important;
+          align-items: flex-start !important;
+  gap: 1rem;
+  background-color: #fff;
+  padding: 1rem;
+}
+
+.product-form-grid .product-form-container .product-form-desc {
+  max-height: 150px;
+  overflow: scroll;
+}
+
+.product-form-grid .product-form-container input,
+.product-form-grid .product-form-container select,
+.product-form-grid .product-form-container textarea {
+  font-size: 16px;
+  height: 100%;
+  width: 100% !important;
+  border: none;
+  outline: none;
+  background: #efefef;
+  padding: 1rem;
+  -webkit-transition: all .1s ease-in-out;
+  transition: all .1s ease-in-out;
+}
+
+.product-form-grid .product-form-container input:focus, .product-form-grid .product-form-container input:active,
+.product-form-grid .product-form-container select:focus,
+.product-form-grid .product-form-container select:active,
+.product-form-grid .product-form-container textarea:focus,
+.product-form-grid .product-form-container textarea:active {
+  padding: 1rem 2rem;
+}
+
+.product-form-grid .product-form-container input:hover,
+.product-form-grid .product-form-container select:hover,
+.product-form-grid .product-form-container textarea:hover {
+  background: #d8d8d8;
+}
+
+.product-form-grid .product-form-container #image-delete {
+  width: 40px !important;
+  height: 40px;
+}
+
+.product-form-grid .product-form-container .product-check-label {
+  background: transparent;
+  color: #272727;
+  padding: 0;
+}
+
+.product-form-grid .product-form-container label {
+  padding: 1rem;
+  background-color: #65A850;
+  color: #fff;
+  width: 100%;
+}
+
+.product-form-grid .product-submit {
+  -webkit-box-shadow: inset 0px 0px 0px 20px #fff;
+  box-shadow: inset 0px 0px 0px 20px #fff;
+  -webkit-transition: all .1s ease-in-out;
+  transition: all .1s ease-in-out;
+}
+
+.product-form-grid .product-submit:hover {
+  background-color: #457436;
+}
+
 .dffc {
   display: -webkit-box;
   display: -ms-flexbox;

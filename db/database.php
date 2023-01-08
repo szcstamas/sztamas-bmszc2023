@@ -88,9 +88,7 @@ class Database
     public static function getProductById($id)
     {
 
-        $sql = "SELECT * FROM `product` WHERE `id` = $id ";
-
-        $result = mysqli_query(self::$conn, $sql);
+        $sql = "SELECT * FROM `products` WHERE `id` = $id";
 
         //csatlakozás az adatbázishoz, majd az sql parancs elküldése
         $result = self::$conn->prepare($sql);
@@ -114,6 +112,39 @@ class Database
                         echo "Ismeretlen kategória!";
                     }
             }
+        }
+    }
+
+    public static function deleteProductById($id)
+    {
+        $sql = "UPDATE `products` SET `deletedAt` = CURRENT_TIMESTAMP WHERE `products`.`id` = $id";
+
+        //csatlakozás az adatbázishoz, majd az sql parancs elküldése
+        $result = self::$conn->prepare($sql);
+        //sql parancs végrehajtása
+        $result->execute();
+
+        return $result;
+    }
+
+    public static function updateProduct($product)
+    {
+        $onStock = self::boolToSQL($product->onStock);
+
+        $sql = "UPDATE `products` SET `name` = '$product->name', `description` = '$product->description', `image` = '$product->image', `price` = '$product->price', `quantity` = '$product->quantity', `onStock` = '$onStock', `weight` = '$product->weight',  `unitPrice` = '$product->unitPrice', `unitSize` = '$product->unitSize', `flavour` = '$product->flavour', `colour` = '$product->colour', `components` = '$product->components', `preFishes` = '$product->preFishes', `discount` = '$product->discount' WHERE `products`.`id` = $product->id;";
+
+        $result = self::$conn->prepare($sql);
+        $result->execute();
+
+        return $result;
+    }
+
+    private static function boolToSQL($bool)
+    {
+        if ($bool == true) {
+            return 1;
+        } else {
+            return 0;
         }
     }
 }
