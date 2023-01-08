@@ -127,6 +127,18 @@ class Database
         return $result;
     }
 
+    public static function recoverProductById($id)
+    {
+        $sql = "UPDATE `products` SET `deletedAt` = '0000-00-00' WHERE `products`.`id` = $id";
+
+        //csatlakozás az adatbázishoz, majd az sql parancs elküldése
+        $result = self::$conn->prepare($sql);
+        //sql parancs végrehajtása
+        $result->execute();
+
+        return $result;
+    }
+
     public static function updateProduct($product)
     {
         $onStock = self::boolToSQL($product->onStock);

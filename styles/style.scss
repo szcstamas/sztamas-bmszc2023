@@ -13,6 +13,24 @@
     color: #fff;
 }
 
+::-webkit-scrollbar {
+    width: 20px;
+    background-color: #65A850;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #fff;
+    border: 5px solid #65A850;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #272727;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: #fff;
 }
@@ -129,6 +147,43 @@ hr {
     }
 }
 
+.section-nopad {
+    padding: 0;
+
+    .section-text-button {
+        @include dFlex();
+        flex-direction: column;
+        text-align: left;
+        align-items: flex-start;
+        gap: 2rem;
+        width: 55%;
+    }
+}
+
+.mainpage-social-link {
+    @include dFlex();
+    background-color: #fff;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    transition: all .1s ease-in-out;
+
+    i {
+        color: #000;
+    }
+
+    &:hover {
+        background-color: #4c7e3c;
+        color: #fff;
+        transform: translateY(-5px);
+        box-shadow: 0px 10px 10px rgba(0, 0, 0, .4);
+
+        i {
+            color: #fff;
+        }
+    }
+}
+
 .section-paddinglow {
     padding: 2rem 0;
 }
@@ -194,6 +249,10 @@ hr {
     color: #fff;
 }
 
+.greencolor {
+    color: #65A850;
+}
+
 .title-big-green-brobaits {
     margin-top: -40px;
 }
@@ -210,6 +269,54 @@ hr {
 .section-paragraph-white {
     color: #fff;
     line-height: 24px;
+}
+
+#newsletter-subscribe {
+    border: 1px solid #65A850;
+
+    h2,
+    p {
+        color: #fff !important;
+    }
+
+    form {
+        width: 600px;
+        gap: 0rem;
+        height: 100px;
+
+        input {
+            appearance: none;
+            outline: none;
+            border: none;
+            height: 100%;
+        }
+
+        input[type=email] {
+            width: 50%;
+            background-color: #fff;
+            padding: 0 25px;
+            font-size: 1.25rem;
+
+            &::placeholder {
+                color: #ccc;
+            }
+        }
+
+        input[type=submit] {
+            width: 50%;
+            background-color: #4c7e3c;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all .1s ease;
+
+            &:hover {
+                background-color: #315127;
+            }
+        }
+
+
+    }
 }
 
 .admin-login-error {
@@ -264,12 +371,29 @@ hr {
         color: white;
     }
 
+    .admin-btn {
+        @include dFlex();
+        padding: .5rem;
+        background: #efefef;
+        color: #272727;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        transition: all .1s ease-in-out;
+
+        &:hover {
+            background-color: #272727;
+            color: #fff;
+
+            i {
+                color: #fff;
+            }
+        }
+    }
+
     .admin-product-action {
         background-color: #fff;
         color: #272727;
-        -webkit-box-shadow: inset 0px 0px 0px 2px #65A850;
-        -moz-box-shadow: inset 0px 0px 0px 2px #65A850;
-        box-shadow: inset 0px 0px 0px 2px #65A850;
     }
 }
 
@@ -348,6 +472,13 @@ hr {
 
 .dffc {
     @include dFlex();
+    gap: 1rem;
+}
+
+.dfstr {
+    @include dFlex();
+    align-items: stretch !important;
+    justify-content: space-between !important;
     gap: 1rem;
 }
 

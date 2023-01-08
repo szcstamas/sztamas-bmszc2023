@@ -20,6 +20,7 @@
 
 </footer>
 
+<script type="text/javascript" src="js/fish-carousel/app.js"></script>
 </body>
 
 </html>

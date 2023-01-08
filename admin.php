@@ -1,3 +1,4 @@
+<?php ob_start(); ?>
 <?php session_start(); ?>
 <?php require_once("components/header.php") ?>
 
@@ -10,7 +11,7 @@ if (isset($_SESSION["loginAdmin"])) {
   $user = $_SESSION["loginAdmin"];
 }
 
-//connect to database
+//csatlakozás az adatbázishoz
 Database::connect();
 
 if (isset($_POST["signout"])) {
@@ -26,6 +27,7 @@ if (isset($_GET["deleteproduct"])) {
   $deleteProductId = $_GET["deleteproduct"];
   Database::deleteProductById($deleteProductId);
   header("Location: admin.php");
+  ob_end_flush();
   exit();
 }
 
@@ -34,6 +36,7 @@ if (isset($_GET["recoverproduct"])) {
   $recoverProductId = $_GET["recoverproduct"];
   Database::recoverProductById($recoverProductId);
   header("Location: admin.php");
+  ob_end_flush();
   exit();
 }
 
@@ -42,13 +45,11 @@ if (isset($_GET["deleteorder"])) {
   $deleteOrderId = $_GET["deleteorder"];
   Database::deleteOrderById($deleteOrderId);
   header("Location: admin.php");
+  ob_end_flush();
   exit();
 }
 
-//display orders from table called "webshop-orders" in our database
-// $orders = Database::getAllOrders();
-
-//display products from table called "products" in our database
+//az összes item megjelenítése az adatbázisból
 $products = Database::getAllProductsOnAdmin();
 
 ?>
@@ -107,7 +108,7 @@ $products = Database::getAllProductsOnAdmin();
             </td>
             <td><?= $product->price ?></td>
             <td><?= $product->quantity ?></td>
-            <td><?= $product->onStock == 1 ? "Igen" : "Nem" ?></td>
+            <td><?= $product->quantity > 0 ? "Igen" : "Nem" ?></td>
             <td><?= $product->weight ?></td>
             <td><?= $product->unitPrice ?></td>
             <td style="text-align:right;">
@@ -115,25 +116,29 @@ $products = Database::getAllProductsOnAdmin();
               <?php
               if ($product->deletedAt != "0000-00-00") {
                 echo "
-          <span style='margin-right:10px;color: #dc3545;'>Disabled</span>
-          <a class='btn btn-sm btn-warning me-1' role='link' aria-disabled='true' style='opacity:0.5;cursor:default;'>
+          <div class='dffc'>
+                <span style='margin-right:10px;color: #dc3545;'>Inaktív</span>
+          <a class='admin-btn' role='link' aria-disabled='true' style='opacity:0.5;cursor:default;'>
             <i class='bi bi-pencil'></i>
           </a>
-          <a class='btn btn-sm btn-danger me-1' role='link' aria-disabled='true' style='opacity:0.5;cursor:default;'>
+          <a class='admin-btn' role='link' aria-disabled='true' style='opacity:0.5;cursor:default;'>
             <i class='bi bi-trash'></i>
           </a>
-          <a class='btn btn-sm btn-secondary' title='Recover item' href='?recoverproduct=$product->id'>
+          <a class='admin-btn' title='Recover item' href='?recoverproduct=$product->id'>
             <i class='bi bi-arrow-clockwise'></i>
           </a>
+          </div>
           ";
               } else {
                 echo "
-          <a class='btn btn-sm btn-warning me-1' title='Edit item' href='editproduct.php?id=$product->id'>
+                <div class='dfc'>
+          <a class='admin-btn' title='Edit item' href='editproduct.php?id=$product->id'>
             <i class='bi bi-pencil'></i>
           </a>
-          <a class='btn btn-sm btn-danger' title='Delete item' href='?deleteproduct=$product->id'>
+          <a class='admin-btn' title='Delete item' href='?deleteproduct=$product->id'>
             <i class='bi bi-trash'></i>
           </a>
+          </div>
           ";
               }
               ?>
@@ -164,7 +169,7 @@ $products = Database::getAllProductsOnAdmin();
             <td><?= $product->deletedAt ?></td>
           </tr>
           <tr>
-            <td colspan="10" style="background-color:#f2f2f2;padding:1rem;border:1px solid #f2f2f2;"></td>
+            <td colspan="10" style="background-color:#f2f2f2;padding:1rem;border:1px solid #f2f2f2;border-bottom: 1px solid #65A850;"></td>
           </tr>
         <?php endforeach ?>
       </table>
