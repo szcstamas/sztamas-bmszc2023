@@ -55,11 +55,11 @@ $products = Database::getAllProductsOnAdmin();
 
 <?php if (!isset($_SESSION["loginAdmin"])) : ?>
 
-  <div class='section maxw admin-section admin-login-error'>
+  <section class='section maxw admin-section admin-login-error'>
     <h2>Bejelentkezés szükséges!</h2>
     <p>A gomb segítségével látogass el a bejelentkezési felületre!</p>
     <a href='adminlogin.php'><button class='button-green'>bejelentkezés</button></a>
-  </div>
+  </section>
 
 <?php else : ?>
 
@@ -94,11 +94,13 @@ $products = Database::getAllProductsOnAdmin();
             <th>Elérhető?</th>
             <th>Súly</th>
             <th>Ár/kg</th>
-            <th class="admin-product-action">Termék szerkesztés</th>
+            <th class="admin-product-action">Termék szerkesztése</th>
           </tr>
           <tr>
             <td rowspan="3"><img style="max-width:150px;" src="img/products/<?= $product->image ?>" alt="<?= $product->image ?>"></td>
-            <td><?= $product->id ?></td>
+            <td style="text-align:center;">
+              <div class="dffc" style="background-color:#f2f2f2;width:40px;height:40px;border-radius:50%;margin:auto;"><b><?= $product->id ?></b></div>
+            </td>
             <td><?= $product->name ?></td>
             <td>
               <div style="height:100px; overflow:hidden"><?= $product->description ?></div>

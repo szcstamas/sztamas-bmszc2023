@@ -84,4 +84,36 @@ class Database
 
         return $products;
     }
+
+    public static function getProductById($id)
+    {
+
+        $sql = "SELECT * FROM `product` WHERE `id` = $id ";
+
+        $result = mysqli_query(self::$conn, $sql);
+
+        //csatlakozás az adatbázishoz, majd az sql parancs elküldése
+        $result = self::$conn->prepare($sql);
+        //sql parancs végrehajtása
+        $result->execute();
+        //kapott sql-adat fetchelése
+        $data = $result->fetchAll();
+
+        //keresztül loopolás
+        foreach ($data as $row) {
+            switch ($row["category"]) {
+                case "pellet": {
+                        return new Product($row["id"], $row["name"], $row["description"], $row["image"], $row["price"], $row["quantity"], $row["onStock"], $row["weight"], $row["unitPrice"], $row["unitSize"], $row["flavour"], $row["colour"], $row["components"], $row["category"], $row["preFishes"], $row["discount"], $row["createdAt"], $row["deletedAt"]);
+                        break;
+                    }
+                case "feed": {
+                        return new Product($row["id"], $row["name"], $row["description"], $row["image"], $row["price"], $row["quantity"], $row["onStock"], $row["weight"], $row["unitPrice"], $row["unitSize"], $row["flavour"], $row["colour"], $row["components"], $row["category"], $row["preFishes"], $row["discount"], $row["createdAt"], $row["deletedAt"]);
+                        break;
+                    }
+                default: {
+                        echo "Ismeretlen kategória!";
+                    }
+            }
+        }
+    }
 }

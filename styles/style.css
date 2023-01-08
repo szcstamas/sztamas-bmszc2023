@@ -341,6 +341,19 @@ hr {
   box-shadow: inset 0px 0px 0px 2px #65A850;
 }
 
+.dffc {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 1rem;
+}
+
 .dfc {
   display: -webkit-box;
   display: -ms-flexbox;

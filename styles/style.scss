@@ -273,6 +273,11 @@ hr {
     }
 }
 
+.dffc {
+    @include dFlex();
+    gap: 1rem;
+}
+
 .dfc {
     @include dFlex();
     gap: 1rem;

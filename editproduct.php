@@ -3,27 +3,15 @@
 <?php
 
 $error = "";
-
-require_once("model/camera.php");
-require_once("model/monitor.php");
-require_once("model/clothing.php");
+require_once("model/product.php");
 require_once("db/database.php");
 
-// 1. legyen levedve felhasznalonev/jelszoval az oldal
-if (
-  isset($_SERVER['PHP_AUTH_USER']) &&
-  isset($_SERVER['PHP_AUTH_PW']) &&
-  $_SERVER['PHP_AUTH_USER'] == "admin" &&
-  $_SERVER['PHP_AUTH_PW'] == "webshop123"
-) {
-} else {
-  header('WWW-Authenticate: Basic realm="webshop"');
-  header('HTTP/1.0 401 Unauthorized');
-  echo 'You cannot access the Admin console';
-  exit();
+//authentikáció
+if (isset($_SESSION["loginAdmin"])) {
+  $user = $_SESSION["loginAdmin"];
 }
 
-// 2. olvassuk be az "id" parametert
+//csatlakozás az adatbázishoz 
 Database::connect();
 
 if (isset($_GET["id"])) {
@@ -86,29 +74,14 @@ if (
   }
 
   switch ($category) {
-    case "monitor": {
-        $displaySize = $_POST["display-size"];
-        $refreshRate = $_POST["refresh-rate"];
-        $resolutionH = $_POST["resolution-h"];
-        $resolutionV = $_POST["resolution-v"];
+    case "pellet": {
 
-        $editedProduct = new Monitor($id, $name, $price, true, $description, $filename, NULL, NULL, $displaySize, $refreshRate, $resolutionH, $resolutionV);
+        $editedProduct = new Product($id, $name, $description, $image, $price, $quantity, $onStock, $weight, $unitPrice, $unitSize, $flavour, $colour, $components, $category, $preFishes, $discount, $createdAt, $deletedAt);
         break;
       }
-    case "camera": {
-        $resolution = $_POST["resolution"];
-        $ilc = $_POST["ilc"];
-        $weight = $_POST["weight"];
-        $batteryLife = $_POST["battery-life"];
+    case "feed": {
 
-        $editedProduct = new Camera($id, $name, $price, true, $description, $filename, NULL, NULL, $resolution, $ilc, $weight, $batteryLife);
-        break;
-      }
-    case "clothing": {
-        $size = $_POST["size"];
-        $colour = $_POST["colour"];
-
-        $editedProduct = new Clothing($id, $name, $price, true, $description, $filename, NULL, NULL, $size, $colour);
+        $editedProduct = new Product($id, $name, $description, $image, $price, $quantity, $onStock, $weight, $unitPrice, $unitSize, $flavour, $colour, $components, $category, $preFishes, $discount, $createdAt, $deletedAt);
         break;
       }
   }
@@ -121,104 +94,97 @@ if (
 
 ?>
 
-<div class="row">
-  <div class="col-md-6 offset-md-3">
-    <div class="card">
-      <div class="card-body">
-        <h1>Edit Product</h1>
-        <p class="text-danger"><?= $error ?></p>
-        <form method="POST" enctype="multipart/form-data">
-          <div class="mb-3">
-            <label for="id" class="form-label">ID</label>
-            <input type="id" id="id" class="form-control" readonly name="id" value="<?= $product->id ?>">
-          </div>
-          <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input type="name" id="name" class="form-control" name="name" value="<?= $product->name ?>">
-          </div>
-          <div class="mb-3">
-            <label for="price" class="form-label">Price</label>
-            <input type="number" id="price" class="form-control" name="price" value="<?= $product->price ?>">
-          </div>
-          <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <input type="text" id="description" class="form-control" name="description" value="<?= htmlspecialchars($product->description) ?>">
-          </div>
-          <div class="mb-3">
-            <label for="created-at" class="form-label">Created At</label>
-            <input type="text" readonly id="created-at" class="form-control" value="<?= $product->createdAt ?>">
-          </div>
-          <div class="mb-3">
-            <label for="image" class="form-label">Image</label>
-            <input id="image" type="file" name="image" class="form-control" value="<?= $product->image ?>">
-          </div>
-          <div class="mb-3">
-            <input id="image-delete" type="checkbox" name="image-delete" style="margin-right:8px;" class="form-check-input">
-            <label for="image-delete" class="form-check-label">Delete previous images</label>
-          </div>
-
-          <hr>
-
-          <?php if ($product instanceof Camera) : ?>
-            <div class="mb-3">
-              <label for="resolution" class="form-label">Resolution</label>
-              <input type="number" id="resolution" class="form-control" name="resolution" value="<?= $product->resolution ?>">
-            </div>
-            <div class="mb-3 form-check">
-              <input type="checkbox" id="ilc" name="ilc" class="form-check-input" <?= $product->ilc ? "checked" : "" ?>>
-              <label class="form-check-label" for="ilc">ILC</label>
-            </div>
-            <div class="mb-3">
-              <label for="weight" class="form-label">Weight</label>
-              <input type="number" id="weight" class="form-control" name="weight" value="<?= $product->weight ?>">
-            </div>
-            <div class="mb-3">
-              <label for="battery-life" class="form-label">Battery Life</label>
-              <input type="number" id="battery-life" class="form-control" name="battery-life" value="<?= $product->batteryLife ?>">
-            </div>
-            <input type="hidden" name="category" value="camera">
-          <?php elseif ($product instanceof Monitor) : ?>
-            <div class="mb-3">
-              <label for="display-size" class="form-label">Display Size</label>
-              <input type="number" id="display-size" class="form-control" name="display-size" value="<?= $product->size ?>">
-            </div>
-            <div class=" mb-3">
-              <label for="refresh-rate" class="form-label">Refresh Rate</label>
-              <input type="number" id="refresh-rate" class="form-control" name="refresh-rate" value="<?= $product->refreshRate ?>">
-            </div>
-            <div class=" mb-3">
-              <label for="resolution-h" class="form-label">Horizontal Resolution</label>
-              <input type="number" id="resolution-hdisplay-size" class="form-control" name="resolution-h" value="<?= $product->resolutionH ?>">
-            </div>
-            <div class=" mb-3">
-              <label for="resolution-v" class="form-label">Vertical Resolution</label>
-              <input type="number" id="resolution-v" class="form-control" name="resolution-v" value="<?= $product->resolutionV ?>">
-            </div>
-            <input type="hidden" name="category" value="monitor">
-          <?php elseif ($product instanceof Clothing) : ?>
-            <div class=" mb-3">
-              <label for="display-size" class="form-label">Size</label>
-              <select class="form-select mb-3" name="size">
-                <option value="xs" <?= $product->size == "xs" ? "selected" : "" ?>>XS</option>
-                <option value="s" <?= $product->size == "s" ? "selected" : "" ?>>S</option>
-                <option value="m" <?= $product->size == "m" ? "selected" : "" ?>>M</option>
-                <option value="l" <?= $product->size == "l" ? "selected" : "" ?>>L</option>
-                <option value="xl" <?= $product->size == "xl" ? "selected" : "" ?>>XL</option>
-                <option value="xxl" <?= $product->size == "xxl" ? "selected" : "" ?>>XXL</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label for="colour" class="form-label">Colour</label>
-              <input type="text" id="colour" class="form-control" name="colour" value="<?= $product->colour ?>">
-            </div>
-            <input type="hidden" name="category" value="clothing">
-          <?php endif ?>
-          <button type="submit" class="btn btn-primary">Save</button>
-        </form>
-      </div>
+<?php if (!isset($_SESSION["loginAdmin"])) : ?>
+  <section class='section maxw admin-section admin-login-error'>
+    <h2>Bejelentkezés szükséges!</h2>
+    <p>A gomb segítségével látogass el a bejelentkezési felületre!</p>
+    <a href='adminlogin.php'><button class='button-green'>bejelentkezés</button></a>
+  </section>
+<?php else : ?>
+  <section class='section maxw admin-section admin-login-error'>
+    <div class="dfc">
+      <h1>Termék szerkesztése</h1>
+      <p class="text-danger"><?= $error ?></p>
     </div>
-  </div>
-</div>
+    <!--az enctype az image feltöltése miatt kell, máskülönben nem adhatunk hozzá képet-->
+    <form class="product-form-grid" method="POST" enctype="multipart/form-data">
+      <div class="product-form-container">
+        <label for="id" class="product-form-label">ID</label>
+        <input type="id" id="id" class="product-form-input" readonly name="id" value="<?= $product->id ?>">
+      </div>
+      <div class="product-form-container">
+        <label for="name" class="product-form-label">Név</label>
+        <input type="name" id="name" class="product-form-input" name="name" value="<?= $product->name ?>">
+      </div>
+      <div class="product-form-container">
+        <label for="price" class="product-form-label">Ár</label>
+        <input type="number" id="price" class="product-form-input" name="price" value="<?= $product->price ?>">
+      </div>
+      <div class="product-form-container">
+        <label for="unitPrice" class="product-form-label">Ár/kg</label>
+        <input type="number" id="unitPrice" class="product-form-input" name="unitPrice" value="<?= $product->unitPrice ?>">
+      </div>
+      <div class="product-form-container">
+        <label for="description" class="product-form-label">Leírás</label>
+        <input type="text" id="description" class="product-form-input" name="description" value="<?= htmlspecialchars($product->description) ?>">
+      </div>
+      <div class="product-form-container">
+        <label for="createdAt" class="product-form-label">Feltöltve ekkor</label>
+        <input type="text" readonly id="createdAt" class="product-form-input" value="<?= $product->createdAt ?>">
+      </div>
+      <div class="product-form-container">
+        <label for="image" class="product-form-label">Kép</label>
+        <input id="image" type="file" name="image" class="product-form-input" value="<?= $product->image ?>">
+      </div>
+      <div class="product-form-container">
+        <input id="image-delete" type="checkbox" name="image-delete" style="margin-right:8px;" class="product-check-input">
+        <label for="image-delete" class="product-check-label">Azonos elnevezésű képek törlése</label>
+      </div>
+      <div class="product-form-container">
+        <label for="quantity" class="product-form-label">Darabszám</label>
+        <input type="number" id="quantity" class="product-form-input" name="quantity" value="<?= $product->quantity ?>">
+      </div>
+      <div class="product-form-container">
+        <label for="weight" class="product-form-label">Súly</label>
+        <input type="number" id="weight" class="product-form-input" name="weight" value="<?= $product->weight ?>">
+      </div>
+      <div class="product-form-container">
+        <label for="unitSize" class="product-form-label">Szemcsék mérete</label>
+        <select class="product-select" name="unitSize">
+          <option value="2-6" <?= $product->unitSize == "2-6" ? "selected" : "" ?>>2-6</option>
+          <option value="4-8" <?= $product->unitSize == "4-8" ? "selected" : "" ?>>4-8</option>
+          <option value="6-8" <?= $product->unitSize == "6-8" ? "selected" : "" ?>>6-8</option>
+          <option value="10-12" <?= $product->unitSize == "10-12" ? "selected" : "" ?>>10-12</option>
+          <option value="14-16" <?= $product->unitSize == "14-16" ? "selected" : "" ?>>14-16</option>
+        </select>
+      </div>
+      <div class="product-form-container">
+        <label for="flavour" class="product-form-label">Íz</label>
+        <input type="text" id="flavour" class="product-form-input" name="flavour" value="<?= $product->flavour ?>">
+      </div>
+      <div class="product-form-container">
+        <label for="colour" class="product-form-label">Szín</label>
+        <input type="text" id="colour" class="product-form-input" name="colour" value="<?= $product->colour ?>">
+      </div>
+      <div class="product-form-container">
+        <label for="components" class="product-form-label">Összetevők</label>
+        <input type="text" id="components" class="product-form-input" name="components" value="<?= $product->components ?>">
+      </div>
+      <div class="product-form-container">
+        <label for="preFishes" class="product-form-label">Preferált halfajták</label>
+        <input type="text" id="preFishes" class="product-form-input" name="preFishes" value="<?= $product->preFishes ?>">
+      </div>
+      <div class="product-form-container">
+        <label for="discount" class="product-form-label">Aktuális kedvezmény</label>
+        <input type="number" id="discount" class="product-form-input" name="discount" value="<?= $product->discount ?>">
+      </div>
+      <!-- <input type="hidden" name="category" value="camera"> -->
+      <!-- <input type="hidden" name="category" value="monitor"> -->
+      <!-- <input type="hidden" name="category" value="clothing"> -->
+      <button type="submit" class="button-green">Save</button>
+    </form>
+  </section>
 
-<?php require_once("components/footer.php") ?>
+
+<?php endif ?>
 <?php require_once("components/footer.php") ?>
