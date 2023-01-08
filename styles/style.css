@@ -25,6 +25,10 @@ a {
   text-decoration: none;
 }
 
+hr {
+  border: 1px solid #f2f2f2;
+}
+
 .header {
   padding: .5rem 0;
   border-bottom: 1px solid #65A850;
@@ -167,8 +171,13 @@ a {
   width: 55%;
 }
 
+.section-paddinglow {
+  padding: 2rem 0;
+}
+
 .button-green,
-.button-white {
+.button-white,
+.button-gray {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -196,7 +205,9 @@ a {
 .button-green span,
 .button-green i,
 .button-white span,
-.button-white i {
+.button-white i,
+.button-gray span,
+.button-gray i {
   color: #fff;
 }
 
@@ -207,6 +218,16 @@ a {
 
 .button-white span,
 .button-white i {
+  color: #272727;
+}
+
+.button-gray {
+  background-color: #f2f2f2;
+  color: #272727;
+}
+
+.button-gray span,
+.button-gray i {
   color: #272727;
 }
 
@@ -289,6 +310,37 @@ a {
   padding: 1.5rem 2rem;
 }
 
+.admin-products-list {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.admin-products-list td,
+.admin-products-list th {
+  border: 1px solid #65A850;
+  padding: 8px;
+}
+
+.admin-products-list tr:nth-child(even) {
+  background-color: #fff;
+}
+
+.admin-products-list th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #65A850;
+  color: white;
+}
+
+.admin-products-list .admin-product-action {
+  background-color: #fff;
+  color: #272727;
+  -webkit-box-shadow: inset 0px 0px 0px 2px #65A850;
+  box-shadow: inset 0px 0px 0px 2px #65A850;
+}
+
 .dfc {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -304,6 +356,23 @@ a {
   -webkit-box-align: start !important;
       -ms-flex-align: start !important;
           align-items: flex-start !important;
+}
+
+.dffs {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 1rem;
+  -webkit-box-pack: start !important;
+      -ms-flex-pack: start !important;
+          justify-content: flex-start !important;
+  align-items: center !important;
 }
 
 .dfcc {
@@ -337,5 +406,6 @@ a {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  width: 100%;
 }
 /*# sourceMappingURL=style.css.map */

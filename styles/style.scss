@@ -22,6 +22,10 @@ a {
 
 }
 
+hr {
+    border: 1px solid #f2f2f2;
+}
+
 .header {
     padding: .5rem 0;
     border-bottom: 1px solid #65A850;
@@ -125,8 +129,13 @@ a {
     }
 }
 
+.section-paddinglow {
+    padding: 2rem 0;
+}
+
 .button-green,
-.button-white {
+.button-white,
+.button-gray {
     @include dFlex();
     text-transform: uppercase;
     background-color: #65A850;
@@ -148,6 +157,16 @@ a {
 
 .button-white {
     background-color: #fff;
+    color: #272727;
+
+    span,
+    i {
+        color: #272727;
+    }
+}
+
+.button-gray {
+    background-color: #f2f2f2;
     color: #272727;
 
     span,
@@ -222,11 +241,50 @@ a {
     }
 }
 
+.admin-products-list {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+
+    td,
+    th {
+        border: 1px solid #65A850;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #fff;
+    }
+
+    th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #65A850;
+        color: white;
+    }
+
+    .admin-product-action {
+        background-color: #fff;
+        color: #272727;
+        -webkit-box-shadow: inset 0px 0px 0px 2px #65A850;
+        -moz-box-shadow: inset 0px 0px 0px 2px #65A850;
+        box-shadow: inset 0px 0px 0px 2px #65A850;
+    }
+}
+
 .dfc {
     @include dFlex();
     gap: 1rem;
     justify-content: center !important;
     align-items: flex-start !important;
+}
+
+.dffs {
+    @include dFlex();
+    gap: 1rem;
+    justify-content: flex-start !important;
+    align-items: center !important;
 }
 
 .dfcc {
@@ -241,4 +299,5 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }

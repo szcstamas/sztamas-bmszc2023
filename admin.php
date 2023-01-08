@@ -16,12 +16,9 @@ Database::connect();
 if (isset($_POST["signout"])) {
 
   //szedje ki az adataimat a munkamenetből
-  setcookie(session_name(), '', 100);
   session_unset();
   session_destroy();
   $_SESSION = array();
-  //irányítson vissza
-  // header("Location: /sztamas-bmszc2023/admin.php");
 }
 
 //if deleteproduct is set in url, call deleteProductById from db.php
@@ -52,7 +49,7 @@ if (isset($_GET["deleteorder"])) {
 // $orders = Database::getAllOrders();
 
 //display products from table called "products" in our database
-// $products = Database::getAllProductsOnAdmin();
+$products = Database::getAllProductsOnAdmin();
 
 ?>
 
@@ -66,72 +63,56 @@ if (isset($_GET["deleteorder"])) {
 
 <?php else : ?>
 
-  <div class='section maxw admin-section admin-login-error'>
-    <h2>Bejelentkezve mint: <?= $user ?></h2>
-    <p>A gomb segítségével kijelentkezhetsz!</p>
+  <section class='section-paddinglow maxw admin-section dfsb'>
+    <h2>Bejelentkezve mint: <span style="color:#65A850;"><?= $user ?></span></h2>
     <form method="POST">
-      <button type="submit" name="signout" class="button-danger">kijelentkezés</button>
+      <button type="submit" name="signout" class="button-gray">kijelentkezés</button>
     </form>
-  </div>
+  </section>
 
-  <h4>Orders</h4>
+  <hr class="maxw">
 
-  <?php if (!$orders) : ?>
-    <p style="margin: 20px 0;">There are no orders.</p>
+  <div class='section-paddinglow maxw admin-section admin-login-error'>
+    <div class="dfc">
+      <h2>Rendelések</h2>
+    </div>
 
-  <?php else : ?>
-    <table class="table table-sm">
-      <thead>
-        <th>ID</th>
-        <th>Email</th>
-        <th>Name</th>
-        <th>Address</th>
-        <th>Total</th>
-        <th>Date</th>
-        <th></th>
-      </thead>
+    <div class='section-paddinglow maxw admin-section admin-login-error'>
+      <div class="dffs">
+        <h2>Termékek</h2>
+        <a href="newproduct.php" class="button-green">Termékek hozzáadása</a>
+      </div>
+      <table class="admin-products-list">
+        <?php foreach ($products as $product) : ?>
+          <tr>
+            <th>Kép</th>
+            <th>ID</th>
+            <th>Név</th>
+            <th>Leírás részlete</th>
+            <th>Ár</th>
+            <th>Darabszám</th>
+            <th>Elérhető?</th>
+            <th>Súly</th>
+            <th>Ár/kg</th>
+            <th class="admin-product-action">Termék szerkesztés</th>
+          </tr>
+          <tr>
+            <td rowspan="3"><img style="max-width:150px;" src="img/products/<?= $product->image ?>" alt="<?= $product->image ?>"></td>
+            <td><?= $product->id ?></td>
+            <td><?= $product->name ?></td>
+            <td>
+              <div style="height:100px; overflow:hidden"><?= $product->description ?></div>
+            </td>
+            <td><?= $product->price ?></td>
+            <td><?= $product->quantity ?></td>
+            <td><?= $product->onStock == 1 ? "Yes" : "No" ?></td>
+            <td><?= $product->weight ?></td>
+            <td><?= $product->unitPrice ?></td>
+            <td style="text-align:right;">
 
-      <?php foreach ($orders as $order) : ?>
-        <tr>
-          <td><?= $order->id ?></td>
-          <td><?= $order->email ?></td>
-          <td><?= $order->name ?></td>
-          <td><?= $order->address ?></td>
-          <td><?= $order->total ?></td>
-          <td><?= $order->date ?></td>
-          <td style="text-align:right;">
-            <a class="btn btn-sm btn-danger" href="?deleteorder=<?= $order->id ?>">
-              <i class="bi bi-trash"></i>
-            </a>
-          </td>
-        </tr>
-      <?php endforeach ?>
-    </table>
-
-  <?php endif ?>
-
-  <h4>Products</h4>
-  <a href="newproduct.php" class="btn btn-primary">Add Product</a>
-  <table class="table table-sm">
-    <thead>
-      <th>ID</th>
-      <th>Name</th>
-      <th>In Stock</th>
-      <th>Created At</th>
-      <th></th>
-    </thead>
-
-    <?php foreach ($products as $product) : ?>
-      <tr>
-        <td><?= $product->id ?></td>
-        <td><?= $product->name ?></td>
-        <td><?= $product->inStock == 1 ? "Yes" : "No" ?></td>
-        <td><?= $product->createdAt ?></td>
-        <td style="text-align:right;">
-
-          <?php
-          if ($product->deletedAt != "0000-00-00") {
-            echo "
+              <?php
+              if ($product->deletedAt != "0000-00-00") {
+                echo "
           <span style='margin-right:10px;color: #dc3545;'>Disabled</span>
           <a class='btn btn-sm btn-warning me-1' role='link' aria-disabled='true' style='opacity:0.5;cursor:default;'>
             <i class='bi bi-pencil'></i>
@@ -143,8 +124,8 @@ if (isset($_GET["deleteorder"])) {
             <i class='bi bi-arrow-clockwise'></i>
           </a>
           ";
-          } else {
-            echo "
+              } else {
+                echo "
           <a class='btn btn-sm btn-warning me-1' title='Edit item' href='editproduct.php?id=$product->id'>
             <i class='bi bi-pencil'></i>
           </a>
@@ -152,12 +133,41 @@ if (isset($_GET["deleteorder"])) {
             <i class='bi bi-trash'></i>
           </a>
           ";
-          }
-          ?>
-        </td>
-      </tr>
-    <?php endforeach ?>
-  </table>
+              }
+              ?>
+            </td>
+          </tr>
+
+          <tr>
+            <th>Pelletek mérete</th>
+            <th>Íz</th>
+            <th>Szín</th>
+            <th>Összetevők</th>
+            <th>Kategória</th>
+            <th>Preferált halak</th>
+            <th>Aktuális kedvezmény</th>
+            <th>Hozzáadás dátuma</th>
+            <th>Törlés dátuma</th>
+          </tr>
+
+          <tr>
+            <td><?= $product->unitSize ?></td>
+            <td><?= $product->flavour ?></td>
+            <td><?= $product->colour ?></td>
+            <td><?= $product->components ?></td>
+            <td><?= $product->category ?></td>
+            <td><?= $product->preFishes ?></td>
+            <td><?= $product->discount ?></td>
+            <td><?= $product->createdAt ?></td>
+            <td><?= $product->deletedAt ?></td>
+          </tr>
+          <tr>
+            <td colspan="10" style="background-color:#f2f2f2;padding:1rem;border:1px solid #f2f2f2;"></td>
+          </tr>
+        <?php endforeach ?>
+      </table>
+    </div>
+  </div>
 <?php endif ?>
 
 <?php require_once("components/footer.php") ?>
