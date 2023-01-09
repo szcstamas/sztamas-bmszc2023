@@ -35,7 +35,7 @@ error_reporting(E_ALL);
             </div>
             <div class="header-row-link-container">
                 <a href="/sztamas-bmszc2023/" class="header-row-link">Főoldal</a>
-                <a href="/sztamas-bmszc2023/pellets.php" class="header-row-link">Pelleteink</a>
+                <a href="/sztamas-bmszc2023/shop.php" class="header-row-link">Pelleteink</a>
                 <a href="/sztamas-bmszc2023/partners.php" class="header-row-link">Partnereink</a>
                 <a href="/sztamas-bmszc2023/contact.php" class="header-row-link">Kapcsolat</a>
                 <a href="/sztamas-bmszc2023/about.php" class="header-row-link">Rólunk</a>
