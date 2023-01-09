@@ -4,9 +4,21 @@
 
 require_once("db/database.php");
 
+//adatbázis kapcsolódás
 Database::connect();
 //az összes item megjelenítése az adatbázisból
 $products = Database::getAllProducts();
+
+$searchName = "";
+
+if (
+    isset($_GET["search"]) &&
+    !empty($_GET["search"])
+) {
+    $searchName = $_GET["search"];
+    $products = Database::searchProductByName($searchName);
+}
+
 
 ?>
 
@@ -28,7 +40,7 @@ $products = Database::getAllProducts();
 <section id="shop-product-list" class="section-nopad">
     <div class="homepage-main maxw dfsb">
         <div class="shop-search-bar">
-            <form class="shop-search-form dfcc" action="GET">
+            <form class="shop-search-form dfcc" method="GET" id="search-left">
                 <div class="dfsb">
                     <p class="shop-search-title-main">Rendezés:</p>
                     <select class="product-select" name="sortItems" id="">
@@ -38,73 +50,67 @@ $products = Database::getAllProducts();
                     </select>
                 </div>
                 <div class="dfcc">
-                    <div class="dfc">
-                        <label for="discountItem" class="container">Akciós
-                            <input type="checkbox" name="discountItem" id="discountItem">
-                            <span class="checkmark"></span>
-                        </label>
-                    </div>
-
-                    <div class="dfc">
-                        <label for="onStockItem" class="container">Raktáron
-                            <input type="checkbox" name="onStockItem" id="onStockItem">
-                            <span class="checkmark"></span>
-                        </label>
-                    </div>
-                    <div class="dfc">
-                        <label for="discountItem" class="container">BroBaits termékek
-                            <input type="checkbox" name="broBaitsItems" id="broBaitsItems">
-                            <span class="checkmark"></span>
-                        </label>
-                    </div>
+                    <label for="discountItem" class="container">Akciós
+                        <input type="checkbox" name="discountItem" id="discountItem">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label for="onStockItem" class="container">Raktáron
+                        <input type="checkbox" name="onStockItem" id="onStockItem">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label for="broBaitsItems" class="container">BroBaits termékek
+                        <input type="checkbox" name="broBaitsItems" id="broBaitsItems">
+                        <span class="checkmark"></span>
+                    </label>
                 </div>
                 <div class="dfsb">
                     <p class="shop-search-title-main">Ár</p>
                 </div>
-                <div class="dfcc">
-                    <div class="dfc">
-                        <label for="discountItem" class="container">1 - 2000 Ft
-                            <input type="checkbox" name="discountItem" id="discountItem" value="1-2000">
-                            <span class="checkmark"></span>
-                        </label>
-                    </div>
-                    <div class="dfc">
-                        <label for="onStockItem" class="container">2 - 4000 Ft
-                            <input type="checkbox" name="onStockItem" id="onStockItem" value="2-4000">
-                            <span class="checkmark"></span>
-                        </label>
-                    </div>
-                    <div class="dfc">
-                        <label for="discountItem" class="container">4 - 8000 Ft
-                            <input type="checkbox" name="discountItem" id="broBaitsItems" value="4-8000">
-                            <span class="checkmark"></span>
-                        </label>
-                    </div>
+                <div class="dfcc-secondpart-of-form">
+                    <label for="discountItem" class="container2">1 - 2000 Ft
+                        <input type="checkbox" name="discountItem" id="discountItem" value="1-2000">
+                        <span class="checkmark2"></span>
+                    </label>
+                    <label for="onStockItem" class="container2">2 - 4000 Ft
+                        <input type="checkbox" name="onStockItem" id="onStockItem" value="2-4000">
+                        <span class="checkmark2"></span>
+                    </label>
+                    <label for="discountItem" class="container2">4 - 8000 Ft
+                        <input type="checkbox" name="discountItem" id="broBaitsItems" value="4-8000">
+                        <span class="checkmark2"></span>
+                    </label>
                 </div>
             </form>
         </div>
         <div class="shop-subpage-product-list">
-            <form action="GET" class="dffc">
-                <input type="text" name="search" placeholder="Keresés terméknév alapján...">
-                <a href="?deletesearch" class="dfcc"><i class="bi bi-x"></i></a>
+            <form method="GET" class="dffc" id="search-right">
+                <input type="text" name="search" value="<?= $searchName ?>" placeholder="Keresés terméknév alapján...">
+                <a href="shop.php" class="dfcc"><i class="bi bi-x"></i></a>
                 <label for="submit" class="dfc">
-                    <input type="submit" value="" name="submit" /><i class="bi bi-search"></i>
+                    <input type="submit" value="" onclick="submitForms()" /><i class="bi bi-search"></i>
                 </label>
             </form>
             <div class="shop-subpage-product-grid">
 
                 <?php
 
-                foreach ($products as $product) {
-                    if ($product->discount > 0) {
+                if (!$products) {
 
+                    echo
+                    "
+                    <div style='display:flex;justify-content:center;align-items:center;width:100%;padding:2rem;gap:1rem;'>Nincs megfelelő találat a keresésre! Próbálj meg egy másik kifejezést! <i style='color:#65A850;' class='bi bi-emoji-frown '></i></div>
+                    ";
+                } else {
 
-                        $discPrice = 100 - $product->discount;
-                        $discPrice = $discPrice * 0.01;
-                        $discPrice = $discPrice * $product->price;
+                    foreach ($products as $product) {
+                        if ($product->discount > 0) {
 
-                        echo
-                        "
+                            $discPrice = 100 - $product->discount;
+                            $discPrice = $discPrice * 0.01;
+                            $discPrice = $discPrice * $product->price;
+
+                            echo
+                            "
                         <div class='shop-grid-item dfcc'>
                             <div class='shop-item-discount dffc'>-{$product->discount}%</div>
                         <div class='shop-image-container dffc'>
@@ -129,10 +135,10 @@ $products = Database::getAllProducts();
                         </div>
                         </div>
                         ";
-                    } else {
+                        } else {
 
-                        echo
-                        "
+                            echo
+                            "
                     <div class='shop-grid-item dfcc'>
                     <div class='shop-image-container dffc'>
                         <img src='img/products/{$product->image}' alt='{$product->image}'>
@@ -156,9 +162,9 @@ $products = Database::getAllProducts();
                     </div>
                     </div>
                     ";
+                        }
                     }
                 }
-
                 ?>
             </div>
         </div>

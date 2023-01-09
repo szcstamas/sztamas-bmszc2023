@@ -6,18 +6,6 @@ require_once("db/database.php");
 
 Database::connect();
 
-//delete images when uploading new image for same item with same name
-$dir = 'img/products/';
-$files1 = scandir($dir);
-
-foreach ($files1 as $filename) {
-    $pos = strpos($filename, "sushi_mix");
-
-    if ($pos !== false) {
-        unlink("img/products/$filename");
-    }
-}
-
 ?>
 
 <section class="section video-bg">

@@ -50,6 +50,41 @@ class Database
         return $products;
     }
 
+    public static function searchProductByName($name)
+    {
+
+        //az összes olyan termék kiválasztása amiből több van mint 0, és még nem törölték (nincsen valid dátum beállítva a deleted_at propertynél)
+        $sql = "SELECT * FROM `products` WHERE `name` LIKE '%$name%'";
+
+        //csatlakozás az adatbázishoz, majd az sql parancs elküldése
+        $result = self::$conn->prepare($sql);
+        //sql parancs végrehajtása
+        $result->execute();
+        //ebben a tömbben fognak eltárolódni a fetchelt termékek
+        $products = [];
+        //kapott sql-adat fetchelése
+        $data = $result->fetchAll();
+
+        //adatok megjelenítése (a kapott tömbön keresztül loopol)
+        foreach ($data as $row) {
+            switch ($row["category"]) {
+                case "pellet": {
+                        $products[] = new Product($row["id"], $row["name"], $row["description"], $row["image"], $row["price"], $row["quantity"], $row["onStock"], $row["weight"], $row["unitPrice"], $row["unitSize"], $row["flavour"], $row["colour"], $row["components"], $row["category"], $row["preFishes"], $row["discount"], $row["createdAt"], $row["deletedAt"]);
+                        break;
+                    }
+                case "feed": {
+                        $products[] = new Product($row["id"], $row["name"], $row["description"], $row["image"], $row["price"], $row["quantity"], $row["onStock"], $row["weight"], $row["unitPrice"], $row["unitSize"], $row["flavour"], $row["colour"], $row["components"], $row["category"], $row["preFishes"], $row["discount"], $row["createdAt"], $row["deletedAt"]);
+                        break;
+                    }
+                default: {
+                        echo "Ismeretlen kategória!";
+                    }
+            }
+        }
+
+        return $products;
+    }
+
     public static function getAllProductsOnAdmin()
     {
 
