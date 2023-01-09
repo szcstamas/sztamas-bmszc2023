@@ -8,7 +8,7 @@ Database::connect();
 
 ?>
 
-<h1>Pellets</h1>
+<h1>shop</h1>
 
 
 <?php require_once("./components/footer.php") ?>

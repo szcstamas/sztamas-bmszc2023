@@ -512,3 +512,45 @@
     z-index: -2;
     opacity: .15;
 }
+
+@media screen and (max-width:560px) {
+
+    #fish-calendar .section-text-button {
+        padding: 2rem 0 !important;
+    }
+
+    section#fish-calendar {
+        padding: 0 !important;
+    }
+
+    section#fish-calendar .section-text-button {
+        padding: 2rem !important;
+    }
+
+    .fish-book .header-container {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .img-container {
+        width: 100%;
+    }
+
+    .img-subtext {
+        right: -150px;
+    }
+
+    .img-subtext::before {
+        top: 100%;
+        bottom: -25px;
+        left: 25px;
+    }
+
+    .img-container:hover~.img-subtext,
+    .img-link:hover~.img-subtext {
+
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(-300px) translateX(-150px) !important;
+    }
+}

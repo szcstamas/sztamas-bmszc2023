@@ -80,8 +80,8 @@ foreach ($files1 as $filename) {
             </div>
             <p class="section-paragraph-white">Mindig szeretettel fogadjuk az elégedett ügyfelek visszajelzéseit, kiváltképp akkor, ha szebbnél szebb fogásokkal tisztelnek meg minket. Büszke horgászaink az általunk gyártott és forgalmazott pelletcsomagokkal etettek, és ahogy azt a képek már elárulták: nem maradtak hal nélkül!</p>
             <div class="dffc">
-                <a href="" class="mainpage-social-link"><i class="bi bi-facebook"></i></a>
-                <a href="" class="mainpage-social-link"><i class="bi bi-instagram"></i></a>
+                <a href="https://www.facebook.com" class="mainpage-social-link"><i class="bi bi-facebook"></i></a>
+                <a href="https://www.instagram.com" class="mainpage-social-link"><i class="bi bi-instagram"></i></a>
                 <h4 class="whitecolor" style="font-family:'Bebas Neue', Arial, Helvetica, sans-serif;font-size:60px;letter-spacing:1px;">#BROBAITS</h4>
             </div>
         </div>
