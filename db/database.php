@@ -19,7 +19,7 @@ class Database
     {
 
         //az összes olyan termék kiválasztása amiből több van mint 0, és még nem törölték (nincsen valid dátum beállítva a deleted_at propertynél)
-        $sql = "SELECT * FROM `products` WHERE `quantity` > 0 AND `deletedAt` = '0000-00-00 00:00:00';";
+        $sql = "SELECT * FROM `products` WHERE `deletedAt` = '0000-00-00 00:00:00';";
 
         //csatlakozás az adatbázishoz, majd az sql parancs elküldése
         $result = self::$conn->prepare($sql);

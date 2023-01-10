@@ -1,0 +1,24 @@
+---
+MIN
+1. A shop.php oldalon fixelni a checkboxokat és megcsinálni a részletes keresést.
+2. Lehessen rendelni itemeket, a gombra rányomva rakja be az itemet a cart.php-ba
+3. Rendelés leadása funkció (cart.php, majd order.php és utána egy megköszönő html (form multipage?))
+4. Orders tábla létrehozása
+5. Rendelések megjelenítése 
+6. Item.php oldal (item aloldala)
+7. Felhasználói bejelentkezés (regisztrációval), majd felhasználói authentikáció
+    * pagination a shop oldalon
+    * partnereink aloldal
+8. Profil aloldala
+9. Rendelések aloldala (felhasználónak)
+10. Főoldalon videó a heronak, az aloldalakra pedig illusztrációk a heroknak
+11. Form authentikáció (email, stb)
+12. REST API és szerverkommunikáció
+13. Reszponzív check
+14. DB Dump
+15. DB Diagram
+16. Rövid doksi
+
+---
+POST READY
+- indexen

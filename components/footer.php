@@ -1,6 +1,6 @@
 <footer class="footer">
 
-    <div class="footer-row dfsb">
+    <div class="footer-row dfsb maxw">
         <div class="footer-row-image-container">
             <a href="" class="footer-row-link"><img src="/sztamas-bmszc2023/img/logovariations/brobaits_logo-dark.png" alt="brobaits-logo"></a>
         </div>

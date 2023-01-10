@@ -128,7 +128,7 @@ if (
                                     <span>{$discPrice} Ft</span>
                                     <span style='text-decoration:line-through;'>{$product->price} Ft</span>
                                 </div>
-                                <a href='product.php?id={$product->id}'><i style='color:#272727;' class='bi bi-caret-right-fill'></i></a>
+                                <a href='item.php?id={$product->id}'><i style='color:#272727;' class='bi bi-caret-right-fill'></i></a>
                             </div>
                             </div>
                             <a href='cart.php?id={$product->id}' class='shop-item-tocart dffc'>Kosárba <i class='bi bi-cart-fill'></i></a>
@@ -155,7 +155,7 @@ if (
                                 <span>{$product->price} Ft</span>
                                 <span>( {$product->unitPrice} Ft/kg )</span>
                             </div>
-                            <a href='product.php?id={$product->id}'><i style='color:#272727;' class='bi bi-caret-right-fill'></i></a>
+                            <a href='item.php?id={$product->id}'><i style='color:#272727;' class='bi bi-caret-right-fill'></i></a>
                         </div>
                         </div>
                         <a href='cart.php?id={$product->id}' class='shop-item-tocart dffc'>Kosárba <i class='bi bi-cart-fill'></i></a>

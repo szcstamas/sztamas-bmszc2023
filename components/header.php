@@ -29,7 +29,7 @@ error_reporting(E_ALL);
 <body>
     <header class="header">
 
-        <div class="header-row dfsb">
+        <div class="header-row dfsb maxw">
             <div class="header-row-image-container">
                 <a href="/sztamas-bmszc2023/" class="header-row-link"><img src="/sztamas-bmszc2023/img/logovariations/brobaits_logo-dark.png" alt="brobaits-logo"></a>
             </div>
