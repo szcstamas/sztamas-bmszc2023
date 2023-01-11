@@ -63,7 +63,18 @@ $sum = 0;
 
 foreach ($cart as $cartItem) {
 
-  $sum += $cartItem["product"]->price * $cartItem["count"];
+  $product = $cartItem["product"];
+  $count = $cartItem["count"];
+
+  if ($product->discount > 0) {
+    $discPrice = 100 - $product->discount;
+    $discPrice = $discPrice * 0.01;
+    $discPrice = $discPrice * $product->price;
+
+    $sum += $discPrice * $count;
+  } else {
+    $sum += $product->price * $count;
+  }
 }
 
 
@@ -99,31 +110,63 @@ foreach ($cart as $cartItem) {
               $product = $cartItem["product"];
               $count = $cartItem["count"];
 
-              echo "
-        <div class='cart-subpage-item-titlebox dffs'>
-          <div class='cart-subpage-item-titlebox-td dfcc'>
-          <p style='font-weight: bold;'>{$product->name}</p>
-          </div>
-          <div class='cart-subpage-item-titlebox-td dfcc'>
-          <p>{$product->weight} g</p>
-          </div>
-          <div class='cart-subpage-item-titlebox-td dfcc'>
-          <p>{$product->price} Ft</p>
-          </div>
-          <div class='cart-subpage-item-titlebox-td dfcc'>
-          <p>{$product->unitPrice} (Ft/kg)</p>
-          </div>
-          <div class='cart-subpage-item-titlebox-td dfcc'>
-            <div class='dffc'>
-              <a class='dffc' href='cart.php?remove={$product->id}' type='button'><span class='dffc'><i class='bi bi-dash-circle'></i></span></a>
-              <input type='text' readonly
-              value='{$count}'>
-              <a class='dffc' href='cart.php?id={$product->id}' type='button'><span class='dffc'><i class='bi bi-plus-circle'></i></span></a>
-              <a class='dffc' href='cart.php?delete={$product->id}' class='btn btn-outline-secondary ms-2' type='button'><i class='bi bi-x'></i></a>
-            </div>
-          </div>
-        </div>
-    ";
+              if ($product->discount > 0) {
+                $discPrice = 100 - $product->discount;
+                $discPrice = $discPrice * 0.01;
+                $discPrice = $discPrice * $product->price;
+
+                echo "
+                  <div class='cart-subpage-item-titlebox dffs'>
+                    <div class='cart-subpage-item-titlebox-td dfcc'>
+                    <p style='font-weight: bold;'>{$product->name}</p>
+                    </div>
+                    <div class='cart-subpage-item-titlebox-td dfcc'>
+                    <p>{$product->weight} g</p>
+                    </div>
+                    <div class='cart-subpage-item-titlebox-td dfcc'>
+                    <p>{$discPrice} Ft <span style='color:#65A850;'>(Akció!)</span></p>
+                    </div>
+                    <div class='cart-subpage-item-titlebox-td dfcc'>
+                    <p>{$product->unitPrice} (Ft/kg)</p>
+                    </div>
+                    <div class='cart-subpage-item-titlebox-td dfcc'>
+                      <div class='dffc'>
+                        <a class='dffc' href='cart.php?remove={$product->id}' type='button'><span class='dffc'><i class='bi bi-dash-circle'></i></span></a>
+                        <input type='text' readonly
+                        value='{$count}'>
+                        <a class='dffc' href='cart.php?id={$product->id}' type='button'><span class='dffc'><i class='bi bi-plus-circle'></i></span></a>
+                        <a class='dffc' href='cart.php?delete={$product->id}' class='btn btn-outline-secondary ms-2' type='button'><i class='bi bi-x'></i></a>
+                      </div>
+                    </div>
+                  </div>
+              ";
+              } else {
+                echo "
+                  <div class='cart-subpage-item-titlebox dffs'>
+                    <div class='cart-subpage-item-titlebox-td dfcc'>
+                    <p style='font-weight: bold;'>{$product->name}</p>
+                    </div>
+                    <div class='cart-subpage-item-titlebox-td dfcc'>
+                    <p>{$product->weight} g</p>
+                    </div>
+                    <div class='cart-subpage-item-titlebox-td dfcc'>
+                    <p>{$product->price} Ft</p>
+                    </div>
+                    <div class='cart-subpage-item-titlebox-td dfcc'>
+                    <p>{$product->unitPrice} (Ft/kg)</p>
+                    </div>
+                    <div class='cart-subpage-item-titlebox-td dfcc'>
+                      <div class='dffc'>
+                        <a class='dffc' href='cart.php?remove={$product->id}' type='button'><span class='dffc'><i class='bi bi-dash-circle'></i></span></a>
+                        <input type='text' readonly
+                        value='{$count}'>
+                        <a class='dffc' href='cart.php?id={$product->id}' type='button'><span class='dffc'><i class='bi bi-plus-circle'></i></span></a>
+                        <a class='dffc' href='cart.php?delete={$product->id}' class='btn btn-outline-secondary ms-2' type='button'><i class='bi bi-x'></i></a>
+                      </div>
+                    </div>
+                  </div>
+              ";
+              }
             }
             ?>
           </div>

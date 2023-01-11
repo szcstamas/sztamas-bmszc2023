@@ -43,7 +43,16 @@ $otherItems = Database::getAllProducts();
 
                 <div class="dfsb item-subpage-left-row">
                     <div class="dfcc">
-                        <h4 class="item-subpage-detail-title"><?= $product->price ?> Ft</h4>
+                        <?php if ($product->discount > 0) {
+
+                            $discPrice = 100 - $product->discount;
+                            $discPrice = $discPrice * 0.01;
+                            $discPrice = $discPrice * $product->price;
+                            echo "<h4 class='item-subpage-detail-title'>$discPrice Ft <span style='font-family:Bebas Neue, Arial, Helvetica, sans-serif;text-decoration:line-through;opacity:0.35;'>$product->price Ft</span></h4>";
+                        } else if ($product->discount === 0) {
+                            echo "<h4 class='item-subpage-detail-title'>$product->price Ft</h4>";
+                        }
+                        ?>
                         <p class="item-subpage-unitprice">Egységár: <?= $product->unitPrice ?> Ft/kg</p>
                     </div>
                     <div class="dffc">

@@ -4,6 +4,8 @@ class Order
 {
 
     public $id;
+    public $productName;
+    public $productQuantity;
     public $name;
     public $date;
     public $email;
@@ -17,9 +19,13 @@ class Order
     public $comment;
     public $completed;
     public $completedAt;
+    public $isUser;
+    public $username;
 
     public function __construct(
         $id,
+        $productName,
+        $productQuantity,
         $name,
         $date,
         $email,
@@ -32,10 +38,14 @@ class Order
         $billStreet,
         $comment,
         $completed,
-        $completedAt
+        $completedAt,
+        $isUser,
+        $username
     ) {
 
         $this->id = $id;
+        $this->productName = $productName;
+        $this->productQuantity = $productQuantity;
         $this->name = $name;
         $this->date = $date;
         $this->email = $email;
@@ -49,5 +59,7 @@ class Order
         $this->comment = $comment;
         $this->completed = $completed;
         $this->completedAt = $completedAt;
+        $this->isUser = $isUser;
+        $this->username = $username;
     }
 }

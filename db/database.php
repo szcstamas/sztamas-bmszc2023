@@ -210,6 +210,17 @@ class Database
         return $result;
     }
 
+    public static function createOrder($order)
+    {
+
+        $sql = "INSERT INTO `orders` (`productName`, `productQuantity`, `name`, `date`, `email`, `totalPrice`, `deliveryPostcode`, `deliveryCity`, `deliveryStreet`, `billPostcode`, `billCity`, `billStreet`, `comment`, `completed`, `completedAt`, `username`) VALUES ('{$order->productName}', '{$order->productQuantity}', '{$order->name}', current_timestamp(), '{$order->email}', '{$order->totalPrice}', '{$order->deliveryPostcode}', '{$order->deliveryCity}', '{$order->deliveryStreet}', '{$order->billPostcode}', '{$order->billCity}', '{$order->billStreet}', '{$order->comment}', 0, '0000-00-00', '{$order->username}');";
+
+        $result = self::$conn->prepare($sql);
+        $result->execute();
+
+        return $result;
+    }
+
     private static function boolToSQL($bool)
     {
         if ($bool == true) {

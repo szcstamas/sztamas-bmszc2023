@@ -2682,6 +2682,254 @@ hr {
     @include maxWidth();
 }
 
+.checkout-maxw {
+    max-width: 700px;
+    margin: auto;
+
+    .checkout-first {
+        line-height: 3rem;
+        margin-bottom: 2rem;
+    }
+
+    input[type=text],
+    input[type=email],
+    input[type=number] {
+        border: none;
+        outline: none;
+        background-color: #f2f2f2;
+        padding: 1rem;
+        width: 100%;
+        transition: all .1s ease;
+
+        &:focus {
+            padding-left: 2rem;
+            background-color: #ccc;
+        }
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input {
+        font-size: 1rem;
+    }
+
+    .checkout-form {
+        gap: 0;
+
+        .star {
+            color: #65A850;
+        }
+
+        .checkout-firstrow {
+            gap: 2rem;
+            border: 2px solid #65A850;
+            grid-gap: 2px;
+
+            .dfcc {
+                width: 100%;
+                padding: 2rem;
+                background: #fff;
+            }
+        }
+
+        .checkout-description-container {
+            width: 100%;
+            border: 2px solid #65A850;
+            border-top: none;
+            padding: 2rem;
+
+            textarea {
+                width: 100%;
+                font-size: 1rem;
+                height: 150px;
+                padding: 1rem;
+                border: none;
+                outline: none;
+                background-color: #f2f2f2;
+                resize: none;
+            }
+        }
+
+        .checkout-secondrow {
+            align-items: stretch !important;
+            border: 2px solid #65A850;
+            border-top: none;
+
+            h4 {
+                font-family: 'Bebas Neue', Arial, Helvetica, sans-serif;
+                font-size: 2rem;
+                letter-spacing: 1px;
+            }
+
+            .checkout-form-left,
+            .checkout-form-right {
+                width: 50%;
+                height: 100%;
+                align-items: flex-start !important;
+                padding: 2rem;
+                background: #fff;
+            }
+
+            .checkout-form-left {
+                border-right: 2px solid #65A850;
+                padding-right: 4.5%;
+
+                check-box {
+                    transform: scale(2);
+                }
+
+                input[type="checkbox"] {
+                    position: relative;
+                    appearance: none;
+                    width: 70px;
+                    height: 35px;
+                    background: #ccc;
+                    border-radius: 50px;
+                    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+                    cursor: pointer;
+                    transition: 0.4s;
+                }
+
+                input:checked[type="checkbox"] {
+                    background: #65A850;
+                }
+
+                input[type="checkbox"]::after {
+                    position: absolute;
+                    content: "";
+                    width: 35px;
+                    height: 35px;
+                    top: 0;
+                    left: 0;
+                    background: #fff;
+                    border-radius: 50%;
+                    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+                    transform: scale(1.1);
+                    transition: 0.4s;
+                }
+
+                input:checked[type="checkbox"]::after {
+                    left: 50%;
+                }
+            }
+
+            .checkout-form-right {
+                padding-left: 4.5%;
+            }
+
+            .checkout-form-right {
+                .checkout-billstreet {
+                    width: 100%;
+
+                    .dfcc {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+
+        .checkout-firstrow,
+        .checkout-secondrow {
+            .dffc {
+                .dfcc {
+                    width: 50%;
+                }
+            }
+        }
+
+        .checkout-thirdrow {
+            width: 100%;
+            border: 2px solid #65A850;
+            border-top: none;
+
+            .checkout-form-payment {
+                width: 50%;
+                padding: 2rem 1rem 1rem 1rem;
+
+                .dfcc {
+                    width: 100%;
+                }
+
+                input {
+                    width: 100%;
+                }
+
+                .dffc {
+                    padding-top: 1rem;
+
+                    check-box {
+                        transform: scale(2);
+                    }
+
+                    input[type="checkbox"] {
+                        position: relative;
+                        appearance: none;
+                        width: 70px;
+                        height: 35px;
+                        background: #ccc;
+                        border-radius: 50px;
+                        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+                        cursor: pointer;
+                        transition: 0.4s;
+                    }
+
+                    input:checked[type="checkbox"] {
+                        background: #65A850;
+                    }
+
+                    input[type="checkbox"]::after {
+                        position: absolute;
+                        content: "";
+                        width: 35px;
+                        height: 35px;
+                        top: 0;
+                        left: 0;
+                        background: #fff;
+                        border-radius: 50%;
+                        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+                        transform: scale(1.1);
+                        transition: 0.4s;
+                    }
+
+                    input:checked[type="checkbox"]::after {
+                        left: 50%;
+                    }
+
+
+                    label {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+
+        .checkout-paymentrow {
+            border: 2px solid #65A850;
+            border-top: 0;
+
+            p {
+                padding: 1rem;
+            }
+
+            * {
+                width: 50%;
+            }
+
+            button {
+                width: auto;
+
+                i {
+                    width: auto;
+                }
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 1440px) {
     .maxw {
         width: 100%;

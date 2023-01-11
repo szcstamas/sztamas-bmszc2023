@@ -3010,6 +3010,270 @@ hr {
   margin: auto;
 }
 
+.checkout-maxw {
+  max-width: 700px;
+  margin: auto;
+}
+
+.checkout-maxw .checkout-first {
+  line-height: 3rem;
+  margin-bottom: 2rem;
+}
+
+.checkout-maxw input[type=text],
+.checkout-maxw input[type=email],
+.checkout-maxw input[type=number] {
+  border: none;
+  outline: none;
+  background-color: #f2f2f2;
+  padding: 1rem;
+  width: 100%;
+  -webkit-transition: all .1s ease;
+  transition: all .1s ease;
+}
+
+.checkout-maxw input[type=text]:focus,
+.checkout-maxw input[type=email]:focus,
+.checkout-maxw input[type=number]:focus {
+  padding-left: 2rem;
+  background-color: #ccc;
+}
+
+.checkout-maxw input::-webkit-outer-spin-button,
+.checkout-maxw input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.checkout-maxw input {
+  font-size: 1rem;
+}
+
+.checkout-maxw .checkout-form {
+  gap: 0;
+}
+
+.checkout-maxw .checkout-form .star {
+  color: #65A850;
+}
+
+.checkout-maxw .checkout-form .checkout-firstrow {
+  gap: 2rem;
+  border: 2px solid #65A850;
+  grid-gap: 2px;
+}
+
+.checkout-maxw .checkout-form .checkout-firstrow .dfcc {
+  width: 100%;
+  padding: 2rem;
+  background: #fff;
+}
+
+.checkout-maxw .checkout-form .checkout-description-container {
+  width: 100%;
+  border: 2px solid #65A850;
+  border-top: none;
+  padding: 2rem;
+}
+
+.checkout-maxw .checkout-form .checkout-description-container textarea {
+  width: 100%;
+  font-size: 1rem;
+  height: 150px;
+  padding: 1rem;
+  border: none;
+  outline: none;
+  background-color: #f2f2f2;
+  resize: none;
+}
+
+.checkout-maxw .checkout-form .checkout-secondrow {
+  -webkit-box-align: stretch !important;
+      -ms-flex-align: stretch !important;
+          align-items: stretch !important;
+  border: 2px solid #65A850;
+  border-top: none;
+}
+
+.checkout-maxw .checkout-form .checkout-secondrow h4 {
+  font-family: 'Bebas Neue', Arial, Helvetica, sans-serif;
+  font-size: 2rem;
+  letter-spacing: 1px;
+}
+
+.checkout-maxw .checkout-form .checkout-secondrow .checkout-form-left,
+.checkout-maxw .checkout-form .checkout-secondrow .checkout-form-right {
+  width: 50%;
+  height: 100%;
+  -webkit-box-align: start !important;
+      -ms-flex-align: start !important;
+          align-items: flex-start !important;
+  padding: 2rem;
+  background: #fff;
+}
+
+.checkout-maxw .checkout-form .checkout-secondrow .checkout-form-left {
+  border-right: 2px solid #65A850;
+  padding-right: 4.5%;
+}
+
+.checkout-maxw .checkout-form .checkout-secondrow .checkout-form-left check-box {
+  -webkit-transform: scale(2);
+          transform: scale(2);
+}
+
+.checkout-maxw .checkout-form .checkout-secondrow .checkout-form-left input[type="checkbox"] {
+  position: relative;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  width: 70px;
+  height: 35px;
+  background: #ccc;
+  border-radius: 50px;
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+          box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.checkout-maxw .checkout-form .checkout-secondrow .checkout-form-left input:checked[type="checkbox"] {
+  background: #65A850;
+}
+
+.checkout-maxw .checkout-form .checkout-secondrow .checkout-form-left input[type="checkbox"]::after {
+  position: absolute;
+  content: "";
+  width: 35px;
+  height: 35px;
+  top: 0;
+  left: 0;
+  background: #fff;
+  border-radius: 50%;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.checkout-maxw .checkout-form .checkout-secondrow .checkout-form-left input:checked[type="checkbox"]::after {
+  left: 50%;
+}
+
+.checkout-maxw .checkout-form .checkout-secondrow .checkout-form-right {
+  padding-left: 4.5%;
+}
+
+.checkout-maxw .checkout-form .checkout-secondrow .checkout-form-right .checkout-billstreet {
+  width: 100%;
+}
+
+.checkout-maxw .checkout-form .checkout-secondrow .checkout-form-right .checkout-billstreet .dfcc {
+  width: 100%;
+}
+
+.checkout-maxw .checkout-form .checkout-firstrow .dffc .dfcc,
+.checkout-maxw .checkout-form .checkout-secondrow .dffc .dfcc {
+  width: 50%;
+}
+
+.checkout-maxw .checkout-form .checkout-thirdrow {
+  width: 100%;
+  border: 2px solid #65A850;
+  border-top: none;
+}
+
+.checkout-maxw .checkout-form .checkout-thirdrow .checkout-form-payment {
+  width: 50%;
+  padding: 2rem 1rem 1rem 1rem;
+}
+
+.checkout-maxw .checkout-form .checkout-thirdrow .checkout-form-payment .dfcc {
+  width: 100%;
+}
+
+.checkout-maxw .checkout-form .checkout-thirdrow .checkout-form-payment input {
+  width: 100%;
+}
+
+.checkout-maxw .checkout-form .checkout-thirdrow .checkout-form-payment .dffc {
+  padding-top: 1rem;
+}
+
+.checkout-maxw .checkout-form .checkout-thirdrow .checkout-form-payment .dffc check-box {
+  -webkit-transform: scale(2);
+          transform: scale(2);
+}
+
+.checkout-maxw .checkout-form .checkout-thirdrow .checkout-form-payment .dffc input[type="checkbox"] {
+  position: relative;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  width: 70px;
+  height: 35px;
+  background: #ccc;
+  border-radius: 50px;
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+          box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.checkout-maxw .checkout-form .checkout-thirdrow .checkout-form-payment .dffc input:checked[type="checkbox"] {
+  background: #65A850;
+}
+
+.checkout-maxw .checkout-form .checkout-thirdrow .checkout-form-payment .dffc input[type="checkbox"]::after {
+  position: absolute;
+  content: "";
+  width: 35px;
+  height: 35px;
+  top: 0;
+  left: 0;
+  background: #fff;
+  border-radius: 50%;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.checkout-maxw .checkout-form .checkout-thirdrow .checkout-form-payment .dffc input:checked[type="checkbox"]::after {
+  left: 50%;
+}
+
+.checkout-maxw .checkout-form .checkout-thirdrow .checkout-form-payment .dffc label {
+  width: 100%;
+}
+
+.checkout-maxw .checkout-form .checkout-paymentrow {
+  border: 2px solid #65A850;
+  border-top: 0;
+}
+
+.checkout-maxw .checkout-form .checkout-paymentrow p {
+  padding: 1rem;
+}
+
+.checkout-maxw .checkout-form .checkout-paymentrow * {
+  width: 50%;
+}
+
+.checkout-maxw .checkout-form .checkout-paymentrow button {
+  width: auto;
+}
+
+.checkout-maxw .checkout-form .checkout-paymentrow button i {
+  width: auto;
+}
+
 @media screen and (max-width: 1440px) {
   .maxw {
     width: 100%;
