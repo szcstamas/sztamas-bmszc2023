@@ -14,3 +14,5 @@ $_SESSION["user"] = [
     "username" => "admin",
     "password" => "12345",
 ];
+
+$deliveryPrice = 1650;

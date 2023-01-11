@@ -1,11 +1,9 @@
 <?php
-
 require_once('components/header.php');
 require_once("db/database.php");
 
 Database::connect();
 
-$count = 1;
 $product = "";
 
 if (isset($_GET["id"]) && $_GET["id"] != "") {
@@ -50,9 +48,9 @@ $otherItems = Database::getAllProducts();
                     </div>
                     <div class="dffc">
                         <div class="item-subpage-counter dffc">
-                            <a href='item.php?remove=<?= $product->id ?>' class='button-border' type='button'>-</a>
-                            <input type='text' readonly aria-label='Example text with two button addons' value='<?= $count ?>'>
-                            <a href='item.php?id=<?= $product->id ?>' class='button-border' type='button'>+</a>
+                            <button class='button-border decrease' style="appearance:none;border:none;box-shadow:none;" type='button'>-</button>
+                            <input class="input-count" type='text' readonly aria-label='Example text with two button addons' value="1">
+                            <button class='button-border increase' style="appearance:none;border:none;box-shadow:none;" type='button'>+</button>
                         </div>
                         <div class="item-subpage-cart">
                             <a href='cart.php?id=<?= $product->id ?>' class='button-green dffc'>Kosárba<i class="bi bi-cart-fill"></i></a>

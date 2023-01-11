@@ -8,7 +8,7 @@ Database::connect();
 
 ?>
 
-<section id="about-subpage-hero" class="section whitebg" style="padding-bottom:0rem;">
+<section id="about-subpage-hero" class="section whitebg" style="padding-bottom:3rem;">
     <div class="homepage-main maxw">
         <div class="homepage-main-hero section-text-button">
             <div class="homepage-main-title">
@@ -27,10 +27,11 @@ Database::connect();
     </div>
 </section>
 
-<hr class="about-hr" style="border:none;border-top:1px solid #ccc;margin-top:2rem;" class="section-paddinglow maxw">
+
 
 <section id="about-subpage-main" class="whitebg" style="padding-bottom:0rem;">
-    <div class="homepage-main maxw dfcc" style="gap:0rem;">
+
+    <div class="homepage-main maxw dfcc" style="gap:0rem;border-top:1px solid #ccc;">
         <div class="about-subpage-container dffc">
             <div class="about-subpage-container-box dfcc">
                 <img src="img/green-thumbsup.png" alt="">

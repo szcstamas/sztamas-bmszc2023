@@ -41,9 +41,9 @@ error_reporting(E_ALL);
                 <a href="/sztamas-bmszc2023/about.php" class="header-row-link">Rólunk</a>
             </div>
             <div class="header-row-social-container">
-                <a href="" class="header-row-link"><i class="bi bi-cart-fill"></i></a>
-                <a href="" class="header-row-link"><i class="bi bi-person-fill"></i></a>
-                <a href="" class="header-row-link"><i class="bi bi-search"></i></a>
+                <a href="cart.php" class="header-row-link"><i class="bi bi-cart-fill"></i></a>
+                <a href="user.php" class="header-row-link"><i class="bi bi-person-fill"></i></a>
+                <button class="header-row-link header-search"><i class="bi bi-search"></i></button>
             </div>
         </div>
 
