@@ -1,6 +1,7 @@
 <?php
 
 require_once("model/product.php");
+require_once("model/order.php");
 
 class Database
 {
@@ -216,6 +217,54 @@ class Database
         $sql = "INSERT INTO `orders` (`productName`, `productQuantity`, `name`, `date`, `email`, `totalPrice`, `deliveryPostcode`, `deliveryCity`, `deliveryStreet`, `billPostcode`, `billCity`, `billStreet`, `comment`, `completed`, `completedAt`, `username`) VALUES ('{$order->productName}', '{$order->productQuantity}', '{$order->name}', current_timestamp(), '{$order->email}', '{$order->totalPrice}', '{$order->deliveryPostcode}', '{$order->deliveryCity}', '{$order->deliveryStreet}', '{$order->billPostcode}', '{$order->billCity}', '{$order->billStreet}', '{$order->comment}', 0, '0000-00-00', '{$order->username}');";
 
         $result = self::$conn->prepare($sql);
+        $result->execute();
+
+        return $result;
+    }
+
+    public static function getAllOrders()
+    {
+
+        //az összes olyan termék kiválasztása amiből több van mint 0, és még nem törölték (nincsen valid dátum beállítva a deleted_at propertynél)
+        $sql = "SELECT * FROM `orders`";
+
+        //csatlakozás az adatbázishoz, majd az sql parancs elküldése
+        $result = self::$conn->prepare($sql);
+        //sql parancs végrehajtása
+        $result->execute();
+        //ebben a tömbben fognak eltárolódni a fetchelt termékek
+        $orders = [];
+        //kapott sql-adat fetchelése
+        $data = $result->fetchAll();
+
+        //adatok megjelenítése (a kapott tömbön keresztül loopol)
+        foreach ($data as $row) {
+
+            $orders[] = new Order($row["id"], $row["productName"], $row["productQuantity"], $row["name"], $row["date"], $row["email"], $row["totalPrice"], $row["deliveryPostcode"], $row["deliveryCity"], $row["deliveryStreet"], $row["billPostcode"], $row["billCity"], $row["billStreet"], $row["comment"], $row["completed"], $row["completedAt"], $row["isUser"], $row["username"],);
+        }
+
+        return $orders;
+    }
+
+    public static function deleteOrderById($id)
+    {
+        $sql = "DELETE FROM `orders` WHERE `orders`.`id` = $id;";
+
+        //csatlakozás az adatbázishoz, majd az sql parancs elküldése
+        $result = self::$conn->prepare($sql);
+        //sql parancs végrehajtása
+        $result->execute();
+
+        return $result;
+    }
+
+    public static function completeOrderById($id)
+    {
+        $sql = "UPDATE `orders` SET `completed` = '1', `completedAt` = CURRENT_TIMESTAMP WHERE `orders`.`id` = $id";
+
+        //csatlakozás az adatbázishoz, majd az sql parancs elküldése
+        $result = self::$conn->prepare($sql);
+        //sql parancs végrehajtása
         $result->execute();
 
         return $result;

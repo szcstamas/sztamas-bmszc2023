@@ -17,6 +17,7 @@ Database::connect();
 if (isset($_POST["signout"])) {
 
   //szedje ki az adataimat a munkamenetből
+  //munkamenet megszüntetése
   session_unset();
   session_destroy();
   $_SESSION = array();
@@ -50,6 +51,15 @@ if (isset($_GET["restockproduct"])) {
 }
 
 //if deleteorder is set in url, call deleteOrderById from db.php
+if (isset($_GET["completeorder"])) {
+  $completeOrderId = $_GET["completeorder"];
+  Database::completeOrderById($completeOrderId);
+  header("Location: admin.php");
+  ob_end_flush();
+  exit();
+}
+
+//if deleteorder is set in url, call deleteOrderById from db.php
 if (isset($_GET["deleteorder"])) {
   $deleteOrderId = $_GET["deleteorder"];
   Database::deleteOrderById($deleteOrderId);
@@ -60,6 +70,7 @@ if (isset($_GET["deleteorder"])) {
 
 //az összes item megjelenítése az adatbázisból
 $products = Database::getAllProductsOnAdmin();
+$orders = Database::getAllOrders();
 
 ?>
 
@@ -83,9 +94,93 @@ $products = Database::getAllProductsOnAdmin();
   <hr class="maxw">
 
   <div class='section-paddinglow maxw admin-section admin-login-error'>
-    <div class="dfc">
-      <h2>Rendelések</h2>
-    </div>
+    <h2>Rendelések</h2>
+    <table class="admin-products-list">
+      <?php foreach ($orders as $order) : ?>
+        <tr>
+          <th>ID</th>
+          <th>Termék neve</th>
+          <th>Darabszám</th>
+          <th>Megrendelő neve</th>
+          <th>Megrendelés dátuma</th>
+          <th>Megrendelő e-mail címe</th>
+          <th>Fizetett összeg</th>
+          <th>Szállítási cím (irányítószám)</th>
+          <th>Szállítási cím (város)</th>
+          <th class="admin-product-action">Rendelés interakciók</th>
+        </tr>
+        <tr>
+          <td>
+            <div class="dffc" style="background-color:#f2f2f2;width:40px;height:40px;border-radius:50%;margin:auto;"><b><?= $order->id ?></b></div>
+          </td>
+          <td><?= $order->productName ?></td>
+          <td><?= $order->productQuantity ?></td>
+          <td><?= $order->name ?></td>
+          <td><?= $order->date ?></td>
+          <td><?= $order->email ?></td>
+          <td><?= $order->totalPrice ?> Ft</td>
+          <td><?= $order->deliveryPostcode ?></td>
+          <td><?= $order->deliveryCity ?></td>
+          <td rowspan="3" style="text-align:right;">
+
+            <?php
+            if ($order->completed === 1) {
+              echo "
+              <div class='dfc'>
+              <a class='admin-btn' role='link' aria-disabled='true' style='opacity:0.5;cursor:default;' href='completeorder.php?id=$order->id'>
+                <i class='bi bi-check-lg'></i>
+              </a>
+              <a class='admin-btn' title='Rendelés törlése' href='?deleteorder=$order->id'>
+                <i class='bi bi-trash'></i>
+              </a>
+              </div>  
+          ";
+            } else if ($order->completed === 0) {
+              echo "
+              <div class='dfc'>
+              <a class='admin-btn' title='Rendelés teljesítése' href='?completeorder=$order->id'>
+                <i class='bi bi-check-lg'></i>
+              </a>
+              <a class='admin-btn' title='Rendelés törlése' href='?deleteorder=$order->id'>
+                <i class='bi bi-trash'></i>
+              </a>
+              </div>
+          ";
+            }
+            ?>
+          </td>
+        </tr>
+
+        <tr>
+          <th>Szállítási cím (utca/házszám)</th>
+          <th>Számlázási cím (irányítószám)</th>
+          <th>Számlázási cím (város)</th>
+          <th>Számlázási cím (utca/házszám)</th>
+          <th>Megjegyzés</th>
+          <th>Készen van?</th>
+          <th>Kézbesítés dátuma</th>
+          <th>Regisztrált ügyfél?</th>
+          <th>Felhasználónév</th>
+        </tr>
+
+        <tr>
+          <td><?= $order->deliveryStreet ?></td>
+          <td><?= $order->billPostcode ?></td>
+          <td><?= $order->billCity ?></td>
+          <td><?= $order->billStreet ?></td>
+          <td>
+            <div style="height:100px; overflow:scroll;"><?= $order->comment ?></div>
+          </td>
+          <td><?= $order->completed > 0 ? "<span class='dffs' style='color:#65A850;font-weight:bold;'>Igen <i class='bi bi-check-square' style='color:#65A850;'></i></span>" : "Nem" ?></td>
+          <td><?= $order->completedAt === '0000-00-00' ?  $order->completedAt : "<span class='dffs' style='color:#65A850;font-weight:bold;'>$order->completedAt</span>" ?></td>
+          <td><?= $order->isUser > 0 ? "Igen" : "Nem" ?></td>
+          <td><?= $order->username = "no-user" ? "-" : $order->username ?></td>
+        </tr>
+        <tr>
+          <td colspan="10" style="background-color:#f2f2f2;padding:1rem;border:1px solid #f2f2f2;border-bottom: 1px solid #65A850;"></td>
+        </tr>
+      <?php endforeach ?>
+    </table>
 
     <div class='section-paddinglow maxw admin-section admin-login-error'>
       <div class="dffs">
@@ -133,7 +228,7 @@ $products = Database::getAllProductsOnAdmin();
           <a class='admin-btn' role='link' aria-disabled='true' style='opacity:0.5;cursor:default;'>
             <i class='bi bi-trash'></i>
           </a>
-          <a class='admin-btn' title='Recover item' href='?recoverproduct=$product->id'>
+          <a class='admin-btn' title='Alapértelmezett árufeltöltés(50)' href='?recoverproduct=$product->id'>
             <i class='bi bi-arrow-clockwise'></i>
           </a>
           </div>
@@ -156,10 +251,10 @@ $products = Database::getAllProductsOnAdmin();
               } else {
                 echo "
                 <div class='dfc'>
-          <a class='admin-btn' title='Edit item' href='editproduct.php?id=$product->id'>
+          <a class='admin-btn' title='Termék szerkesztése' href='editproduct.php?id=$product->id'>
             <i class='bi bi-pencil'></i>
           </a>
-          <a class='admin-btn' title='Delete item' href='?deleteproduct=$product->id'>
+          <a class='admin-btn' title='Termék törlése' href='?deleteproduct=$product->id'>
             <i class='bi bi-trash'></i>
           </a>
           </div>
