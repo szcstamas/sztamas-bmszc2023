@@ -10,7 +10,7 @@ $secrets = [
 ];
 
 
-$_SESSION["user"] = [
+$_SESSION["admin"] = [
     "username" => "admin",
     "password" => "12345",
 ];

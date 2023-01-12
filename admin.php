@@ -20,7 +20,8 @@ if (isset($_POST["signout"])) {
   //munkamenet megszüntetése
   session_unset();
   session_destroy();
-  $_SESSION = array();
+  session_write_close();
+  setcookie(session_name(), '', 0, '/');
 }
 
 //if deleteproduct is set in url, call deleteProductById from db.php

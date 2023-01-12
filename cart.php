@@ -192,7 +192,11 @@ foreach ($cart as $cartItem) {
             </div>
             <div class="cart-subpage-checkout-td dfcc">
               <h4>Végösszeg</h4>
-              <p><?= $sum ?> Ft</p>
+              <p>
+                <?php
+                $_SESSION['totalprice'] = $sum;
+                ?>
+                <?= $_SESSION['totalprice'] ?> Ft</p>
             </div>
             <div class="cart-subpage-checkout-td">
               <?php if (empty($cart)) : ?>

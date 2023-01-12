@@ -19,17 +19,17 @@ if (
 
     if (isset($_POST["action"]) && $_POST["action"] === "bejelentkezés") {
         if (
-            isset($_SESSION["user"]) &&
-            $usern === $_SESSION["user"]["username"] &&
-            $password === $_SESSION["user"]["password"]
+            isset($_SESSION["admin"]) &&
+            $usern === $_SESSION["admin"]["username"] &&
+            $password === $_SESSION["admin"]["password"]
         ) {
-            $message = "Sikeres bejelentkezés! Üdv <b>{$_SESSION["user"]["username"]}</b>!";
-            $_SESSION["loginAdmin"] = $_SESSION["user"]["username"];
+            $message = "Sikeres bejelentkezés! Üdv <b>{$_SESSION["admin"]["username"]}</b>!";
+            $_SESSION["loginAdmin"] = $_SESSION["admin"]["username"];
             $colour = "#65A850";
         } else if (
-            isset($_SESSION["user"]) &&
-            $usern != $_SESSION["user"]["username"] &&
-            $password != $_SESSION["user"]["password"]
+            isset($_SESSION["admin"]) &&
+            $usern != $_SESSION["admin"]["username"] &&
+            $password != $_SESSION["admin"]["password"]
         ) {
             $message = "Helytelen felhasználónév vagy jelszó!";
             $colour = "red";
@@ -48,12 +48,12 @@ if (
     </p>
 
     <form method="POST" class="dfcc">
-        <label>Username</label>
+        <label>Admin felhasználónév:</label>
         <input name="username" type="text"></input>
-        <label>Password</label>
+        <label>Jelszó:</label>
         <input name="password" type="password"></input>
         <div class="dfc">
-            <input class="button-green" <?php if (!isset($_SESSION["user"])) {
+            <input class="button-green" <?php if (!isset($_SESSION["admin"])) {
                                             print("disabled");
                                         } ?> type="submit" name="action" value="bejelentkezés" />
             <?php if (!isset($_SESSION["loginAdmin"])) {

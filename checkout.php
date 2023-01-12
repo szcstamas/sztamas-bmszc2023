@@ -28,7 +28,9 @@ foreach ($cartIDs as $cartID => $count) {
         "count" => $count,
     ];
 }
+
 $sum = 0;
+
 foreach ($cart as $cartItem) {
 
     $product = $cartItem["product"];
@@ -42,12 +44,6 @@ foreach ($cart as $cartItem) {
         $sum += $discPrice * $count;
     } else {
         $sum += $product->price * $count;
-    }
-
-    if ($sum < 10000) {
-        $sum = $sum + $deliveryPrice;
-    } else {
-        $sum;
     }
 }
 
@@ -223,7 +219,7 @@ if (isset($_POST["checkout"])) {
                 </div>
             </div>
             <div class="dfsb checkout-paymentrow">
-                <p>Levonásra kerülő összeg: <span style="color:#65A850;font-weight:bold;"><?= $sum ?> Ft</span></p>
+                <p>Levonásra kerülő összeg: <span style="color:#65A850;font-weight:bold;"><?= $_SESSION["totalprice"] ?> Ft</span></p>
                 <button type="submit" name="checkout" class="button-green">fizetés és rendelés leadása<i class="bi bi-credit-card"></i></button>
             </div>
         </form>

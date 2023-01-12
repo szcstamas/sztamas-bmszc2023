@@ -887,6 +887,10 @@ hr {
   color: #272727;
 }
 
+.button-gray:hover {
+  background-color: #ccc;
+}
+
 .button-border {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -982,6 +986,10 @@ hr {
 
 .greencolor {
   color: #65A850;
+}
+
+.orangecolor {
+  color: #f59042;
 }
 
 .title-big-green-brobaits {
@@ -2149,6 +2157,90 @@ hr {
   padding: 1rem;
   border: 2px solid #ccc;
   border-right: none;
+}
+
+.profile-user-subpage-login-section .profile-user-subpage-title .profile-user-subpage-title-h2 {
+  font-family: 'Bebas Neue', Arial, Helvetica, sans-serif;
+  font-size: 3rem;
+  letter-spacing: 1px;
+  line-height: 34px;
+}
+
+.profile-user-subpage-login-section .profile-user-subpage-title .profile-user-subpage-title-h4 {
+  font-family: 'Bebas Neue', Arial, Helvetica, sans-serif;
+  font-size: 3rem;
+  letter-spacing: 1px;
+  color: #65A850;
+}
+
+.profile-user-subpage-login-section .profile-user-subpage-title .section-paragraph-gray {
+  padding: 2rem 0;
+}
+
+.profile-user-subpage-login-section .profile-login-form {
+  width: 400px;
+}
+
+.profile-user-subpage-login-section .profile-login-form .login-form-buttons {
+  width: 100%;
+  gap: 1rem;
+}
+
+.profile-user-subpage-login-section .profile-login-form .login-form-buttons input[type=submit] {
+  width: 50%;
+}
+
+.profile-user-subpage-login-section .profile-login-form input:not([type="submit"]) {
+  width: 400px;
+  background-color: #f2f2f2;
+  border: none;
+  outline: none;
+  padding: 1rem;
+  font-size: 1rem;
+}
+
+.profile-user-subpage-login-section .profile-login-form input:not([type="submit"]):focus {
+  padding: 1.25rem;
+  padding-left: 2rem;
+}
+
+#profile-subpage-user-section .title-secondline-h1 {
+  font-size: 140px;
+  line-height: 125px;
+}
+
+#profile-subpage-user-section span {
+  -webkit-transition: all .1s ease;
+  transition: all .1s ease;
+}
+
+#profile-subpage-user-section span .signout-user {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border: none;
+  outline: none;
+  text-transform: uppercase;
+  background: transparent;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  -webkit-transition: all .1s ease;
+  transition: all .1s ease;
+}
+
+#profile-subpage-user-section span .signout-user + i {
+  color: #272727;
+}
+
+#profile-subpage-user-section span:hover {
+  background-color: #272727;
+  color: #fff;
+}
+
+#profile-subpage-user-section span:hover .signout-user,
+#profile-subpage-user-section span:hover i {
+  color: #fff;
 }
 
 @media screen and (max-width: 1440px) {

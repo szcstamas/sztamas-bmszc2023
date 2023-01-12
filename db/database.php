@@ -270,6 +270,83 @@ class Database
         return $result;
     }
 
+    public static function registerUser($username, $password, $email)
+    {
+        $sql = "SELECT userName FROM users WHERE userName=:userName";
+
+        //csatlakozás az adatbázishoz, majd az sql parancs elküldése
+        $result = self::$conn->prepare($sql);
+
+        if (!$result) {
+            header("Location: profile.php?error=sqlerror");
+            exit();
+        } else {
+            $result->bindParam(':userName', $username);
+            $result->execute();
+            $resultCheck = $result->fetchColumn();
+
+            if ($resultCheck > 0) {
+                header("Location: profile.php?error=usertaken&mail=" . $email);
+                exit();
+            } else {
+                $sql = "INSERT INTO users (userName, userEmail, userPwd) VALUES (:userName, :userEmail, :userPwd)";
+                $result = self::$conn->prepare($sql);
+                if (!$result) {
+                    header("Location: profile.php?error=sqlerror");
+                    exit();
+                } else {
+                    $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
+
+                    $result->bindParam(':userName', $username);
+                    $result->bindParam(':userEmail', $email);
+                    $result->bindParam(':userPwd', $hashedPwd);
+                    $result->execute();
+                    header("Location: profile.php?signup=success");
+                    exit();
+                }
+            }
+        }
+    }
+
+    public static function loginUser($username, $password, $email)
+    {
+        $sql = "SELECT * FROM users WHERE userName=:userName AND userEmail=:userEmail;";
+
+        //csatlakozás az adatbázishoz, majd az sql parancs elküldése
+        $result = self::$conn->prepare($sql);
+
+        if (!$result) {
+            header("Location: profile.php?error=sqlerror");
+            exit();
+        } else {
+
+            $result->bindParam(':userName', $username);
+            $result->bindParam(':userEmail', $email);
+            $result->execute();
+
+            if ($result) {
+                $data = $result->fetchAll();
+
+                foreach ($data as $row) {
+                    $pwdCheck = password_verify($password, $row['userPwd']);
+                    if ($pwdCheck == false) {
+                        header("Location: profile.php?login=wrongpassword");
+                        exit();
+                    } else if ($pwdCheck == true) {
+                        $_SESSION['userId'] = $row['id'];
+                        $_SESSION['userName'] = $row['userName'];
+
+                        header("Location: profile.php?login=success");
+                        exit();
+                    }
+                }
+            } else {
+                header("Location: profile.php?error=nouser");
+                exit();
+            }
+        }
+    }
+
     private static function boolToSQL($bool)
     {
         if ($bool == true) {

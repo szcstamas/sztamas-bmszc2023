@@ -750,6 +750,10 @@ hr {
     i {
         color: #272727;
     }
+
+    &:hover {
+        background-color: #ccc;
+    }
 }
 
 .button-border {
@@ -828,6 +832,10 @@ hr {
 
 .greencolor {
     color: #65A850;
+}
+
+.orangecolor {
+    color: #f59042;
 }
 
 .title-big-green-brobaits {
@@ -1864,6 +1872,100 @@ hr {
         }
     }
 
+}
+
+.profile-user-subpage-login-section {
+    .profile-user-subpage-title {
+
+        .profile-user-subpage-title-h2 {
+            font-family: 'Bebas Neue', Arial, Helvetica, sans-serif;
+            font-size: 3rem;
+            letter-spacing: 1px;
+            line-height: 34px;
+        }
+
+        .profile-user-subpage-title-h4 {
+            font-family: 'Bebas Neue', Arial, Helvetica, sans-serif;
+            font-size: 3rem;
+            letter-spacing: 1px;
+            color: #65A850;
+        }
+
+        .section-paragraph-gray {
+            padding: 2rem 0;
+        }
+    }
+
+    .profile-login-form {
+
+        width: 400px;
+
+        .login-form-buttons {
+            width: 100%;
+            gap: 1rem;
+
+            input[type=submit] {
+                width: 50%;
+            }
+
+        }
+
+        input:not([type="submit"]) {
+            width: 400px;
+            background-color: #f2f2f2;
+            border: none;
+            outline: none;
+            padding: 1rem;
+            font-size: 1rem;
+
+            &:focus {
+                padding: 1.25rem;
+                padding-left: 2rem;
+            }
+
+        }
+    }
+}
+
+#profile-subpage-user-section {
+
+    .title-secondline-h1 {
+        font-size: 140px;
+        line-height: 125px;
+    }
+
+    span {
+
+        transition: all .1s ease;
+
+        .signout-user {
+            appearance: none;
+            border: none;
+            outline: none;
+            text-transform: uppercase;
+            background: transparent;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all .1s ease;
+
+            &+i {
+                color: #272727;
+            }
+
+
+        }
+
+        &:hover {
+            background-color: #272727;
+            color: #fff;
+
+            .signout-user,
+            i {
+                color: #fff;
+            }
+        }
+    }
 }
 
 @media screen and (max-width: 1440px) {
