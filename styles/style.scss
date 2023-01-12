@@ -1929,6 +1929,11 @@ hr {
 
 #profile-subpage-user-section {
 
+    .homepage-main {
+        gap: 1.5rem;
+        align-items: flex-start;
+    }
+
     .title-secondline-h1 {
         font-size: 140px;
         line-height: 125px;
@@ -1965,6 +1970,116 @@ hr {
                 color: #fff;
             }
         }
+    }
+
+    .profile-subpage-running-order {
+        width: 50%;
+
+        h2 {
+            padding-bottom: 2rem;
+        }
+
+        .profile-subpage-order-container {
+            background-color: #f2f2f2;
+
+            .user-orders-list {
+                font-family: Arial, Helvetica, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                border: 1px solid #ccc;
+                grid-gap: 1px;
+                background-color: #ccc;
+                position: relative;
+
+                .dfc {
+                    gap: 0;
+                    grid-gap: 1px;
+                    background-color: #ccc;
+                    align-items: stretch !important;
+
+                    .order-part-box {
+                        background-color: #fff;
+
+                        h4 {
+                            border-bottom: 1px solid #ccc;
+                        }
+
+                        * {
+                            padding: 1rem;
+                        }
+
+                        .user-order-id {
+                            width: 40px;
+                            height: 40px;
+                            background-color: #f2f2f2;
+                            color: #272727;
+                            font-weight: bold;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            border-radius: 50%;
+                            margin-top: 1rem;
+                            margin-left: 1rem;
+                        }
+                    }
+                }
+
+                .order-second-row {
+                    height: 0;
+                    overflow: hidden;
+                    transition: all .1s ease;
+                }
+
+                #secondrow-down-input {
+                    position: absolute;
+                    width: 40px;
+                    height: 40px;
+                    top: 75px;
+                    right: -25px;
+                    transform: translateY(-50%);
+                    opacity: 0;
+                    cursor: pointer;
+
+                    &:hover~#secondrow-down-icon {
+                        color: #457436;
+                    }
+                }
+
+                #secondrow-down-icon {
+                    font-size: 2rem;
+                    position: absolute;
+                    pointer-events: none;
+                    top: 75px;
+                    right: -30px;
+                    transform: translateY(-50%);
+                    background: #fff;
+                    color: #65A850;
+                    border: 1px solid #ccc;
+                    border-radius: 50%;
+                    width: 50px;
+                    height: 50px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    transition: all .1s ease;
+                }
+
+                #secondrow-down-input:checked~.order-second-row {
+                    height: 100%;
+                }
+
+                #secondrow-down-input:checked~#secondrow-down-icon {
+                    transform: translateY(-50%) rotate(180deg);
+                    width: 60px;
+                    height: 60px;
+                    right: -35px;
+                }
+
+            }
+        }
+
     }
 }
 

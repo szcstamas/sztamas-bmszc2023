@@ -1,11 +1,9 @@
 ---
 MIN
 1. A shop.php oldalon fixelni a checkboxokat és megcsinálni a részletes keresést.
-7. Felhasználói bejelentkezés (regisztrációval), majd felhasználói authentikáció
 8. Pagination a shop oldalon
 9. partnereink aloldal
-8. Profil aloldala
-9. Rendelések aloldala (felhasználónak)
+10. ha a user be van jelentkezve, akkor az ő felhasználója alá rakja a rendelést
 10. Főoldalon videó a heronak, az aloldalakra pedig illusztrációk a heroknak
 ---
 MUST

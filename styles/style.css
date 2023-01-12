@@ -2204,6 +2204,13 @@ hr {
   padding-left: 2rem;
 }
 
+#profile-subpage-user-section .homepage-main {
+  gap: 1.5rem;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
 #profile-subpage-user-section .title-secondline-h1 {
   font-size: 140px;
   line-height: 125px;
@@ -2241,6 +2248,138 @@ hr {
 #profile-subpage-user-section span:hover .signout-user,
 #profile-subpage-user-section span:hover i {
   color: #fff;
+}
+
+#profile-subpage-user-section .profile-subpage-running-order {
+  width: 50%;
+}
+
+#profile-subpage-user-section .profile-subpage-running-order h2 {
+  padding-bottom: 2rem;
+}
+
+#profile-subpage-user-section .profile-subpage-running-order .profile-subpage-order-container {
+  background-color: #f2f2f2;
+}
+
+#profile-subpage-user-section .profile-subpage-running-order .profile-subpage-order-container .user-orders-list {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  border: 1px solid #ccc;
+  grid-gap: 1px;
+  background-color: #ccc;
+  position: relative;
+}
+
+#profile-subpage-user-section .profile-subpage-running-order .profile-subpage-order-container .user-orders-list .dfc {
+  gap: 0;
+  grid-gap: 1px;
+  background-color: #ccc;
+  -webkit-box-align: stretch !important;
+      -ms-flex-align: stretch !important;
+          align-items: stretch !important;
+}
+
+#profile-subpage-user-section .profile-subpage-running-order .profile-subpage-order-container .user-orders-list .dfc .order-part-box {
+  background-color: #fff;
+}
+
+#profile-subpage-user-section .profile-subpage-running-order .profile-subpage-order-container .user-orders-list .dfc .order-part-box h4 {
+  border-bottom: 1px solid #ccc;
+}
+
+#profile-subpage-user-section .profile-subpage-running-order .profile-subpage-order-container .user-orders-list .dfc .order-part-box * {
+  padding: 1rem;
+}
+
+#profile-subpage-user-section .profile-subpage-running-order .profile-subpage-order-container .user-orders-list .dfc .order-part-box .user-order-id {
+  width: 40px;
+  height: 40px;
+  background-color: #f2f2f2;
+  color: #272727;
+  font-weight: bold;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 50%;
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+#profile-subpage-user-section .profile-subpage-running-order .profile-subpage-order-container .user-orders-list .order-second-row {
+  height: 0;
+  overflow: hidden;
+  -webkit-transition: all .1s ease;
+  transition: all .1s ease;
+}
+
+#profile-subpage-user-section .profile-subpage-running-order .profile-subpage-order-container .user-orders-list #secondrow-down-input {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  top: 75px;
+  right: -25px;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  opacity: 0;
+  cursor: pointer;
+}
+
+#profile-subpage-user-section .profile-subpage-running-order .profile-subpage-order-container .user-orders-list #secondrow-down-input:hover ~ #secondrow-down-icon {
+  color: #457436;
+}
+
+#profile-subpage-user-section .profile-subpage-running-order .profile-subpage-order-container .user-orders-list #secondrow-down-icon {
+  font-size: 2rem;
+  position: absolute;
+  pointer-events: none;
+  top: 75px;
+  right: -30px;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  background: #fff;
+  color: #65A850;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-transition: all .1s ease;
+  transition: all .1s ease;
+}
+
+#profile-subpage-user-section .profile-subpage-running-order .profile-subpage-order-container .user-orders-list #secondrow-down-input:checked ~ .order-second-row {
+  height: 100%;
+}
+
+#profile-subpage-user-section .profile-subpage-running-order .profile-subpage-order-container .user-orders-list #secondrow-down-input:checked ~ #secondrow-down-icon {
+  -webkit-transform: translateY(-50%) rotate(180deg);
+          transform: translateY(-50%) rotate(180deg);
+  width: 60px;
+  height: 60px;
+  right: -35px;
 }
 
 @media screen and (max-width: 1440px) {

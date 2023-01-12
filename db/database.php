@@ -347,6 +347,29 @@ class Database
         }
     }
 
+    public static function getOrdersByUser($username)
+    {
+
+        $sql = "SELECT * FROM `orders` WHERE `username` = :username";
+
+        //csatlakozás az adatbázishoz, majd az sql parancs elküldése
+        $result = self::$conn->prepare($sql);
+        $result->bindParam(':username', $username);
+        //sql parancs végrehajtása
+        $result->execute();
+        $rows = $result->fetchAll();
+
+        //egy üres tömb, amit feltöltünk a user megrendeléseivel
+        $orders = [];
+
+        //keresztül loopolás
+        foreach ($rows as $row) {
+            $orders[] = new Order($row["id"], $row["productName"], $row["productQuantity"], $row["name"], $row["date"], $row["email"], $row["totalPrice"], $row["deliveryPostcode"], $row["deliveryCity"], $row["deliveryStreet"], $row["billPostcode"], $row["billCity"], $row["billStreet"], $row["comment"], $row["completed"], $row["completedAt"], $row["isUser"], $row["username"],);
+        }
+
+        return $orders;
+    }
+
     private static function boolToSQL($bool)
     {
         if ($bool == true) {

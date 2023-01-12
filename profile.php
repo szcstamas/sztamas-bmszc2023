@@ -8,6 +8,8 @@ Database::connect();
 
 if (isset($_SESSION["userId"])) {
     $user = $_SESSION["userId"];
+    $userName = $_SESSION["userName"];
+    $orders = Database::getOrdersByUser($userName);
 }
 if (isset($_POST["signout-user"])) {
 
@@ -149,7 +151,7 @@ if (isset($_POST["action"]) && $_POST["action"] === "regisztráció") {
 <?php else : ?>
 
     <section id="profile-subpage-user-section" class="section whitebg">
-        <div class="homepage-main maxw">
+        <div class="homepage-main maxw dfsb">
             <div class="homepage-main-hero section-text-button">
                 <div class="homepage-main-title">
                     <h4 class="title-firstline">Üdvözlünk a profilodban,</h4>
@@ -162,8 +164,90 @@ if (isset($_POST["action"]) && $_POST["action"] === "regisztráció") {
                     </span>
                 </form>
             </div>
-            <div class="top-product-list">
+            <div class="profile-subpage-running-order">
+                <h2>Rendeléseid:</h2>
+                <div class="profile-subpage-order-container dfcc">
+                    <?php if ($orders) : ?>
 
+                        <?php
+
+
+                        foreach ($orders as $order) {
+
+                            $status = $order->completed;
+
+                            if ($status === 1) {
+                                $status = 'Teljesítve';
+                            } else if ($status === 0) {
+                                $status = 'Kiszállítás alatt';
+                            }
+                            echo
+                            "
+                            <div class='user-orders-list'>
+                            <div class='dfc'>
+                                <div class='order-part-box'>
+                                    <h4>Megrendelés sorszáma</h4>
+                                    <p class='user-order-id'>$order->id</p>
+                                </div>
+                                <div class='order-part-box'>
+                                    <h4>Termék neve</h4>
+                                    <p>$order->productName</p>
+                                </div>
+                                <div class='order-part-box'>
+                                    <h4>Rendelt darabszám</h4>
+                                    <p>$order->productQuantity</p>
+                                </div>
+                                <div class='order-part-box'>
+                                    <h4>Fizetett összeg</h4>
+                                    <p>$order->totalPrice Ft</p>
+                                </div>
+                                <div class='order-part-box'>
+                                    <h4>Rendelés dátuma</h4>
+                                    <p>$order->date</p>
+                                </div>
+                            </div>
+
+                            <input id='secondrow-down-input' type='checkbox'>
+                            <i id='secondrow-down-icon' class='bi bi-arrow-down-circle-fill'></i>
+
+                            <div class='order-second-row dfc'>
+                                <div class='order-part-box'>
+                                    <h4>Megrendelő neve</h4>
+                                    <p>$order->name</p>
+                                </div>
+                                <div class='order-part-box'>
+                                    <h4>Szállítási cím</h4>
+                                    <p>$order->deliveryPostcode, $order->deliveryCity, $order->deliveryStreet</p>
+                                </div>
+                                <div class='order-part-box'>
+                                    <h4>Számlázási cím</h4>
+                                    <p>$order->billPostcode, $order->billCity, $order->billStreet</p>
+                                </div>
+                                <div class='order-part-box'>
+                                    <h4>Megjegyzés (ha volt)</h4>
+                                    <p>$order->comment</p>
+                                </div>
+                                <div class='order-part-box'>
+                                    <h4>Státusz</h4>
+                                    <p>$status</p>
+                                </div>
+                            </div>
+                            </div>
+                            
+                            ";
+                        }
+
+
+                        ?>
+                </div>
+
+            <?php else : ?>
+
+                <div class="cart-noitem dfsb">
+                    <h4>Nincs jelenleg aktív rendelésed! Nézz körül webshopunkban!</h4>
+                    <a href="shop.php" class="button-green">termékek<i class="bi bi-bag-heart"></i></a>
+                </div>
+            <?php endif ?>
             </div>
         </div>
     </section>

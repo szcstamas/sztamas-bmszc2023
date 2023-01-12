@@ -175,7 +175,7 @@ $orders = Database::getAllOrders();
           <td><?= $order->completed > 0 ? "<span class='dffs' style='color:#65A850;font-weight:bold;'>Igen <i class='bi bi-check-square' style='color:#65A850;'></i></span>" : "Nem" ?></td>
           <td><?= $order->completedAt === '0000-00-00' ?  $order->completedAt : "<span class='dffs' style='color:#65A850;font-weight:bold;'>$order->completedAt</span>" ?></td>
           <td><?= $order->isUser > 0 ? "Igen" : "Nem" ?></td>
-          <td><?= $order->username = "no-user" ? "-" : $order->username ?></td>
+          <td><?= $order->username === "no-user" ? "-" : $order->username ?></td>
         </tr>
         <tr>
           <td colspan="10" style="background-color:#f2f2f2;padding:1rem;border:1px solid #f2f2f2;border-bottom: 1px solid #65A850;"></td>
