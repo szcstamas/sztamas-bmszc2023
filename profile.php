@@ -1,5 +1,4 @@
 <?php ob_start(); ?>
-<?php session_start(); ?>
 <?php require_once('components/header.php');
 
 require_once("db/database.php");
@@ -18,6 +17,7 @@ if (isset($_POST["signout-user"])) {
     session_unset();
     session_destroy();
     $_SESSION = array();
+    header("Location: profile.php");
 }
 
 if (isset($_POST["action"]) && $_POST["action"] === "regisztráció") {

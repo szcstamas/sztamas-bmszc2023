@@ -1,5 +1,4 @@
 <?php ob_start(); ?>
-<?php session_start(); ?>
 <?php
 
 require_once("components/header.php");
@@ -115,6 +114,7 @@ foreach ($cart as $cartItem) {
                 $discPrice = $discPrice * 0.01;
                 $discPrice = $discPrice * $product->price;
                 $discPrice = round($discPrice);
+                $discPrice = ceil($discPrice / 10) * 10;
 
                 echo "
                   <div class='cart-subpage-item-titlebox dffs'>
@@ -195,6 +195,7 @@ foreach ($cart as $cartItem) {
               <h4>Végösszeg</h4>
               <p>
                 <?php
+                $sum = ceil($sum / 10) * 10;
                 $_SESSION['totalprice'] = round($sum);
                 ?>
                 <?= $_SESSION['totalprice'] ?> Ft</p>

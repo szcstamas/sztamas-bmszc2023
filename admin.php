@@ -1,5 +1,4 @@
 <?php ob_start(); ?>
-<?php session_start(); ?>
 <?php require_once("components/header.php") ?>
 
 <?php

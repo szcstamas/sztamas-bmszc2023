@@ -14,7 +14,7 @@ if (isset($_GET["id"]) && $_GET["id"] != "") {
     //a terméknév kettéosztása (hogy megfelelően megjelenhessen a kódban)
     $text = $product->name;
     //felkerekíti a névben található szavak számát
-    $half = (int)ceil(count($words = str_word_count($text, 1, 'àáãç3ÁRVÍZTŰRŐTÜKÖRFÚRÓGÉPárvíztűrőtükörfúrógép')) / 2);
+    $half = (int)ceil(count($words = str_word_count($text, 1, 'àáãç3ÁRVÍZTŰRŐTÜKÖRFÚRÓGÉPárvíztűrőtükörfúrógép123456789')) / 2);
     //az elnevezés első szelete (a kapott érték kettéosztása az array_slice functionnel)
     $halfOfNameFirst = implode(' ', array_slice($words, 0, $half));
     //az elnevezés második szelete
@@ -32,7 +32,7 @@ $otherItems = Database::getAllProducts();
             <div class="homepage-main-hero section-text-button item-left-row-overflow">
                 <div class="dfsb item-subpage-firstrow">
                     <a href="shop.php" class="dffc" style="gap:.5rem;"><i class="bi bi-caret-left-fill"></i>TERMÉKEK</a>
-                    <span style="color:#65A850;">-------------------------</span>
+                    <span style="color:#65A850;border:1px solid #f2f2f2;width: 80%;margin-left:5%;"></span>
                     <span class="item-subpage-info"><i class="bi bi-info-circle"></i> A többi információ megtekintéséhez görgess!</span>
                 </div>
                 <div class="homepage-main-title">
@@ -49,6 +49,7 @@ $otherItems = Database::getAllProducts();
                             $discPrice = $discPrice * 0.01;
                             $discPrice = $discPrice * $product->price;
                             $discPrice = round($discPrice);
+                            $discPrice = ceil($discPrice / 10) * 10;
 
                             echo "<h4 class='item-subpage-detail-title'>$discPrice Ft <span style='font-family:Bebas Neue, Arial, Helvetica, sans-serif;text-decoration:line-through;opacity:0.35;'>$product->price Ft</span></h4>";
                         } else if ($product->discount === 0) {
@@ -174,6 +175,7 @@ $otherItems = Database::getAllProducts();
                                 $discPrice = $discPrice * 0.01;
                                 $discPrice = $discPrice * $product->price;
                                 $discPrice = round($discPrice);
+                                $discPrice = ceil($discPrice / 10) * 10;
 
                                 echo
                                 "

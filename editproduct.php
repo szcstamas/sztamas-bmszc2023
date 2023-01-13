@@ -1,5 +1,4 @@
 <?php ob_start(); ?>
-<?php session_start(); ?>
 <?php require_once("components/header.php") ?>
 
 <?php
@@ -68,6 +67,7 @@ if (
 
     foreach ($files1 as $filename) {
       $name = strtolower(str_replace(" ", "_", $_POST["name"]));
+      $name = strtok($name, '_');
       $pos = strpos($filename, $name);
 
       if ($pos !== false) {

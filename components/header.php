@@ -1,11 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <?php
+session_start();
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
+$searchValueInHeader = "";
+if (isset($_GET["search"])) {
+
+    $searchValueInHeader = $_GET["search"];
+}
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -31,19 +39,30 @@ error_reporting(E_ALL);
 
         <div class="header-row dfsb maxw">
             <div class="header-row-image-container">
-                <a href="/sztamas-bmszc2023/" class="header-row-link"><img src="/sztamas-bmszc2023/img/logovariations/brobaits_logo-dark.png" alt="brobaits-logo"></a>
+                <a href="index.php" class="header-row-link"><img src="img/logovariations/brobaits_logo-dark.png" alt="brobaits-logo"></a>
             </div>
             <div class="header-row-link-container">
-                <a href="/sztamas-bmszc2023/" class="header-row-link">Főoldal</a>
-                <a href="/sztamas-bmszc2023/shop.php" class="header-row-link">Pelleteink</a>
-                <a href="/sztamas-bmszc2023/partners.php" class="header-row-link">Partnereink</a>
-                <a href="/sztamas-bmszc2023/contact.php" class="header-row-link">Kapcsolat</a>
-                <a href="/sztamas-bmszc2023/about.php" class="header-row-link">Rólunk</a>
+                <a href="index.php" class="header-row-link">Főoldal</a>
+                <a href="shop.php" class="header-row-link">Webshop</a>
+                <a href="partners.php" class="header-row-link">Partnereink</a>
+                <a href="contact.php" class="header-row-link">Kapcsolat</a>
+                <a href="about.php" class="header-row-link">Rólunk</a>
             </div>
             <div class="header-row-social-container">
                 <a href="cart.php" class="header-row-link"><i class="bi bi-cart-fill"></i></a>
-                <a href="profile.php" class="header-row-link"><i class="bi bi-person-fill"></i></a>
-                <button class="header-row-link header-search"><i class="bi bi-search"></i></button>
+                <?php if (isset($_SESSION["userName"])) : ?>
+                    <a href="profile.php" class="header-row-link user-profile-active">
+                        <i class="bi bi-person-fill"></i></a>
+                <?php else : ?>
+                    <a href="profile.php" class="header-row-link"><i class="bi bi-person-fill"></i></a>
+                <?php endif ?>
+                <input type="checkbox" class="header-row-link header-search">
+                <i class="bi bi-search"></i>
+                <form action="shop.php?search=<?= $searchValueInHeader ?>" method="GET" class="header-search-bar dffc">
+                    <input type="text" name="search" placeholder="Ide írd be amit keresel...">
+                    <input type="submit" class="button-green" value="mehet">
+                    <span></span>
+                </form>
             </div>
         </div>
 

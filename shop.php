@@ -8,28 +8,7 @@ require_once("db/database.php");
 
 //adatbázis kapcsolódás
 Database::connect();
-//az összes item megjelenítése az adatbázisból
-$numOfRows = Database::countProductsRows();
-
-//pagination: a numOfItems változóban elmentett értéknek megfelelő mennyiségű termék fog kilistázódni az oldalon
-$numOfItems = 4;
-//az összes "termék-oldal" értéknek kiszámítása felfelé kerekítéssel
-$totalPages = ceil(($numOfRows / $numOfItems));
-//ha a page változó megtalálható az url-ben, akkor a $page változó vegye fel az értékét
-if (isset($_GET["page"])) {
-
-    $page = $_GET["page"];
-    $previousPage = $page - 1;
-    $nextPage = $page + 1;
-} else {
-
-    //egyébként meg ha nincsen page= az url-ben, akkor mindig legyen 1 a $page értéke (ez jelenti a kezdőoldalt)
-    $page = 1;
-    $nextPage = $page + 1;
-}
-//Az SQL szintaxis két számot vár a db.php-ban meghatározott LIMIT után: az első szám azt határozza meg, hogy hanyadik indexű terméktől kezdje el a számolást, a második pedig azt, hogy hány termékig "menjen el" az adott indexű termék után. Például a kezdőoldalnál: 1-1*4, ez azt jelenti hogy a 0-ik indexű itemnél kezdje el a számolást, második oldalnál 2-1*4, tehát a 4-ik indexű terméknél kezdje el a termékek megjelenítését. A $numOfItems mivel állandó változó, emiatt a lekérdezésben mindig 4 darab elemet kell megjelenítenie az oldalnak.
-$startFrom = ($page - 1) * $numOfItems;
-$products = Database::getAllProductsWithLimit($startFrom, $numOfItems);
+$totalPages = "";
 
 //a keresésben használt változók felvétele
 $searchName = "";
@@ -47,17 +26,26 @@ if (
         isset($_GET["search"]) &&
         !empty($_GET["search"])
     ) {
-        $searchName = $_GET["search"];
-        $sortBy = $_GET["sortItems"];
-        $products = Database::searchInShop($searchName, $sortBy, $discountItem, $rangeItemPrice, $onStock);
+        if (
+            isset($_GET["sortItems"]) &&
+            !empty($_GET["sortItems"])
+        ) {
+            $searchName = $_GET["search"];
+            $sortBy = $_GET["sortItems"];
+            $products = Database::searchInShop($searchName, $sortBy, $discountItem, $rangeItemPrice, $onStock);
+        }
 
         if (
             isset($_GET["discountItem"]) &&
             !empty($_GET["discountItem"])
         ) {
+            $searchName = $_GET["search"];
             $discountItem = $_GET["discountItem"];
             $products = Database::searchInShop($searchName, $sortBy, $discountItem, $rangeItemPrice, $onStock);
         }
+
+        $searchName = $_GET["search"];
+        $products = Database::searchInShop($searchName, $sortBy, $discountItem, $rangeItemPrice, $onStock);
     } else if (isset($_GET["sortItems"]) && !empty($_GET["sortItems"])) {
         $sortBy = $_GET["sortItems"];
         $products = Database::searchInShop($searchName, $sortBy, $discountItem, $rangeItemPrice, $onStock);
@@ -115,6 +103,35 @@ if (
         $onStock = $_GET["onStock"];
         $products = Database::searchInShop($searchName, $sortBy, $discountItem, $rangeItemPrice, $onStock);
     }
+} else {
+
+    //az összes item megjelenítése az adatbázisból
+    $numOfRows = Database::countProductsRows();
+
+    //pagination: a numOfItems változóban elmentett értéknek megfelelő mennyiségű termék fog kilistázódni az oldalon
+    $numOfItems = 8;
+    //az összes "termék-oldal" értéknek kiszámítása felfelé kerekítéssel
+    $totalPages = ceil(($numOfRows / $numOfItems));
+    //ha a page változó megtalálható az url-ben, akkor a $page változó vegye fel az értékét
+    if (isset($_GET["page"])) {
+
+        $page = $_GET["page"];
+        $previousPage = $page - 1;
+        $nextPage = $page + 1;
+    } else {
+
+        //egyébként meg ha nincsen page= az url-ben, akkor mindig legyen 1 a $page értéke (ez jelenti a kezdőoldalt)
+        $page = 1;
+        $nextPage = $page + 1;
+    }
+    //Az SQL szintaxis két számot vár a db.php-ban meghatározott LIMIT után: az első szám azt határozza meg, hogy hanyadik indexű terméktől kezdje el a számolást, a második pedig azt, hogy hány termékig "menjen el" az adott indexű termék után. Például a kezdőoldalnál: 1-1*4, ez azt jelenti hogy a 0-ik indexű itemnél kezdje el a számolást, második oldalnál 2-1*4, tehát a 4-ik indexű terméknél kezdje el a termékek megjelenítését. A $numOfItems mivel állandó változó, emiatt a lekérdezésben mindig 4 darab elemet kell megjelenítenie az oldalnak.
+    $startFrom = ($page - 1) * $numOfItems;
+    $products = Database::getAllProductsWithLimit($startFrom, $numOfItems);
+}
+
+if (isset($_GET["search"])) {
+    $searchName = $_GET["search"];
+    $products = Database::searchInShop($searchName, $sortBy, $discountItem, $rangeItemPrice, $onStock);
 }
 
 ?>
@@ -192,7 +209,7 @@ if (
                 </label>
             </form>
         </div>
-        <div class="shop-subpage-product-list">
+        <div class="shop-subpage-product-list dfcc">
             <div class="shop-subpage-product-grid">
                 <?php
 
@@ -218,82 +235,89 @@ if (
                             $discPrice = $discPrice * 0.01;
                             $discPrice = $discPrice * $product->price;
                             $discPrice = round($discPrice);
+                            $discPrice = ceil($discPrice / 10) * 10;
 
                             echo
                             "
-                        <div class='shop-grid-item dfcc'>
-                            <div class='shop-item-discount dffc'>-{$product->discount}%</div>
-                        <div class='shop-image-container dffc'>
-                            <img src='img/products/{$product->image}' alt='{$product->image}'>
-                            <div class='shop-image-background'></div>
-                        </div>
-                        <div class='shop-item-body'>
-                            <div class='dfcc'>
-                            <div class='dfsb shop-item-title'>
-                                <h4>{$product->name}</h4>
-                                <p>{$product->weight} g</p>   
+                            <div class='shop-grid-item dfcc'>
+                                <div class='shop-item-discount dffc'>-{$product->discount}%</div>
+                            <div class='shop-image-container dffc'>
+                                <img src='img/products/{$product->image}' alt='{$product->image}'>
+                                <div class='shop-image-background'></div>
                             </div>
-                            <div class='dfsb'>
-                                <div class='dffc shop-item-price'>
-                                    <span>{$discPrice} Ft</span>
-                                    <span style='text-decoration:line-through;'>{$product->price} Ft</span>
+                            <div class='shop-item-body'>
+                                <div class='dfcc'>
+                                <div class='dfsb shop-item-title'>
+                                    <a class='shop-link-title' style='display:inline-block;background-color:transparent;height:100%;width:100%;' href='item.php?id={$product->id}'><h4>{$product->name}</h4></a>
+                                    <p>{$product->weight} g</p>   
                                 </div>
-                                <a href='item.php?id={$product->id}'><i style='color:#272727;' class='bi bi-caret-right-fill'></i></a>
+                                <div class='dfsb'>
+                                    <div class='dffc shop-item-price'>
+                                        <span>{$discPrice} Ft</span>
+                                        <span style='text-decoration:line-through;'>{$product->price} Ft</span>
+                                    </div>
+                                    <a href='item.php?id={$product->id}'><i style='color:#272727;' class='bi bi-caret-right-fill'></i></a>
+                                </div>
+                                </div>
+                                <a href='cart.php?id={$product->id}' class='shop-item-tocart dffc'>Kosárba <i class='bi bi-cart-fill'></i></a>
                             </div>
                             </div>
-                            <a href='cart.php?id={$product->id}' class='shop-item-tocart dffc'>Kosárba <i class='bi bi-cart-fill'></i></a>
-                        </div>
-                        </div>
-                        ";
+                            ";
                         }
                         //ha a termék éppen nincsen leakciózva
                         else {
 
                             echo
                             "
-                    <div class='shop-grid-item dfcc'>
-                    <div class='shop-image-container dffc'>
-                        <img src='img/products/{$product->image}' alt='{$product->image}'>
-                        <div class='shop-image-background'></div>
-                    </div>
-                    <div class='shop-item-body'>
-                        <div class='dfcc'>
-                        <div class='dfsb shop-item-title'>
-                            <h4>{$product->name}</h4>
-                            <p>{$product->weight} g</p>   
-                        </div>
-                        <div class='dfsb'>
-                            <div class='dffc shop-item-price'>
-                                <span>{$product->price} Ft</span>
-                                <span>( {$product->unitPrice} Ft/kg )</span>
+                            <div class='shop-grid-item dfcc'>
+                            <div class='shop-image-container dffc'>
+                                <img src='img/products/{$product->image}' alt='{$product->image}'>
+                                <div class='shop-image-background'></div>
                             </div>
-                            <a href='item.php?id={$product->id}'><i style='color:#272727;' class='bi bi-caret-right-fill'></i></a>
-                        </div>
-                        </div>
-                        <a href='cart.php?id={$product->id}' class='shop-item-tocart dffc'>Kosárba <i class='bi bi-cart-fill'></i></a>
-                    </div>
-                    </div>
-                    ";
+                            <div class='shop-item-body'>
+                                <div class='dfcc'>
+                                <div class='dfsb shop-item-title'>
+                                    <a class='shop-link-title' style='display:inline-block;background-color:transparent;height:100%;width:100%;' href='item.php?id={$product->id}'><h4>{$product->name}</h4></a>
+                                    <p>{$product->weight} g</p>   
+                                </div>
+                                <div class='dfsb'>
+                                    <div class='dffc shop-item-price'>
+                                        <span>{$product->price} Ft</span>
+                                        <span>( {$product->unitPrice} Ft/kg )</span>
+                                    </div>
+                                    <a href='item.php?id={$product->id}'><i style='color:#272727;' class='bi bi-caret-right-fill'></i></a>
+                                </div>
+                                </div>
+                                <a href='cart.php?id={$product->id}' class='shop-item-tocart dffc'>Kosárba <i class='bi bi-cart-fill'></i></a>
+                            </div>
+                            </div>
+                            ";
                         }
                     }
                 }
                 ?>
             </div>
-            <div class="dffc">
 
-                <a <?= $page > 1 ? "href='shop.php?page=$previousPage'" : "disabled" ?>><i class='bi bi-caret-left-fill'></i></a>
-                <?php
+            <?php if ($totalPages === "") : ?>
+            <?php else : ?>
+                <div class="dffc shop-subpage-pagination-container">
 
-                //a totalPages változó értékével megegyező oldalszámok legenerálása for loop segítségével
-                for ($i = 1; $i <= $totalPages; $i++) {
 
-                    echo "<a href='shop.php?page=$i'>$i</a>";
-                }
+                    <a class="shop-subpage-pagination-prev dffc" <?= $page > 1 ? "href='shop.php?page=$previousPage'" : "disabled" ?>><i class='bi bi-caret-left-fill pulse'></i></a>
+                    <?php
 
-                ?>
+                    //a totalPages változó értékével megegyező oldalszámok legenerálása for loop segítségével
+                    for ($i = 1; $i <= $totalPages; $i++) {
 
-                <a <?= $page < $numOfItems ? "href='shop.php?page=$nextPage'" : "disabled" ?>><i class='bi bi-caret-right-fill'></i></a>
-            </div>
+                        echo "<a class='shop-subpage-pagination-page dffc' href='shop.php?page=$i'><div class='dffc'>$i</div></a>";
+                    }
+
+                    ?>
+                    <a class="shop-subpage-pagination-next dffc" <?= $page < $totalPages ? "href='shop.php?page=$nextPage'" : "disabled" ?>><i class='bi bi-caret-right-fill pulse'></i></a>
+
+                </div>
+
+            <?php endif ?>
         </div>
     </div>
 </section>
