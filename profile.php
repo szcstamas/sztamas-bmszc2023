@@ -158,11 +158,14 @@ if (isset($_POST["action"]) && $_POST["action"] === "regisztráció") {
                     <h1 class="title-secondline-h1 greencolor"><?= $_SESSION["userName"] ?>!</h1>
                 </div>
                 <p class="section-paragraph-gray">Kiváló partnereinknek köszönhetően folyamatosan bővítjük oldalunk kínálatát, így ügyfeleink a megbízhatóság és elégedettség mellett vadonatúj termékcsomagokkal és kapitális fogásokkal gazdagodhatnak. Árusítani szeretnéd a BroBaits© pelletcsomagjait? Viszonteladásra kínálnád jobbnál jobb termékeidet? Vedd fel velünk a kapcsolatot, és tárgyaljuk meg a részleteket!</p>
-                <form method="POST">
-                    <span class="button-border">
-                        <input type="submit" name="signout-user" class="signout-user" value="Kijelentkezés"><i class="bi bi-box-arrow-left"></i>
-                    </span>
-                </form>
+                <div class="dfc" style="align-items:stretch!important;">
+                    <a class="button-green" href="shop.php">Rendelek! <i class="bi bi-bag-heart"></i></a>
+                    <form method="POST">
+                        <span class="button-border">
+                            <input type="submit" name="signout-user" class="signout-user" value="Kijelentkezés"><i style='color:#000;font-size:1.25rem;' class="bi bi-box-arrow-left"></i>
+                        </span>
+                    </form>
+                </div>
             </div>
             <div class="profile-subpage-running-order">
                 <h2>Rendeléseid:</h2>

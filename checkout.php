@@ -65,54 +65,109 @@ if (isset($_POST["checkout"])) {
         isset($_POST["tnc"])
     ) {
 
-        if (isset($_POST["comment"]) && !empty($_POST["comment"])) {
+        if (isset($_SESSION["userName"])) {
 
+            $userName = $_SESSION["userName"];
 
-            foreach ($cart as $cartItem) {
+            if (isset($_POST["comment"]) && !empty($_POST["comment"])) {
 
-                $product = $cartItem["product"];
-                $count = $cartItem["count"];
+                foreach ($cart as $cartItem) {
 
-                if ($product->discount > 0) {
-                    $discPrice = 100 - $product->discount;
-                    $discPrice = $discPrice * 0.01;
-                    $discPrice = $discPrice * $product->price;
+                    $product = $cartItem["product"];
+                    $count = $cartItem["count"];
 
-                    $order = new Order(0, $cartItem["product"]->name, $cartItem["count"], $_POST["name"], null, $_POST["email"], ($discPrice * $cartItem["count"]), $_POST["deliveryPostalcode"], $_POST["deliveryCity"], $_POST["deliveryStreet"], $_POST["billPostalcode"], $_POST["billCity"], $_POST["billStreet"], $_POST["comment"], 0, null, 0, "no-user");
-                    Database::createOrder($order);
-                } else {
+                    if ($product->discount > 0) {
+                        $discPrice = 100 - $product->discount;
+                        $discPrice = $discPrice * 0.01;
+                        $discPrice = $discPrice * $product->price;
 
-                    $order = new Order(0, $cartItem["product"]->name, $cartItem["count"], $_POST["name"], null, $_POST["email"], ($cartItem["product"]->price * $cartItem["count"]), $_POST["deliveryPostalcode"], $_POST["deliveryCity"], $_POST["deliveryStreet"], $_POST["billPostalcode"], $_POST["billCity"], $_POST["billStreet"], $_POST["comment"], 0, null, 0, "no-user");
-                    Database::createOrder($order);
+                        $order = new Order(0, $cartItem["product"]->name, $cartItem["count"], $_POST["name"], null, $_POST["email"], ($discPrice * $cartItem["count"]), $_POST["deliveryPostalcode"], $_POST["deliveryCity"], $_POST["deliveryStreet"], $_POST["billPostalcode"], $_POST["billCity"], $_POST["billStreet"], $_POST["comment"], 0, null, 1, $userName);
+                        Database::createOrder($order);
+                    } else {
+
+                        $order = new Order(0, $cartItem["product"]->name, $cartItem["count"], $_POST["name"], null, $_POST["email"], ($cartItem["product"]->price * $cartItem["count"]), $_POST["deliveryPostalcode"], $_POST["deliveryCity"], $_POST["deliveryStreet"], $_POST["billPostalcode"], $_POST["billCity"], $_POST["billStreet"], $_POST["comment"], 0, null, 1, $userName);
+                        Database::createOrder($order);
+                    }
                 }
-            }
 
-            header("Location: success.php");
-            ob_end_flush();
-            die();
+                header("Location: success.php");
+                ob_end_flush();
+                die();
+            } else {
+
+                foreach ($cart as $cartItem) {
+
+                    $product = $cartItem["product"];
+                    $count = $cartItem["count"];
+
+                    if ($product->discount > 0) {
+                        $discPrice = 100 - $product->discount;
+                        $discPrice = $discPrice * 0.01;
+                        $discPrice = $discPrice * $product->price;
+
+                        $order = new Order(0, $cartItem["product"]->name, $cartItem["count"], $_POST["name"], null, $_POST["email"], ($discPrice * $cartItem["count"]), $_POST["deliveryPostalcode"], $_POST["deliveryCity"], $_POST["deliveryStreet"], $_POST["billPostalcode"], $_POST["billCity"], $_POST["billStreet"], "No comment", 0, null, 1, $userName);
+                        Database::createOrder($order);
+                    } else {
+
+                        $order = new Order(0, $cartItem["product"]->name, $cartItem["count"], $_POST["name"], null, $_POST["email"], ($cartItem["product"]->price * $cartItem["count"]), $_POST["deliveryPostalcode"], $_POST["deliveryCity"], $_POST["deliveryStreet"], $_POST["billPostalcode"], $_POST["billCity"], $_POST["billStreet"], "No comment", 0, null, 1, $userName);
+                        Database::createOrder($order);
+                    }
+                }
+                header("Location: success.php");
+                ob_end_flush();
+                die();
+            }
         } else {
 
-            foreach ($cart as $cartItem) {
+            if (isset($_POST["comment"]) && !empty($_POST["comment"])) {
 
-                $product = $cartItem["product"];
-                $count = $cartItem["count"];
 
-                if ($product->discount > 0) {
-                    $discPrice = 100 - $product->discount;
-                    $discPrice = $discPrice * 0.01;
-                    $discPrice = $discPrice * $product->price;
+                foreach ($cart as $cartItem) {
 
-                    $order = new Order(0, $cartItem["product"]->name, $cartItem["count"], $_POST["name"], null, $_POST["email"], ($discPrice * $cartItem["count"]), $_POST["deliveryPostalcode"], $_POST["deliveryCity"], $_POST["deliveryStreet"], $_POST["billPostalcode"], $_POST["billCity"], $_POST["billStreet"], "No comment", 0, null, 0, "no-user");
-                    Database::createOrder($order);
-                } else {
+                    $product = $cartItem["product"];
+                    $count = $cartItem["count"];
 
-                    $order = new Order(0, $cartItem["product"]->name, $cartItem["count"], $_POST["name"], null, $_POST["email"], ($cartItem["product"]->price * $cartItem["count"]), $_POST["deliveryPostalcode"], $_POST["deliveryCity"], $_POST["deliveryStreet"], $_POST["billPostalcode"], $_POST["billCity"], $_POST["billStreet"], "No comment", 0, null, 0, "no-user");
-                    Database::createOrder($order);
+                    if ($product->discount > 0) {
+                        $discPrice = 100 - $product->discount;
+                        $discPrice = $discPrice * 0.01;
+                        $discPrice = $discPrice * $product->price;
+
+                        $order = new Order(0, $cartItem["product"]->name, $cartItem["count"], $_POST["name"], null, $_POST["email"], ($discPrice * $cartItem["count"]), $_POST["deliveryPostalcode"], $_POST["deliveryCity"], $_POST["deliveryStreet"], $_POST["billPostalcode"], $_POST["billCity"], $_POST["billStreet"], $_POST["comment"], 0, null, 0, "no-user");
+                        Database::createOrder($order);
+                    } else {
+
+                        $order = new Order(0, $cartItem["product"]->name, $cartItem["count"], $_POST["name"], null, $_POST["email"], ($cartItem["product"]->price * $cartItem["count"]), $_POST["deliveryPostalcode"], $_POST["deliveryCity"], $_POST["deliveryStreet"], $_POST["billPostalcode"], $_POST["billCity"], $_POST["billStreet"], $_POST["comment"], 0, null, 0, "no-user");
+                        Database::createOrder($order);
+                    }
                 }
+
+                header("Location: success.php");
+                ob_end_flush();
+                die();
+            } else {
+
+                foreach ($cart as $cartItem) {
+
+                    $product = $cartItem["product"];
+                    $count = $cartItem["count"];
+
+                    if ($product->discount > 0) {
+                        $discPrice = 100 - $product->discount;
+                        $discPrice = $discPrice * 0.01;
+                        $discPrice = $discPrice * $product->price;
+
+                        $order = new Order(0, $cartItem["product"]->name, $cartItem["count"], $_POST["name"], null, $_POST["email"], ($discPrice * $cartItem["count"]), $_POST["deliveryPostalcode"], $_POST["deliveryCity"], $_POST["deliveryStreet"], $_POST["billPostalcode"], $_POST["billCity"], $_POST["billStreet"], "No comment", 0, null, 0, "no-user");
+                        Database::createOrder($order);
+                    } else {
+
+                        $order = new Order(0, $cartItem["product"]->name, $cartItem["count"], $_POST["name"], null, $_POST["email"], ($cartItem["product"]->price * $cartItem["count"]), $_POST["deliveryPostalcode"], $_POST["deliveryCity"], $_POST["deliveryStreet"], $_POST["billPostalcode"], $_POST["billCity"], $_POST["billStreet"], "No comment", 0, null, 0, "no-user");
+                        Database::createOrder($order);
+                    }
+                }
+                header("Location: success.php");
+                ob_end_flush();
+                die();
             }
-            header("Location: success.php");
-            ob_end_flush();
-            die();
         }
     } else {
         $error = "Kérjük, hogy töltsd ki az összes mezőt, majd a rendelés véglegesítéséhez fogadd el Felhasználói Feltételeinket. Köszönjük!";

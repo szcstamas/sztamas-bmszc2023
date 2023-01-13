@@ -10,15 +10,87 @@ Database::connect();
 $products = Database::getAllProducts();
 
 $searchName = "";
+$discountItem = "";
+$rangeItemPrice = "";
+$sortBy = "";
+$onStock = "";
 
 if (
-    isset($_GET["search"]) &&
-    !empty($_GET["search"])
+    isset($_GET["submit-form"])
 ) {
-    $searchName = $_GET["search"];
-    $products = Database::searchProductByName($searchName);
-}
+    if (
+        isset($_GET["search"]) &&
+        !empty($_GET["search"])
+    ) {
+        $searchName = $_GET["search"];
+        $sortBy = $_GET["sortItems"];
+        $products = Database::searchInShop($searchName, $sortBy, $discountItem, $rangeItemPrice, $onStock);
 
+        if (
+            isset($_GET["discountItem"]) &&
+            !empty($_GET["discountItem"])
+        ) {
+            $discountItem = $_GET["discountItem"];
+            $products = Database::searchInShop($searchName, $sortBy, $discountItem, $rangeItemPrice, $onStock);
+        }
+    } else if (isset($_GET["sortItems"]) && !empty($_GET["sortItems"])) {
+        $sortBy = $_GET["sortItems"];
+        $products = Database::searchInShop($searchName, $sortBy, $discountItem, $rangeItemPrice, $onStock);
+
+        if (
+            isset($_GET["discountItem"]) &&
+            !empty($_GET["discountItem"])
+        ) {
+            $discountItem = $_GET["discountItem"];
+            $products = Database::searchInShop($searchName, $sortBy, $discountItem, $rangeItemPrice, $onStock);
+
+            if (
+                isset($_GET["onStock"]) &&
+                !empty($_GET["onStock"])
+            ) {
+                $onStock = $_GET["onStock"];
+                $products = Database::searchInShop($searchName, $sortBy, $discountItem, $rangeItemPrice, $onStock);
+
+                if (
+                    isset($_GET["radio"]) &&
+                    !empty($_GET["radio"])
+                ) {
+                    $rangeItemPrice = $_GET["radio"];
+                    $products = Database::searchInShop($searchName, $sortBy, $discountItem, $rangeItemPrice, $onStock);
+                }
+            }
+        }
+    } else if (isset($_GET["discountItem"]) && !empty($_GET["discountItem"])) {
+
+        if (isset($_GET["radio"]) && !empty($_GET["radio"])) {
+
+            if (isset($_GET["onStock"]) && !empty($_GET["onStock"])) {
+                $discountItem = $_GET["discountItem"];
+                $onStock = $_GET["onStock"];
+                $rangeItemPrice = $_GET["radio"];
+                $products = Database::searchInShop($searchName, $sortBy, $discountItem, $rangeItemPrice, $onStock);
+            } else {
+                $discountItem = $_GET["discountItem"];
+                $rangeItemPrice = $_GET["radio"];
+                $products = Database::searchInShop($searchName, $sortBy, $discountItem, $rangeItemPrice, $onStock);
+            }
+        } else if (isset($_GET["onStock"]) && !empty($_GET["onStock"])) {
+            $rangeItemPrice = $_GET["radio"];
+            $discountItem = $_GET["discountItem"];
+            $onStock = $_GET["onStock"];
+            $products = Database::searchInShop($searchName, $sortBy, $discountItem, $rangeItemPrice, $onStock);
+        } else {
+            $discountItem = $_GET["discountItem"];
+            $products = Database::searchInShop($searchName, $sortBy, $discountItem, $rangeItemPrice, $onStock);
+        }
+    } else if (isset($_GET["radio"]) && !empty($_GET["radio"])) {
+        $rangeItemPrice = $_GET["radio"];
+        $products = Database::searchInShop($searchName, $sortBy, $discountItem, $rangeItemPrice, $onStock);
+    } else if (isset($_GET["onStock"]) && !empty($_GET["onStock"])) {
+        $onStock = $_GET["onStock"];
+        $products = Database::searchInShop($searchName, $sortBy, $discountItem, $rangeItemPrice, $onStock);
+    }
+}
 
 ?>
 
@@ -41,64 +113,70 @@ if (
     <div class="homepage-main maxw dfsb">
         <div class="shop-search-bar">
             <form class="shop-search-form dfcc" method="GET" id="search-left">
+                <div class="dfsb shop-subpage-search-first">
+                    <input type="text" name="search" value="<?= $searchName ?>" placeholder="Keresés terméknév alapján...">
+                    <a href="shop.php" class="dffc"><i class="bi bi-x"></i></a>
+                </div>
                 <div class="dfsb">
                     <p class="shop-search-title-main">Rendezés:</p>
                     <select class="product-select" name="sortItems" id="">
-                        <option value="Legolcsóbb elől">Legolcsóbb elől</option>
-                        <option value="Legdrágább elől">Legdrágább elől</option>
-                        <option value="Akciós elől">Akciós elől</option>
+                        <option value="">Nincs rendezés</option>
+                        <option value="sortByPriceAsc">Legolcsóbb elől</option>
+                        <option value="sortByPriceDesc">Legdrágább elől</option>
+                        <option value="sortByDiscount">Akciós elől</option>
                     </select>
                 </div>
                 <div class="dfcc">
-                    <label for="discountItem" class="container">Akciós
-                        <input type="checkbox" name="discountItem" id="discountItem">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label for="onStockItem" class="container">Raktáron
-                        <input type="checkbox" name="onStockItem" id="onStockItem">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label for="broBaitsItems" class="container">BroBaits termékek
-                        <input type="checkbox" name="broBaitsItems" id="broBaitsItems">
-                        <span class="checkmark"></span>
-                    </label>
+
+                    <div class="dffs">
+                        <div class="check-box dffc">
+                            <input type="checkbox" type="checkbox" id="discountItem" class="discountItem" name="discountItem">
+                        </div>
+                        <label for="discountItem">Akciós</label>
+                    </div>
+
+                    <div class="dffs">
+                        <div class="check-box dffc">
+                            <input type="checkbox" type="checkbox" id="onStock" class="onStock" name="onStock">
+                        </div>
+                        <label for="discountItem">Raktáron</label>
+                    </div>
                 </div>
                 <div class="dfsb">
                     <p class="shop-search-title-main">Ár</p>
                 </div>
-                <div class="dfcc-secondpart-of-form">
-                    <label for="discountItem" class="container2">1 - 2000 Ft
-                        <input type="checkbox" name="discountItem" id="discountItem" value="1-2000">
-                        <span class="checkmark2"></span>
+                <div class="dfcc secondpart-of-form">
+                    <label class="container-radio">1 - 2000 Ft
+                        <input type="radio" name="radio" value="1 2000">
+                        <span class="checkmark"></span>
                     </label>
-                    <label for="onStockItem" class="container2">2 - 4000 Ft
-                        <input type="checkbox" name="onStockItem" id="onStockItem" value="2-4000">
-                        <span class="checkmark2"></span>
+                    <label class="container-radio">2000 - 4000 Ft
+                        <input type="radio" name="radio" value="2000 4000">
+                        <span class="checkmark"></span>
                     </label>
-                    <label for="discountItem" class="container2">4 - 8000 Ft
-                        <input type="checkbox" name="discountItem" id="broBaitsItems" value="4-8000">
-                        <span class="checkmark2"></span>
+                    <label class="container-radio">4000 - 10000 Ft
+                        <input type="radio" name="radio" value="4000 10000">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container-radio">10000 Ft felett
+                        <input type="radio" name="radio" value="10000">
+                        <span class="checkmark"></span>
                     </label>
                 </div>
+                <label for="search-form" class="dfc shop-search-box">
+                    <input type="submit" class="button-green" name="submit-form" id="shop-search-box-submit" value="keresés" />
+                </label>
             </form>
         </div>
         <div class="shop-subpage-product-list">
-            <form method="GET" class="dffc" id="search-right">
-                <input type="text" name="search" value="<?= $searchName ?>" placeholder="Keresés terméknév alapján...">
-                <a href="shop.php" class="dfcc"><i class="bi bi-x"></i></a>
-                <label for="submit" class="dfc">
-                    <input type="submit" value="" onclick="submitForms()" /><i class="bi bi-search"></i>
-                </label>
-            </form>
             <div class="shop-subpage-product-grid">
-
                 <?php
 
                 if (!$products) {
 
                     echo
                     "
-                    <div style='display:flex;justify-content:center;align-items:center;width:100%;padding:2rem;gap:1rem;'>Nincs megfelelő találat a keresésre! Próbálj meg egy másik kifejezést! <i style='color:#65A850;' class='bi bi-emoji-frown '></i></div>
+                    <div style='display:flex;justify-content:center;align-items:center;width:100%;padding:2rem;gap:1rem;'>Nincs megfelelő találat a keresésre!<i style='color:#65A850;' class='bi bi-emoji-frown '></i></div>
                     ";
                 } else {
 

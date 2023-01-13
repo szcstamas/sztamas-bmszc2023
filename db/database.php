@@ -51,11 +51,113 @@ class Database
         return $products;
     }
 
-    public static function searchProductByName($name)
+    public static function searchInShop($name, $sortItems, $discountItem, $rangeItemPrice, $onStock)
     {
 
         //az összes olyan termék kiválasztása amiből több van mint 0, és még nem törölték (nincsen valid dátum beállítva a deleted_at propertynél)
-        $sql = "SELECT * FROM `products` WHERE `name` LIKE '%$name%'";
+        $sql = "SELECT * FROM `products`";
+
+        if ($name) {
+            $sql = "SELECT * FROM `products` WHERE `name` LIKE '%$name%'";
+
+            if ($sortItems && $sortItems != []) {
+
+                if ($discountItem && $discountItem != []) {
+                    $sql = "SELECT * FROM `products` WHERE `products`.`discount` > 0";
+
+                    if ($onStock && $onStock != []) {
+
+                        $sql = $sql . ' ' . "AND `products`.`quantity` > 0";
+
+                        if ($rangeItemPrice && $rangeItemPrice != []) {
+
+                            if (str_contains($rangeItemPrice, ' ') === true) {
+                                $prices = explode(" ", $rangeItemPrice);
+
+                                $sql = $sql . ' ' . "AND `price` BETWEEN $prices[0] AND $prices[1]";
+                            } else {
+                                $sql = $sql . ' ' . "AND `price` > $rangeItemPrice";
+                            }
+                        }
+                    }
+                }
+
+                switch ($sortItems) {
+
+                    case "sortByPriceDesc":
+                        $sql = $sql . ' ' . "ORDER BY `products`.`price` DESC;";
+                        break;
+                    case "sortByPriceAsc":
+                        $sql = $sql . ' ' . "ORDER BY `products`.`price` ASC;";
+                        break;
+                    case "sortByDiscount":
+                        $sql = $sql . ' ' . "ORDER BY `products`.`discount` DESC;";
+                        break;
+                }
+            }
+            if ($discountItem && $discountItem != []) {
+                $sql = $sql . ' ' . "AND `products`.`discount` > 0;";
+            }
+        } else {
+            if ($sortItems && $sortItems != []) {
+                if ($discountItem && $discountItem != []) {
+                    $sql = "SELECT * FROM `products` WHERE `products`.`discount` > 0";
+                }
+
+                switch ($sortItems) {
+
+                    case "sortByPriceDesc":
+                        $sql = $sql . ' ' . "ORDER BY `products`.`price` DESC;";
+                        break;
+                    case "sortByPriceAsc":
+                        $sql = $sql . ' ' . "ORDER BY `products`.`price` ASC;";
+                        break;
+                    case "sortByDiscount":
+                        $sql = $sql . ' ' . "ORDER BY `products`.`discount` DESC";
+                        break;
+                }
+            } else if ($discountItem && $discountItem != []) {
+                $sql = $sql . ' ' . "WHERE `products`.`discount` > 0";
+
+                if ($onStock && $onStock != []) {
+
+                    $sql = $sql . ' ' . "AND `products`.`quantity` > 0";
+
+                    if ($rangeItemPrice && $rangeItemPrice != []) {
+
+                        if (str_contains($rangeItemPrice, ' ') === true) {
+                            $prices = explode(" ", $rangeItemPrice);
+
+                            $sql = $sql . ' ' . "AND `price` BETWEEN $prices[0] AND $prices[1];";
+                        } else {
+                            $sql = $sql . ' ' . "AND `price` > $rangeItemPrice;";
+                        }
+                    }
+                } else if ($rangeItemPrice && $rangeItemPrice != []) {
+
+                    if (str_contains($rangeItemPrice, ' ') === true) {
+                        $prices = explode(" ", $rangeItemPrice);
+
+                        $sql = $sql . ' ' . "AND `price` BETWEEN $prices[0] AND $prices[1];";
+                    } else {
+                        $sql = $sql . ' ' . "AND `price` > $rangeItemPrice;";
+                    }
+                }
+            } else if ($rangeItemPrice && $rangeItemPrice != []) {
+
+                if (str_contains($rangeItemPrice, ' ') === true) {
+                    $prices = explode(" ", $rangeItemPrice);
+
+                    $sql = $sql . ' ' . "WHERE `price` BETWEEN $prices[0] AND $prices[1];";
+                } else {
+                    $sql = $sql . ' ' . "WHERE `price` > $rangeItemPrice;";
+                }
+            } else if ($onStock && $onStock != []) {
+
+                $sql = $sql . ' ' . "WHERE `products`.`quantity` > 0;";
+            }
+        }
+
 
         //csatlakozás az adatbázishoz, majd az sql parancs elküldése
         $result = self::$conn->prepare($sql);
@@ -214,7 +316,7 @@ class Database
     public static function createOrder($order)
     {
 
-        $sql = "INSERT INTO `orders` (`productName`, `productQuantity`, `name`, `date`, `email`, `totalPrice`, `deliveryPostcode`, `deliveryCity`, `deliveryStreet`, `billPostcode`, `billCity`, `billStreet`, `comment`, `completed`, `completedAt`, `username`) VALUES ('{$order->productName}', '{$order->productQuantity}', '{$order->name}', current_timestamp(), '{$order->email}', '{$order->totalPrice}', '{$order->deliveryPostcode}', '{$order->deliveryCity}', '{$order->deliveryStreet}', '{$order->billPostcode}', '{$order->billCity}', '{$order->billStreet}', '{$order->comment}', 0, '0000-00-00', '{$order->username}');";
+        $sql = "INSERT INTO `orders` (`productName`, `productQuantity`, `name`, `date`, `email`, `totalPrice`, `deliveryPostcode`, `deliveryCity`, `deliveryStreet`, `billPostcode`, `billCity`, `billStreet`, `comment`, `completed`, `completedAt`, `isUser`, `username`) VALUES ('{$order->productName}', '{$order->productQuantity}', '{$order->name}', current_timestamp(), '{$order->email}', '{$order->totalPrice}', '{$order->deliveryPostcode}', '{$order->deliveryCity}', '{$order->deliveryStreet}', '{$order->billPostcode}', '{$order->billCity}', '{$order->billStreet}', '{$order->comment}', 0, '0000-00-00', '{$order->isUser}', '{$order->username}');";
 
         $result = self::$conn->prepare($sql);
         $result->execute();

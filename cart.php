@@ -218,8 +218,6 @@ foreach ($cart as $cartItem) {
     </div>
   </div>
 
-
-
   </div>
   </div>
   </div>

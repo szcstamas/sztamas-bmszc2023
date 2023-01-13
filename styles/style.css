@@ -1,4 +1,3 @@
-@charset "UTF-8";
 * {
   padding: 0;
   margin: 0;
@@ -1045,6 +1044,161 @@ hr {
   width: 25%;
 }
 
+#shop-product-list .maxw .shop-search-bar .shop-subpage-search-first {
+  width: 100%;
+  grid-gap: 1px;
+  background-color: #ccc;
+  -webkit-box-align: stretch !important;
+      -ms-flex-align: stretch !important;
+          align-items: stretch !important;
+  padding: 0 !important;
+}
+
+#shop-product-list .maxw .shop-search-bar .shop-subpage-search-first input[type=text] {
+  padding: 1rem;
+  background-color: #fff;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border: none;
+  font-size: 1rem;
+  width: 100%;
+  border-right: 1px solid #ccc;
+}
+
+#shop-product-list .maxw .shop-search-bar .shop-subpage-search-first input[type=text]:focus, #shop-product-list .maxw .shop-search-bar .shop-subpage-search-first input[type=text]:active {
+  border: none;
+  outline: none;
+}
+
+#shop-product-list .maxw .shop-search-bar .shop-subpage-search-first a {
+  background-color: #fff;
+  -webkit-transition: all .1s ease-in-out;
+  transition: all .1s ease-in-out;
+  width: 50px !important;
+}
+
+#shop-product-list .maxw .shop-search-bar .shop-subpage-search-first a i {
+  font-size: 1.75rem;
+  width: 50px;
+  height: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-transform: scale(1.08);
+          transform: scale(1.08);
+  -webkit-transition: all .1s ease-in-out;
+  transition: all .1s ease-in-out;
+}
+
+#shop-product-list .maxw .shop-search-bar .shop-subpage-search-first a:hover i {
+  -webkit-transform: scale(1.08);
+          transform: scale(1.08);
+  color: #fff;
+  background-color: #65A850;
+}
+
+#shop-product-list .maxw .shop-search-bar .shop-subpage-search-first label {
+  gap: 0;
+  position: relative;
+  -webkit-transition: all .1s ease-in-out;
+  transition: all .1s ease-in-out;
+  width: 75%;
+  background-color: #fff;
+}
+
+#shop-product-list .maxw .shop-search-bar .shop-subpage-search-first label input {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+#shop-product-list .maxw .shop-search-bar .shop-subpage-search-first label i {
+  font-size: 1.25rem;
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  pointer-events: none;
+  -webkit-transition: all .1s ease;
+  transition: all .1s ease;
+  width: 40px;
+  height: 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 50%;
+}
+
+#shop-product-list .maxw .shop-search-bar .shop-subpage-search-first label:hover i {
+  font-size: 1rem;
+  -webkit-transform: translate(-50%, -50%) scale(1.1);
+          transform: translate(-50%, -50%) scale(1.1);
+  color: #fff;
+  background-color: #65A850;
+}
+
+#shop-product-list .maxw .shop-search-bar .shop-search-box {
+  width: 100%;
+}
+
+#shop-product-list .maxw .shop-search-bar .shop-search-box input {
+  width: 100%;
+}
+
+#shop-product-list .maxw .shop-search-bar input[type="checkbox"] {
+  position: relative;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  width: 50px;
+  height: 28px;
+  background: #fff;
+  border-radius: 50px;
+  border: 2px solid #65a85071;
+  cursor: pointer;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+#shop-product-list .maxw .shop-search-bar input:checked[type="checkbox"] {
+  background: #65A850;
+}
+
+#shop-product-list .maxw .shop-search-bar input[type="checkbox"]::after {
+  position: absolute;
+  content: "";
+  width: 25px;
+  height: 25px;
+  top: -3px;
+  left: -8px;
+  background: #fff;
+  border-radius: 50%;
+  border: 2px solid #65A850;
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+#shop-product-list .maxw .shop-search-bar input:checked[type="checkbox"]::after {
+  left: 50%;
+}
+
 #shop-product-list .maxw .shop-search-bar .dfcc {
   background-color: #ccc;
   grid-gap: 1px;
@@ -1056,8 +1210,11 @@ hr {
 }
 
 #shop-product-list .maxw .shop-search-bar .dfcc .dfcc {
-  gap: 2rem !important;
-  padding: 1rem;
+  gap: 0;
+}
+
+#shop-product-list .maxw .shop-search-bar .dfcc .dffs {
+  padding: 1rem 1.5rem;
 }
 
 #shop-product-list .maxw .shop-search-bar .dfcc .dfsb,
@@ -1066,75 +1223,6 @@ hr {
   width: 100%;
   grid-gap: 1px;
   border: none;
-  /* elrejteni az alapvető checkboxot */
-  /* custom checkbox */
-}
-
-#shop-product-list .maxw .shop-search-bar .dfcc .dfsb .container,
-#shop-product-list .maxw .shop-search-bar .dfcc .dfcc .container {
-  display: block;
-  position: relative;
-  padding-left: 45px;
-  cursor: pointer;
-  font-size: 1rem;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  padding-bottom: 0rem;
-}
-
-#shop-product-list .maxw .shop-search-bar .dfcc .dfsb .container input,
-#shop-product-list .maxw .shop-search-bar .dfcc .dfcc .container input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-}
-
-#shop-product-list .maxw .shop-search-bar .dfcc .dfsb .checkmark,
-#shop-product-list .maxw .shop-search-bar .dfcc .dfcc .checkmark {
-  position: absolute;
-  top: -3px;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  background-color: #eee;
-}
-
-#shop-product-list .maxw .shop-search-bar .dfcc .dfsb .container:hover input ~ .checkmark,
-#shop-product-list .maxw .shop-search-bar .dfcc .dfcc .container:hover input ~ .checkmark {
-  background-color: #ccc;
-}
-
-#shop-product-list .maxw .shop-search-bar .dfcc .dfsb .container input:checked ~ .checkmark,
-#shop-product-list .maxw .shop-search-bar .dfcc .dfcc .container input:checked ~ .checkmark {
-  background-color: #2196F3;
-}
-
-#shop-product-list .maxw .shop-search-bar .dfcc .dfsb .checkmark:after,
-#shop-product-list .maxw .shop-search-bar .dfcc .dfcc .checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-
-#shop-product-list .maxw .shop-search-bar .dfcc .dfsb .container input:checked ~ .checkmark:after,
-#shop-product-list .maxw .shop-search-bar .dfcc .dfcc .container input:checked ~ .checkmark:after {
-  display: block;
-}
-
-#shop-product-list .maxw .shop-search-bar .dfcc .dfsb .container .checkmark:after,
-#shop-product-list .maxw .shop-search-bar .dfcc .dfcc .container .checkmark:after {
-  left: 9px;
-  top: 5px;
-  width: 5px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
 }
 
 #shop-product-list .maxw .shop-search-bar .dfcc .dfsb select,
@@ -1148,7 +1236,7 @@ hr {
 #shop-product-list .maxw .shop-search-bar .dfcc .dfcc select option {
   background-color: #65A850;
   color: #fff;
-  font-size: 1rem;
+  padding: 1rem;
   border: none;
   outline: none;
 }
@@ -1174,112 +1262,6 @@ hr {
 
 #shop-product-list .maxw .shop-subpage-product-list {
   width: 75%;
-}
-
-#shop-product-list .maxw .shop-subpage-product-list form {
-  width: 100%;
-  grid-gap: 1px;
-  border: 1px solid #ccc;
-  -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch;
-}
-
-#shop-product-list .maxw .shop-subpage-product-list form input[type=text] {
-  width: 100%;
-  padding: 1rem;
-  background-color: #fff;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  border: none;
-  font-size: 1rem;
-}
-
-#shop-product-list .maxw .shop-subpage-product-list form input[type=text]:focus, #shop-product-list .maxw .shop-subpage-product-list form input[type=text]:active {
-  border: none;
-  outline: none;
-}
-
-#shop-product-list .maxw .shop-subpage-product-list form a {
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-  padding: 1rem;
-  -webkit-transition: all .1s ease-in-out;
-  transition: all .1s ease-in-out;
-}
-
-#shop-product-list .maxw .shop-subpage-product-list form a i {
-  font-size: 2rem;
-  width: 40px;
-  height: 40px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  border-radius: 50%;
-  -webkit-transition: all .1s ease-in-out;
-  transition: all .1s ease-in-out;
-}
-
-#shop-product-list .maxw .shop-subpage-product-list form a:hover i {
-  font-size: 1.75rem;
-  -webkit-transform: scale(1.1);
-          transform: scale(1.1);
-  color: #fff;
-  background-color: #65A850;
-}
-
-#shop-product-list .maxw .shop-subpage-product-list form label {
-  gap: 0;
-  position: relative;
-  padding: 1rem;
-  -webkit-transition: all .1s ease-in-out;
-  transition: all .1s ease-in-out;
-}
-
-#shop-product-list .maxw .shop-subpage-product-list form label input {
-  opacity: 0;
-  width: 30px;
-  height: 100%;
-  cursor: pointer;
-}
-
-#shop-product-list .maxw .shop-subpage-product-list form label i {
-  font-size: 1.25rem;
-  position: absolute;
-  right: -15%;
-  top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  pointer-events: none;
-  -webkit-transition: all .1s ease;
-  transition: all .1s ease;
-  width: 40px;
-  height: 40px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  border-radius: 50%;
-}
-
-#shop-product-list .maxw .shop-subpage-product-list form label:hover i {
-  font-size: 1rem;
-  -webkit-transform: translate(-50%, -50%) scale(1.1);
-          transform: translate(-50%, -50%) scale(1.1);
-  color: #fff;
-  background-color: #65A850;
 }
 
 #shop-product-list .maxw .shop-subpage-product-list .shop-subpage-product-grid {
@@ -1442,10 +1424,6 @@ hr {
   font-family: 'Bebas Neue', Arial, Helvetica, sans-serif;
   color: #272727;
   font-size: 2rem;
-}
-
-#shop-product-list .maxw .shop-subpage-product-list .shop-subpage-product-grid .shop-grid-item:nth-child(1), #shop-product-list .maxw .shop-subpage-product-list .shop-subpage-product-grid .shop-grid-item:nth-child(2), #shop-product-list .maxw .shop-subpage-product-list .shop-subpage-product-grid .shop-grid-item:nth-child(3), #shop-product-list .maxw .shop-subpage-product-list .shop-subpage-product-grid .shop-grid-item:nth-child(4) {
-  border-top: none;
 }
 
 #shop-product-list .maxw .shop-subpage-product-list .shop-subpage-product-grid .shop-grid-item:hover {
@@ -2247,7 +2225,7 @@ hr {
 
 #profile-subpage-user-section span:hover .signout-user,
 #profile-subpage-user-section span:hover i {
-  color: #fff;
+  color: #fff !important;
 }
 
 #profile-subpage-user-section .profile-subpage-running-order {
@@ -2622,67 +2600,6 @@ hr {
     width: 100%;
     grid-gap: 1px;
     border: none;
-    /* elrejteni az alapvető checkboxot */
-    /* custom checkbox */
-  }
-  #shop-product-list .maxw .shop-search-bar .dfcc .dfsb .container,
-  #shop-product-list .maxw .shop-search-bar .dfcc .dfcc .container {
-    display: block;
-    position: relative;
-    padding-left: 45px;
-    cursor: pointer;
-    font-size: 1rem;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    padding-bottom: 0rem;
-  }
-  #shop-product-list .maxw .shop-search-bar .dfcc .dfsb .container input,
-  #shop-product-list .maxw .shop-search-bar .dfcc .dfcc .container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
-  #shop-product-list .maxw .shop-search-bar .dfcc .dfsb .checkmark,
-  #shop-product-list .maxw .shop-search-bar .dfcc .dfcc .checkmark {
-    position: absolute;
-    top: -3px;
-    left: 0;
-    height: 25px;
-    width: 25px;
-    background-color: #eee;
-  }
-  #shop-product-list .maxw .shop-search-bar .dfcc .dfsb .container:hover input ~ .checkmark,
-  #shop-product-list .maxw .shop-search-bar .dfcc .dfcc .container:hover input ~ .checkmark {
-    background-color: #ccc;
-  }
-  #shop-product-list .maxw .shop-search-bar .dfcc .dfsb .container input:checked ~ .checkmark,
-  #shop-product-list .maxw .shop-search-bar .dfcc .dfcc .container input:checked ~ .checkmark {
-    background-color: #2196F3;
-  }
-  #shop-product-list .maxw .shop-search-bar .dfcc .dfsb .checkmark:after,
-  #shop-product-list .maxw .shop-search-bar .dfcc .dfcc .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-  }
-  #shop-product-list .maxw .shop-search-bar .dfcc .dfsb .container input:checked ~ .checkmark:after,
-  #shop-product-list .maxw .shop-search-bar .dfcc .dfcc .container input:checked ~ .checkmark:after {
-    display: block;
-  }
-  #shop-product-list .maxw .shop-search-bar .dfcc .dfsb .container .checkmark:after,
-  #shop-product-list .maxw .shop-search-bar .dfcc .dfcc .container .checkmark:after {
-    left: 9px;
-    top: 5px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    -webkit-transform: rotate(45deg);
-    transform: rotate(45deg);
   }
   #shop-product-list .maxw .shop-search-bar .dfcc .dfsb select,
   #shop-product-list .maxw .shop-search-bar .dfcc .dfcc select {
@@ -2997,81 +2914,84 @@ hr {
   }
 }
 
-.dfcc-secondpart-of-form {
+.secondpart-of-form {
   background-color: #fff;
   width: 100%;
   grid-gap: 1px;
   border: none;
-  /* elrejteni az alapvető checkboxot */
-  /* custom checkbox */
+  /* The container */
+  /* Hide the browser's default radio button */
+  /* Create a custom radio button */
+  /* On mouse-over, add a grey background color */
+  /* When the radio button is checked, add a blue background */
+  /* Create the indicator (the dot/circle - hidden when not checked) */
+  /* Show the indicator (dot/circle) when checked */
+  /* Style the indicator (dot/circle) */
 }
 
-.dfcc-secondpart-of-form .container2 {
+.secondpart-of-form .container-radio {
   display: block;
   position: relative;
-  padding-left: 45px;
   cursor: pointer;
   font-size: 1rem;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  padding-bottom: 0rem;
+  padding: 1rem;
+  padding-left: 4rem;
 }
 
-.dfcc-secondpart-of-form .container2 input {
+.secondpart-of-form .container-radio input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
-  height: 0;
-  width: 0;
 }
 
-.dfcc-secondpart-of-form .checkmark2 {
+.secondpart-of-form .checkmark {
   position: absolute;
-  top: -3px;
-  left: 0;
+  top: 15px;
+  left: 20px;
   height: 25px;
   width: 25px;
   background-color: #eee;
+  border-radius: 50%;
 }
 
-.dfcc-secondpart-of-form .container2:hover input ~ .checkmark2 {
+.secondpart-of-form .container-radio:hover input ~ .checkmark {
   background-color: #ccc;
 }
 
-.dfcc-secondpart-of-form .container2 input:checked ~ .checkmark2 {
-  background-color: #2196F3;
+.secondpart-of-form .container-radio input:checked ~ .checkmark {
+  background-color: #65A850;
 }
 
-.dfcc-secondpart-of-form .checkmark2::after {
+.secondpart-of-form .checkmark:after {
   content: "";
   position: absolute;
   display: none;
 }
 
-.dfcc-secondpart-of-form .container2 input:checked ~ .checkmark2::after {
+.secondpart-of-form .container-radio input:checked ~ .checkmark:after {
   display: block;
 }
 
-.dfcc-secondpart-of-form .container2 .checkmark2::after {
+.secondpart-of-form .container-radio .checkmark:after {
+  top: 9px;
   left: 9px;
-  top: 5px;
-  width: 5px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
 }
 
-.dfcc-secondpart-of-form select {
+.secondpart-of-form select {
   outline: none;
   border: none;
   font-size: 1rem;
 }
 
-.dfcc-secondpart-of-form select option {
+.secondpart-of-form select option {
   background-color: #65A850;
   color: #fff;
   font-size: 1rem;
@@ -3079,7 +2999,7 @@ hr {
   outline: none;
 }
 
-.dfcc-secondpart-of-form .dfc {
+.secondpart-of-form .dfc {
   -webkit-box-align: center !important;
       -ms-flex-align: center !important;
           align-items: center !important;
@@ -3090,7 +3010,7 @@ hr {
   padding: 1rem;
 }
 
-.dfcc-secondpart-of-form .shop-search-title-main {
+.secondpart-of-form .shop-search-title-main {
   font-size: 1.1rem;
   font-weight: bold;
   text-transform: uppercase;
