@@ -51,113 +51,27 @@ class Database
         return $products;
     }
 
-    public static function searchInShop($name, $sortItems, $discountItem, $rangeItemPrice, $onStock)
+    public static function countProductsRows()
     {
 
         //az összes olyan termék kiválasztása amiből több van mint 0, és még nem törölték (nincsen valid dátum beállítva a deleted_at propertynél)
         $sql = "SELECT * FROM `products`";
 
-        if ($name) {
-            $sql = "SELECT * FROM `products` WHERE `name` LIKE '%$name%'";
+        //csatlakozás az adatbázishoz, majd az sql parancs elküldése
+        $result = self::$conn->prepare($sql);
+        //sql parancs végrehajtása
+        $result->execute();
+        //kapott sql-oszlopok számának fetchelése
+        $count = $result->rowCount();
 
-            if ($sortItems && $sortItems != []) {
+        return $count;
+    }
 
-                if ($discountItem && $discountItem != []) {
-                    $sql = "SELECT * FROM `products` WHERE `products`.`discount` > 0";
+    public static function getAllProductsWithLimit($startNum, $endNum)
+    {
 
-                    if ($onStock && $onStock != []) {
-
-                        $sql = $sql . ' ' . "AND `products`.`quantity` > 0";
-
-                        if ($rangeItemPrice && $rangeItemPrice != []) {
-
-                            if (str_contains($rangeItemPrice, ' ') === true) {
-                                $prices = explode(" ", $rangeItemPrice);
-
-                                $sql = $sql . ' ' . "AND `price` BETWEEN $prices[0] AND $prices[1]";
-                            } else {
-                                $sql = $sql . ' ' . "AND `price` > $rangeItemPrice";
-                            }
-                        }
-                    }
-                }
-
-                switch ($sortItems) {
-
-                    case "sortByPriceDesc":
-                        $sql = $sql . ' ' . "ORDER BY `products`.`price` DESC;";
-                        break;
-                    case "sortByPriceAsc":
-                        $sql = $sql . ' ' . "ORDER BY `products`.`price` ASC;";
-                        break;
-                    case "sortByDiscount":
-                        $sql = $sql . ' ' . "ORDER BY `products`.`discount` DESC;";
-                        break;
-                }
-            }
-            if ($discountItem && $discountItem != []) {
-                $sql = $sql . ' ' . "AND `products`.`discount` > 0;";
-            }
-        } else {
-            if ($sortItems && $sortItems != []) {
-                if ($discountItem && $discountItem != []) {
-                    $sql = "SELECT * FROM `products` WHERE `products`.`discount` > 0";
-                }
-
-                switch ($sortItems) {
-
-                    case "sortByPriceDesc":
-                        $sql = $sql . ' ' . "ORDER BY `products`.`price` DESC;";
-                        break;
-                    case "sortByPriceAsc":
-                        $sql = $sql . ' ' . "ORDER BY `products`.`price` ASC;";
-                        break;
-                    case "sortByDiscount":
-                        $sql = $sql . ' ' . "ORDER BY `products`.`discount` DESC";
-                        break;
-                }
-            } else if ($discountItem && $discountItem != []) {
-                $sql = $sql . ' ' . "WHERE `products`.`discount` > 0";
-
-                if ($onStock && $onStock != []) {
-
-                    $sql = $sql . ' ' . "AND `products`.`quantity` > 0";
-
-                    if ($rangeItemPrice && $rangeItemPrice != []) {
-
-                        if (str_contains($rangeItemPrice, ' ') === true) {
-                            $prices = explode(" ", $rangeItemPrice);
-
-                            $sql = $sql . ' ' . "AND `price` BETWEEN $prices[0] AND $prices[1];";
-                        } else {
-                            $sql = $sql . ' ' . "AND `price` > $rangeItemPrice;";
-                        }
-                    }
-                } else if ($rangeItemPrice && $rangeItemPrice != []) {
-
-                    if (str_contains($rangeItemPrice, ' ') === true) {
-                        $prices = explode(" ", $rangeItemPrice);
-
-                        $sql = $sql . ' ' . "AND `price` BETWEEN $prices[0] AND $prices[1];";
-                    } else {
-                        $sql = $sql . ' ' . "AND `price` > $rangeItemPrice;";
-                    }
-                }
-            } else if ($rangeItemPrice && $rangeItemPrice != []) {
-
-                if (str_contains($rangeItemPrice, ' ') === true) {
-                    $prices = explode(" ", $rangeItemPrice);
-
-                    $sql = $sql . ' ' . "WHERE `price` BETWEEN $prices[0] AND $prices[1];";
-                } else {
-                    $sql = $sql . ' ' . "WHERE `price` > $rangeItemPrice;";
-                }
-            } else if ($onStock && $onStock != []) {
-
-                $sql = $sql . ' ' . "WHERE `products`.`quantity` > 0;";
-            }
-        }
-
+        //az összes olyan termék kiválasztása amiből több van mint 0, és még nem törölték (nincsen valid dátum beállítva a deleted_at propertynél)
+        $sql = "SELECT * FROM `products` LIMIT $startNum,$endNum";
 
         //csatlakozás az adatbázishoz, majd az sql parancs elküldése
         $result = self::$conn->prepare($sql);
@@ -470,6 +384,143 @@ class Database
         }
 
         return $orders;
+    }
+
+    public static function searchInShop($name, $sortItems, $discountItem, $rangeItemPrice, $onStock)
+    {
+
+        //az összes olyan termék kiválasztása amiből több van mint 0, és még nem törölték (nincsen valid dátum beállítva a deleted_at propertynél)
+        $sql = "SELECT * FROM `products`";
+
+        if ($name) {
+            $sql = "SELECT * FROM `products` WHERE `name` LIKE '%$name%'";
+
+            if ($sortItems && $sortItems != []) {
+
+                if ($discountItem && $discountItem != []) {
+                    $sql = "SELECT * FROM `products` WHERE `products`.`discount` > 0";
+
+                    if ($onStock && $onStock != []) {
+
+                        $sql = $sql . ' ' . "AND `products`.`quantity` > 0";
+
+                        if ($rangeItemPrice && $rangeItemPrice != []) {
+
+                            if (str_contains($rangeItemPrice, ' ') === true) {
+                                $prices = explode(" ", $rangeItemPrice);
+
+                                $sql = $sql . ' ' . "AND `price` BETWEEN $prices[0] AND $prices[1]";
+                            } else {
+                                $sql = $sql . ' ' . "AND `price` > $rangeItemPrice";
+                            }
+                        }
+                    }
+                }
+
+                switch ($sortItems) {
+
+                    case "sortByPriceDesc":
+                        $sql = $sql . ' ' . "ORDER BY `products`.`price` DESC;";
+                        break;
+                    case "sortByPriceAsc":
+                        $sql = $sql . ' ' . "ORDER BY `products`.`price` ASC;";
+                        break;
+                    case "sortByDiscount":
+                        $sql = $sql . ' ' . "ORDER BY `products`.`discount` DESC;";
+                        break;
+                }
+            }
+            if ($discountItem && $discountItem != []) {
+                $sql = $sql . ' ' . "AND `products`.`discount` > 0;";
+            }
+        } else {
+            if ($sortItems && $sortItems != []) {
+                if ($discountItem && $discountItem != []) {
+                    $sql = "SELECT * FROM `products` WHERE `products`.`discount` > 0";
+                }
+
+                switch ($sortItems) {
+
+                    case "sortByPriceDesc":
+                        $sql = $sql . ' ' . "ORDER BY `products`.`price` DESC;";
+                        break;
+                    case "sortByPriceAsc":
+                        $sql = $sql . ' ' . "ORDER BY `products`.`price` ASC;";
+                        break;
+                    case "sortByDiscount":
+                        $sql = $sql . ' ' . "ORDER BY `products`.`discount` DESC";
+                        break;
+                }
+            } else if ($discountItem && $discountItem != []) {
+                $sql = $sql . ' ' . "WHERE `products`.`discount` > 0";
+
+                if ($onStock && $onStock != []) {
+
+                    $sql = $sql . ' ' . "AND `products`.`quantity` > 0";
+
+                    if ($rangeItemPrice && $rangeItemPrice != []) {
+
+                        if (str_contains($rangeItemPrice, ' ') === true) {
+                            $prices = explode(" ", $rangeItemPrice);
+
+                            $sql = $sql . ' ' . "AND `price` BETWEEN $prices[0] AND $prices[1];";
+                        } else {
+                            $sql = $sql . ' ' . "AND `price` > $rangeItemPrice;";
+                        }
+                    }
+                } else if ($rangeItemPrice && $rangeItemPrice != []) {
+
+                    if (str_contains($rangeItemPrice, ' ') === true) {
+                        $prices = explode(" ", $rangeItemPrice);
+
+                        $sql = $sql . ' ' . "AND `price` BETWEEN $prices[0] AND $prices[1];";
+                    } else {
+                        $sql = $sql . ' ' . "AND `price` > $rangeItemPrice;";
+                    }
+                }
+            } else if ($rangeItemPrice && $rangeItemPrice != []) {
+
+                if (str_contains($rangeItemPrice, ' ') === true) {
+                    $prices = explode(" ", $rangeItemPrice);
+
+                    $sql = $sql . ' ' . "WHERE `price` BETWEEN $prices[0] AND $prices[1];";
+                } else {
+                    $sql = $sql . ' ' . "WHERE `price` > $rangeItemPrice;";
+                }
+            } else if ($onStock && $onStock != []) {
+
+                $sql = $sql . ' ' . "WHERE `products`.`quantity` > 0;";
+            }
+        }
+
+
+        //csatlakozás az adatbázishoz, majd az sql parancs elküldése
+        $result = self::$conn->prepare($sql);
+        //sql parancs végrehajtása
+        $result->execute();
+        //ebben a tömbben fognak eltárolódni a fetchelt termékek
+        $products = [];
+        //kapott sql-adat fetchelése
+        $data = $result->fetchAll();
+
+        //adatok megjelenítése (a kapott tömbön keresztül loopol)
+        foreach ($data as $row) {
+            switch ($row["category"]) {
+                case "pellet": {
+                        $products[] = new Product($row["id"], $row["name"], $row["description"], $row["image"], $row["price"], $row["quantity"], $row["onStock"], $row["weight"], $row["unitPrice"], $row["unitSize"], $row["flavour"], $row["colour"], $row["components"], $row["category"], $row["preFishes"], $row["discount"], $row["createdAt"], $row["deletedAt"]);
+                        break;
+                    }
+                case "feed": {
+                        $products[] = new Product($row["id"], $row["name"], $row["description"], $row["image"], $row["price"], $row["quantity"], $row["onStock"], $row["weight"], $row["unitPrice"], $row["unitSize"], $row["flavour"], $row["colour"], $row["components"], $row["category"], $row["preFishes"], $row["discount"], $row["createdAt"], $row["deletedAt"]);
+                        break;
+                    }
+                default: {
+                        echo "Ismeretlen kategória!";
+                    }
+            }
+        }
+
+        return $products;
     }
 
     private static function boolToSQL($bool)

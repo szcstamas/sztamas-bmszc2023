@@ -1119,8 +1119,7 @@ hr {
                         transition: all .1s ease;
 
                         img {
-                            width: 250px;
-                            height: auto;
+                            height: 250px;
                             object-fit: cover;
                             transition: all .1s ease-in-out;
                             transition-delay: .1s;
@@ -1250,8 +1249,8 @@ hr {
         isolation: isolate;
 
         img {
-            height: auto;
-            width: 70%;
+            height: 360px;
+            width: auto;
             object-fit: cover;
             animation: levitate 3s ease-in-out infinite;
 
@@ -1506,8 +1505,8 @@ hr {
                     transition: all .1s ease;
 
                     img {
-                        width: 250px;
-                        height: auto;
+                        width: auto;
+                        height: 250px;
                         object-fit: cover;
                         transition: all .1s ease-in-out;
                         transition-delay: .1s;

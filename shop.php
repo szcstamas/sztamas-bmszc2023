@@ -1,23 +1,48 @@
+<!-- header importálása -->
 <?php require_once("./components/header.php") ?>
 
 <?php
 
+//adatbázis meghívása
 require_once("db/database.php");
 
 //adatbázis kapcsolódás
 Database::connect();
 //az összes item megjelenítése az adatbázisból
-$products = Database::getAllProducts();
+$numOfRows = Database::countProductsRows();
 
+//pagination: a numOfItems változóban elmentett értéknek megfelelő mennyiségű termék fog kilistázódni az oldalon
+$numOfItems = 4;
+//az összes "termék-oldal" értéknek kiszámítása felfelé kerekítéssel
+$totalPages = ceil(($numOfRows / $numOfItems));
+//ha a page változó megtalálható az url-ben, akkor a $page változó vegye fel az értékét
+if (isset($_GET["page"])) {
+
+    $page = $_GET["page"];
+    $previousPage = $page - 1;
+    $nextPage = $page + 1;
+} else {
+
+    //egyébként meg ha nincsen page= az url-ben, akkor mindig legyen 1 a $page értéke (ez jelenti a kezdőoldalt)
+    $page = 1;
+    $nextPage = $page + 1;
+}
+//Az SQL szintaxis két számot vár a db.php-ban meghatározott LIMIT után: az első szám azt határozza meg, hogy hanyadik indexű terméktől kezdje el a számolást, a második pedig azt, hogy hány termékig "menjen el" az adott indexű termék után. Például a kezdőoldalnál: 1-1*4, ez azt jelenti hogy a 0-ik indexű itemnél kezdje el a számolást, második oldalnál 2-1*4, tehát a 4-ik indexű terméknél kezdje el a termékek megjelenítését. A $numOfItems mivel állandó változó, emiatt a lekérdezésben mindig 4 darab elemet kell megjelenítenie az oldalnak.
+$startFrom = ($page - 1) * $numOfItems;
+$products = Database::getAllProductsWithLimit($startFrom, $numOfItems);
+
+//a keresésben használt változók felvétele
 $searchName = "";
 $discountItem = "";
 $rangeItemPrice = "";
 $sortBy = "";
 $onStock = "";
 
+//ha a KERESÉS gombra kattintunk
 if (
     isset($_GET["submit-form"])
 ) {
+    //a keresésen belül minden változót külön vizsgáltam (van-e érték a keresőmezőben, be van-e kapcsolva az Akciós, a Raktáron, vagy a dropdown menüből valamelyik menüpont ki van-e választva), ez sajnos egy kifejezetten bonyolult szintaxishoz vezetett
     if (
         isset($_GET["search"]) &&
         !empty($_GET["search"])
@@ -93,7 +118,6 @@ if (
 }
 
 ?>
-
 <section id="shop-subpage-hero" class="section whitebg">
     <div class="homepage-main maxw">
         <div class="homepage-main-hero section-text-button">
@@ -172,20 +196,28 @@ if (
             <div class="shop-subpage-product-grid">
                 <?php
 
+                //ha nincs találat a keresésre
                 if (!$products) {
 
                     echo
                     "
                     <div style='display:flex;justify-content:center;align-items:center;width:100%;padding:2rem;gap:1rem;'>Nincs megfelelő találat a keresésre!<i style='color:#65A850;' class='bi bi-emoji-frown '></i></div>
                     ";
-                } else {
+                }
+                //ha van találat a kifejezésre
+                else {
 
+                    //adatokkal feltöltött tömb bejárása
                     foreach ($products as $product) {
+
+                        //ha a termék akciós
                         if ($product->discount > 0) {
 
+                            //akciós ár kiszámítása, majd a kapott ár lekerekítése
                             $discPrice = 100 - $product->discount;
                             $discPrice = $discPrice * 0.01;
                             $discPrice = $discPrice * $product->price;
+                            $discPrice = round($discPrice);
 
                             echo
                             "
@@ -213,7 +245,9 @@ if (
                         </div>
                         </div>
                         ";
-                        } else {
+                        }
+                        //ha a termék éppen nincsen leakciózva
+                        else {
 
                             echo
                             "
@@ -245,9 +279,24 @@ if (
                 }
                 ?>
             </div>
+            <div class="dffc">
+
+                <a <?= $page > 1 ? "href='shop.php?page=$previousPage'" : "disabled" ?>><i class='bi bi-caret-left-fill'></i></a>
+                <?php
+
+                //a totalPages változó értékével megegyező oldalszámok legenerálása for loop segítségével
+                for ($i = 1; $i <= $totalPages; $i++) {
+
+                    echo "<a href='shop.php?page=$i'>$i</a>";
+                }
+
+                ?>
+
+                <a <?= $page < $numOfItems ? "href='shop.php?page=$nextPage'" : "disabled" ?>><i class='bi bi-caret-right-fill'></i></a>
+            </div>
         </div>
     </div>
 </section>
 
-
+<!-- footer importja -->
 <?php require_once("./components/footer.php") ?>

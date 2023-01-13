@@ -114,6 +114,7 @@ foreach ($cart as $cartItem) {
                 $discPrice = 100 - $product->discount;
                 $discPrice = $discPrice * 0.01;
                 $discPrice = $discPrice * $product->price;
+                $discPrice = round($discPrice);
 
                 echo "
                   <div class='cart-subpage-item-titlebox dffs'>
@@ -194,7 +195,7 @@ foreach ($cart as $cartItem) {
               <h4>Végösszeg</h4>
               <p>
                 <?php
-                $_SESSION['totalprice'] = $sum;
+                $_SESSION['totalprice'] = round($sum);
                 ?>
                 <?= $_SESSION['totalprice'] ?> Ft</p>
             </div>

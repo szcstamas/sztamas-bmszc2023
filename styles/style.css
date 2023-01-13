@@ -1317,8 +1317,7 @@ hr {
 }
 
 #shop-product-list .maxw .shop-subpage-product-list .shop-subpage-product-grid .shop-grid-item .shop-image-container img {
-  width: 250px;
-  height: auto;
+  height: 250px;
   -o-object-fit: cover;
      object-fit: cover;
   -webkit-transition: all .1s ease-in-out;
@@ -1463,8 +1462,8 @@ hr {
 }
 
 #item-subpage-hero .item-image-container img {
-  height: auto;
-  width: 70%;
+  height: 360px;
+  width: auto;
   -o-object-fit: cover;
      object-fit: cover;
   -webkit-animation: levitate 3s ease-in-out infinite;
@@ -1771,8 +1770,8 @@ hr {
 }
 
 #items-other-products .items-other-items-grid .other-item-container .shop-grid-item .shop-image-container img {
-  width: 250px;
-  height: auto;
+  width: auto;
+  height: 250px;
   -o-object-fit: cover;
      object-fit: cover;
   -webkit-transition: all .1s ease-in-out;

@@ -48,6 +48,8 @@ $otherItems = Database::getAllProducts();
                             $discPrice = 100 - $product->discount;
                             $discPrice = $discPrice * 0.01;
                             $discPrice = $discPrice * $product->price;
+                            $discPrice = round($discPrice);
+
                             echo "<h4 class='item-subpage-detail-title'>$discPrice Ft <span style='font-family:Bebas Neue, Arial, Helvetica, sans-serif;text-decoration:line-through;opacity:0.35;'>$product->price Ft</span></h4>";
                         } else if ($product->discount === 0) {
                             echo "<h4 class='item-subpage-detail-title'>$product->price Ft</h4>";
@@ -164,12 +166,14 @@ $otherItems = Database::getAllProducts();
                     <div class="other-item-container">
                         <?php
 
+                        $i = 0;
                         foreach ($otherItems as $product) {
                             if ($product->discount > 0) {
 
                                 $discPrice = 100 - $product->discount;
                                 $discPrice = $discPrice * 0.01;
                                 $discPrice = $discPrice * $product->price;
+                                $discPrice = round($discPrice);
 
                                 echo
                                 "
@@ -223,6 +227,8 @@ $otherItems = Database::getAllProducts();
                             </div>
                             ";
                             }
+
+                            if (++$i == 4) break;
                         }
                         ?>
                     </div>

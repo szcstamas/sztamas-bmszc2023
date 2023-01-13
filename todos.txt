@@ -2,6 +2,8 @@
 MIN
 8. Pagination a shop oldalon
 9. partnereink aloldal
+10. search bar a headerben
+11. session start a headerben (többiből off) -> ha kész, felhasználónak ikonnak adni egy classt amivel látható ha be van lépve
 10. Főoldalon videó a heronak, az aloldalakra pedig illusztrációk a heroknak
 ---
 MUST
