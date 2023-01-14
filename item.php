@@ -168,35 +168,41 @@ $otherItems = Database::getAllProducts();
                         <?php
 
                         $i = 0;
-                        foreach ($otherItems as $product) {
-                            if ($product->discount > 0) {
+                        foreach ($otherItems as $otherItem) {
+                            if ($otherItem->discount > 0) {
 
-                                $discPrice = 100 - $product->discount;
+                                //ha a másik termék id-ja megegyezik az éppen fent mutatott termék id-jával, akkor ugorjon át egyet az iteráción (tehát ne mutassa ugyanazt a terméket, mint ami fent látható nagyban) 
+                                if ($otherItem->id === $product->id) {
+
+                                    continue;
+                                }
+
+                                $discPrice = 100 - $otherItem->discount;
                                 $discPrice = $discPrice * 0.01;
-                                $discPrice = $discPrice * $product->price;
+                                $discPrice = $discPrice * $otherItem->price;
                                 $discPrice = round($discPrice);
                                 $discPrice = ceil($discPrice / 10) * 10;
 
                                 echo
                                 "
                                 <div class='shop-grid-item dfcc'>
-                                    <div class='shop-item-discount dffc'>-{$product->discount}%</div>
+                                    <div class='shop-item-discount dffc'>-{$otherItem->discount}%</div>
                                 <div class='shop-image-container dffc'>
-                                    <img src='img/products/{$product->image}' alt='{$product->image}'>
+                                    <img src='img/products/{$otherItem->image}' alt='{$otherItem->image}'>
                                     <div class='shop-image-background'></div>
                                 </div>
                                 <div class='shop-item-body'>
                                     <div class='dfcc'>
                                     <div class='dfsb shop-item-title'>
-                                        <h4>{$product->name}</h4>
-                                        <p>{$product->weight} g</p>   
+                                        <a class='shop-link-title' style='display:inline-block;background-color:transparent!important;height:100%;width:100%;' href='item.php?id={$otherItem->id}'><h4>{$otherItem->name}</h4></a>
+                                        <p>{$otherItem->weight} g</p>   
                                     </div>
                                     <div class='dfsb'>
                                         <div class='dffc shop-item-price'>
                                             <span>{$discPrice} Ft</span>
-                                            <span style='text-decoration:line-through;'>{$product->price} Ft</span>
+                                            <span style='text-decoration:line-through;'>{$otherItem->price} Ft</span>
                                         </div>
-                                        <a href='item.php?id={$product->id}'><i class='bi bi-caret-right-fill'></i></a>
+                                        <a href='item.php?id={$otherItem->id}'><i class='bi bi-caret-right-fill'></i></a>
                                     </div>
                                     </div>
                                 </div>
@@ -204,25 +210,31 @@ $otherItems = Database::getAllProducts();
                                 ";
                             } else {
 
+                                //ha a másik termék id-ja megegyezik az éppen fent mutatott termék id-jával, akkor ugorjon át egyet az iteráción (tehát ne mutassa ugyanazt a terméket, mint ami fent látható nagyban) 
+                                if ($otherItem->id === $product->id) {
+
+                                    continue;
+                                }
+
                                 echo
                                 "
                             <div class='shop-grid-item dfcc'>
                             <div class='shop-image-container dffc'>
-                                <img src='img/products/{$product->image}' alt='{$product->image}'>
+                                <img src='img/products/{$otherItem->image}' alt='{$otherItem->image}'>
                                 <div class='shop-image-background'></div>
                             </div>
                             <div class='shop-item-body'>
                                 <div class='dfcc'>
                                 <div class='dfsb shop-item-title'>
-                                    <h4>{$product->name}</h4>
-                                    <p>{$product->weight} g</p>   
+                                <a class='shop-link-title' style='display:inline-block;background-color:transparent!important;height:100%;width:100%;' href='item.php?id={$otherItem->id}'><h4>{$otherItem->name}</h4></a>
+                                    <p>{$otherItem->weight} g</p>   
                                 </div>
                                 <div class='dfsb'>
                                     <div class='dffc shop-item-price'>
-                                        <span>{$product->price} Ft</span>
-                                        <span>( {$product->unitPrice} Ft/kg )</span>
+                                        <span>{$otherItem->price} Ft</span>
+                                        <span>( {$otherItem->unitPrice} Ft/kg )</span>
                                     </div>
-                                    <a href='item.php?id={$product->id}'><i style='color:#272727;' class='bi bi-caret-right-fill'></i></a>
+                                    <a href='item.php?id={$otherItem->id}'><i class='bi bi-caret-right-fill'></i></a>
                                 </div>
                                 </div>
                             </div>

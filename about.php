@@ -154,7 +154,7 @@ Database::connect();
                     </div>
                     <div class="about-us-personbox dfcc">
                         <div class="image-container">
-                            <img src="img/szakbotond.png" alt="profil fotó">
+                            <img src="img/people/szakbotond.png" alt="profil fotó">
                         </div>
                         <div class="name-container">
                             <h5>Szák Botond</h5>
@@ -163,7 +163,7 @@ Database::connect();
                     </div>
                     <div class="about-us-personbox dfcc">
                         <div class="image-container">
-                            <img src="img/vighbalazs.png" alt="profil fotó">
+                            <img src="img/people/vighbalazs.png" alt="profil fotó">
                         </div>
                         <div class="name-container">
                             <h5>Vígh Balázs</h5>
@@ -172,7 +172,7 @@ Database::connect();
                     </div>
                     <div class="about-us-personbox dfcc">
                         <div class="image-container">
-                            <img src="img/kovacsarpad.png" alt="profil fotó">
+                            <img src="img/people/kovacsarpad.png" alt="profil fotó">
                         </div>
                         <div class="name-container">
                             <h5>Kovács Árpád</h5>
@@ -181,7 +181,7 @@ Database::connect();
                     </div>
                     <div class="about-us-personbox dfcc">
                         <div class="image-container">
-                            <img src="img/antalgereb.png" alt="profil fotó">
+                            <img src="img/people/antalgereb.png" alt="profil fotó">
                         </div>
                         <div class="name-container">
                             <h5>Antal Geréb</h5>
