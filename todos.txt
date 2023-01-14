@@ -19,3 +19,19 @@ MUST
 POST READY
 - indexen
 11. Form authentikáció (email, stb) (?)
+
+RESP DONE:
+- HOMEPAGE
+- WEBSHOP
+- CONTACT
+- ABOUT
+- CART (empty and full)
+- PROFILE (login)
+- CHECKOUT
+- SUCCESS
+- ITEM
+- PROFILE LOGGED IN
+
+
+WAITING:
+- ADMINLOGIN

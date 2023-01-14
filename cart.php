@@ -140,6 +140,60 @@ foreach ($cart as $cartItem) {
                       </div>
                     </div>
                   </div>
+
+                  <div class='cart-list-on-mobile'>
+                      <div class='dfsb cart-mobile-row'>
+                          <div class='dffc cart-mobile-td'>
+                            Megnevezés
+                          </div>
+                          <div class='dffc cart-mobile-td'>
+                          {$product->name}
+                          </div>
+                      </div>
+
+                      <div class='dfsb cart-mobile-row'>
+                        <div class='dffc cart-mobile-td'>
+                        Súly/db
+                        </div>
+                        <div class='dffc cart-mobile-td'>
+                        {$product->weight}
+                        </div>
+                      </div>
+
+                      <div class='dfsb cart-mobile-row'>
+                        <div class='dffc cart-mobile-td'>
+                        Ár/db
+                        </div>
+                        <div class='dffc cart-mobile-td'>
+                        {$discPrice} Ft <span style='color:#65A850;'>(Akció!)</span>
+                        </div>
+                      </div>
+
+                      <div class='dfsb cart-mobile-row'>
+                        <div class='dffc cart-mobile-td'>
+                        Kilós ár
+                        </div>
+                        <div class='dffc cart-mobile-td'>
+                        {$product->unitPrice}
+                        </div>
+                      </div>
+
+                      <div class='dfcc cart-mobile-row'>
+                        <div class='dffc cart-mobile-td'>
+                          Darabszám
+                        </div>
+                        <div class='dffc cart-mobile-td'>
+                          <div class='dffc'>
+                            <a class='dffc' href='cart.php?remove={$product->id}' type='button'><span class='dffc'><i class='bi bi-dash-circle'></i></span></a>
+                            <input type='text' readonly
+                            value='{$count}'>
+                            <a class='dffc' href='cart.php?id={$product->id}' type='button'><span class='dffc'><i class='bi bi-plus-circle'></i></span></a>
+                            <a class='dffc' href='cart.php?delete={$product->id}' class='btn btn-outline-secondary ms-2' type='button'><i class='bi bi-x'></i></a>
+                          </div>
+                        </div>
+                      </div>
+                  
+                  </div>
               ";
               } else {
                 echo "
@@ -165,6 +219,61 @@ foreach ($cart as $cartItem) {
                         <a class='dffc' href='cart.php?delete={$product->id}' class='btn btn-outline-secondary ms-2' type='button'><i class='bi bi-x'></i></a>
                       </div>
                     </div>
+                  </div>
+
+                  <div class='cart-list-on-mobile'>
+                  
+                    <div class='dfsb cart-mobile-row'>
+                        <div class='dffc cart-mobile-td'>
+                          Megnevezés
+                        </div>
+                        <div class='dffc cart-mobile-td'>
+                        {$product->name}
+                        </div>
+                    </div>
+
+                    <div class='dfsb cart-mobile-row'>
+                      <div class='dffc cart-mobile-td'>
+                      Súly/db
+                      </div>
+                      <div class='dffc cart-mobile-td'>
+                      {$product->weight}
+                      </div>
+                    </div>
+
+                    <div class='dfsb cart-mobile-row'>
+                      <div class='dffc cart-mobile-td'>
+                      Ár/db
+                      </div>
+                      <div class='dffc cart-mobile-td'>
+                      {$product->price} Ft
+                      </div>
+                    </div>
+
+                    <div class='dfsb cart-mobile-row'>
+                      <div class='dffc cart-mobile-td'>
+                      Kilós ár
+                      </div>
+                      <div class='dffc cart-mobile-td'>
+                      {$product->unitPrice}
+                      </div>
+                    </div>
+
+                    <div class='dfcc cart-mobile-row'>
+                      <div class='dffc cart-mobile-td'>
+                        Darabszám
+                      </div>
+                      <div class='dffc cart-mobile-td'>
+                        <div class='dffc'>
+                          <a class='dffc' href='cart.php?remove={$product->id}' type='button'><span class='dffc'><i class='bi bi-dash-circle'></i></span></a>
+                          <input type='text' readonly
+                          value='{$count}'>
+                          <a class='dffc' href='cart.php?id={$product->id}' type='button'><span class='dffc'><i class='bi bi-plus-circle'></i></span></a>
+                          <a class='dffc' href='cart.php?delete={$product->id}' class='btn btn-outline-secondary ms-2' type='button'><i class='bi bi-x'></i></a>
+                        </div>
+                      </div>
+                    </div>
+              
                   </div>
               ";
               }

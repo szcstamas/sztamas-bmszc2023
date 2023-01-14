@@ -184,7 +184,7 @@ if (isset($_GET["search"])) {
                     </div>
                 </div>
                 <div class="dfsb">
-                    <p class="shop-search-title-main">Ár</p>
+                    <p class="shop-search-title-main">Ár szerint:</p>
                 </div>
                 <div class="dfcc secondpart-of-form">
                     <label class="container-radio">1 - 2000 Ft

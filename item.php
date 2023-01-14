@@ -152,7 +152,7 @@ $otherItems = Database::getAllProducts();
     <section id="items-other-products" class="section section-nopad whitebg">
         <div class="homepage-main maxw">
             <hr style="color: #65A850; border:none; border-bottom: 1px solid #65A850;">
-            <div class="dfsb items-other-products-main" style="gap: 4rem;">
+            <div class="dfsb items-other-products-main" style="gap: 2rem;">
                 <div class="homepage-main-hero section-text-button">
                     <div class="homepage-main-title">
                         <h4 class="title-firstline">További</h4>

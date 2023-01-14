@@ -1,0 +1,349 @@
+//főoldal + newsletter
+@media screen and (max-width: 750px) {
+
+    h1 {
+        font-size: 110px !important;
+        line-height: 100px !important;
+    }
+
+    #homepage-hero,
+    #top-products,
+    #selling-and-partners,
+    #best-catches,
+    #fish-calendar,
+    #newsletter-subscribe {
+        padding: 2rem;
+
+        .homepage-main {
+            flex-direction: column;
+            justify-content: flex-start !important;
+            gap: 2rem;
+
+            .homepage-main-hero {
+                width: 100%;
+            }
+
+            .homepage-main-hero+* {
+                width: 100%;
+            }
+        }
+
+    }
+
+    #selling-and-partners {
+        .partners-box-image-container {
+            img {
+                width: 85% !important;
+            }
+        }
+    }
+
+    #fish-calendar {
+
+        .homepage-main-hero {
+            padding: 1rem 0 !important;
+        }
+
+        .main-container {
+            .img-container {
+                width: 100%;
+                height: 350px;
+
+                &:hover~.img-subtext {
+                    left: auto !important;
+                    top: -200px;
+                }
+            }
+
+            .img-link {
+
+                &:hover~.img-subtext {
+                    left: auto !important;
+                    top: -200px;
+                }
+            }
+
+            .img-subtext {
+                left: auto !important;
+                right: -150px !important;
+                transform: translateX(-77%);
+
+                &::before {
+                    top: 100%;
+                    left: auto;
+                    border-left: 25px solid #65A850;
+                    border-right: none;
+                    right: 0;
+                    bottom: 0;
+                }
+            }
+        }
+
+        .container {
+            transform: scale(0.8);
+        }
+
+    }
+
+    #newsletter-subscribe {
+        .dfsb {
+            gap: 1.5rem;
+
+            h2 {
+                padding: 0;
+            }
+
+            form {
+                width: 100%;
+            }
+        }
+    }
+}
+
+//shop subpage
+@media screen and (max-width: 750px) {
+    #shop-product-list {
+        .homepage-main {
+            flex-direction: column;
+
+            .shop-search-bar,
+            .shop-subpage-product-list {
+                width: 100% !important;
+            }
+        }
+    }
+}
+
+//about subpage
+@media screen and (max-width: 750px) {
+
+    #about-subpage-hero,
+    #about-subpage-main {
+        padding: 2rem;
+    }
+
+    #about-subpage-hero {
+        padding-bottom: 0 !important;
+
+        .homepage-main {
+            flex-direction: column;
+
+            .shop-search-bar,
+            .shop-subpage-product-list {
+                width: 100% !important;
+            }
+        }
+    }
+}
+
+//cart subpage
+@media screen and (max-width: 750px) {
+
+    #cart-main-section {
+        padding: 6rem 2rem;
+
+        .homepage-main {
+            flex-direction: column;
+
+            .homepage-main-hero,
+            .homepage-main-hero+* {
+                width: 100% !important;
+
+            }
+
+            .cart-subpage-item {
+                .cart-subpage-title-firstrow {
+                    h4 {
+                        width: 20% !important;
+                    }
+                }
+
+                .cart-subpage-item-titlebox {
+                    .cart-subpage-item-titlebox-td {
+                        width: 20% !important;
+                    }
+                }
+
+            }
+        }
+    }
+}
+
+//profile subpage
+@media screen and (max-width: 750px) {
+
+    .profile-user-subpage-login-section {
+        padding: 6rem 2rem !important;
+
+        .profile-user-subpage-title {
+            h2 {
+                line-height: 50px !important;
+            }
+        }
+    }
+}
+
+//checkout subpage
+@media screen and (max-width: 750px) {
+
+    #checkout-section {
+        padding: 6rem 2rem !important;
+
+        .checkout-maxw {
+            max-width: 100%;
+
+            form {
+                .checkout-thirdrow {
+                    width: 100%;
+
+                    .checkout-form-payment {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//success subpage
+@media screen and (max-width: 750px) {
+
+    #checkout-section-thankyou {
+        padding: 6rem 2rem !important;
+
+        h1 {
+            font-size: 90px !important;
+            line-height: 80px !important;
+        }
+    }
+}
+
+//item subpage
+@media screen and (max-width: 750px) {
+
+    #item-subpage-hero,
+    #items-other-products {
+        padding: 3rem 2rem !important;
+
+        h1 {
+            font-size: 100px !important;
+            line-height: 90px !important;
+        }
+    }
+
+    #item-subpage-hero {
+
+        .homepage-main {
+            flex-direction: column !important;
+
+            .item-left-row-overflow {
+                width: 100%;
+            }
+
+            .item-image-container {
+                width: 100%;
+            }
+        }
+
+        .item-image-container {
+            margin-top: 2rem;
+
+            img {
+                height: 450px !important;
+            }
+
+            .item-image-container-background {
+                width: 250px !important;
+                height: 250px !important;
+
+                .circle {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    #items-other-products {
+
+        .homepage-main {
+
+            .items-other-products-main {
+                flex-direction: column !important;
+                align-items: center !important;
+
+                .homepage-main-hero,
+                .homepage-main-hero+* {
+                    width: 100%;
+                }
+
+                .other-item-container {
+                    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+                    .shop-grid-item {
+
+                        &:nth-child(2),
+                        &:nth-child(3) {
+                            background-color: #65A850 !important;
+
+                            * {
+                                color: #fff !important;
+                            }
+
+                            .shop-item-discount {
+                                background-color: #fff;
+                                color: #65A850 !important;
+                            }
+
+                            .shop-image-container {
+                                position: relative;
+                                height: 300px;
+                                width: 100%;
+                                text-align: center;
+                                isolation: isolate;
+                                transition: all .1s ease;
+
+                                img {
+                                    object-fit: cover;
+                                    transition: all .1s ease-in-out;
+                                    transition-delay: .1s;
+                                }
+
+                                .shop-image-background {
+                                    position: absolute;
+                                    width: 200px;
+                                    height: 200px;
+                                    border-radius: 50%;
+                                    background-color: #fff;
+                                    top: 50%;
+                                    left: 50%;
+                                    transform: translate(-50%, -50%);
+                                    z-index: -1;
+                                }
+                            }
+
+                            a {
+                                background-color: #fff !important;
+                                color: #65A850 !important;
+                                width: 40px;
+                                height: 40px;
+                                border-radius: 50%;
+                                @include dFlex();
+                                transition: all .1s ease-in-out;
+
+                                i {
+                                    color: #65A850 !important;
+                                }
+
+                                &:hover {
+                                    background-color: #f2f2f2 !important;
+                                    transform: translateX(5px);
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
