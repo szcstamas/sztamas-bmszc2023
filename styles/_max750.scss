@@ -108,6 +108,18 @@
 
 //shop subpage
 @media screen and (max-width: 750px) {
+
+    #shop-subpage-hero {
+        .homepage-main {
+            flex-direction: column;
+
+            .homepage-main-hero,
+            .shop-hero-image {
+                width: 100% !important;
+            }
+        }
+    }
+
     #shop-product-list {
         .homepage-main {
             flex-direction: column;

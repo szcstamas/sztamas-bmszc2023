@@ -845,6 +845,10 @@
         -ms-flex-direction: column;
             flex-direction: column;
   }
+  #about-subpage-hero .homepage-main .homepage-main-hero,
+  #about-subpage-hero .homepage-main .homepage-main-hero + * {
+    width: 100% !important;
+  }
   #about-subpage-hero .homepage-main .shop-search-bar,
   #about-subpage-hero .homepage-main .shop-subpage-product-list {
     width: 100% !important;
@@ -1107,6 +1111,19 @@
   }
 }
 
+@media screen and (max-width: 900px) {
+  .profile-user-subpage-login-section {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .profile-user-subpage-login-section .subpage-login-container,
+  .profile-user-subpage-login-section .profile-user-subpage-heroimg {
+    width: 100% !important;
+  }
+}
+
 @media screen and (max-width: 1100px) {
   #profile-subpage-user-section {
     padding: 6rem 2rem !important;
@@ -1258,7 +1275,29 @@
   #partners-subpage-partnerlist .homepage-main .homepage-main-hero + *,
   #partners-subpage-forpartners .homepage-main .homepage-main-hero,
   #partners-subpage-forpartners .homepage-main .homepage-main-hero + * {
+    width: 100% !important;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  section.item-subpage-error {
+    padding: 2rem !important;
+  }
+  section.item-subpage-error .homepage-main {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  section.item-subpage-error .homepage-main .homepage-main-hero,
+  section.item-subpage-error .homepage-main .homepage-main-hero + * {
+    width: 100% !important;
+  }
+  section.item-subpage-error .homepage-main .item-subpage-error-imgcont img {
     width: 100%;
+    height: auto;
+    -o-object-fit: cover;
+       object-fit: cover;
   }
 }
 
@@ -2996,6 +3035,16 @@
 }
 
 @media screen and (max-width: 750px) {
+  #shop-subpage-hero .homepage-main {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  #shop-subpage-hero .homepage-main .homepage-main-hero,
+  #shop-subpage-hero .homepage-main .shop-hero-image {
+    width: 100% !important;
+  }
   #shop-product-list .homepage-main {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
@@ -3300,8 +3349,10 @@ body {
   position: relative;
 }
 
-a {
+a,
+button {
   text-decoration: none;
+  cursor: pointer;
 }
 
 hr {
@@ -3822,6 +3873,18 @@ hr {
   color: #65A850;
 }
 
+#about-subpage-hero .homepage-main .homepage-main-hero,
+#about-subpage-hero .homepage-main .homepage-main-hero + * {
+  width: 50%;
+}
+
+#about-subpage-hero .homepage-main .about-subpage-imgcontainer img {
+  width: 100%;
+  height: auto;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
 .about-subpage-container {
   gap: 3rem !important;
   -webkit-box-align: start !important;
@@ -4199,6 +4262,17 @@ hr {
 
 #shop-subpage-hero {
   padding: 6rem 0 3rem 0;
+}
+
+#shop-subpage-hero .homepage-main .homepage-main-hero + * {
+  width: 50%;
+}
+
+#shop-subpage-hero .homepage-main .shop-hero-image img {
+  width: 100%;
+  height: auto;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 #shop-product-list {
@@ -4943,6 +5017,22 @@ hr {
   color: #65A850;
 }
 
+.item-subpage-error {
+  padding: 0 !important;
+}
+
+.item-subpage-error .homepage-main .homepage-main-hero,
+.item-subpage-error .homepage-main .homepage-main-hero + * {
+  width: 50%;
+}
+
+.item-subpage-error .homepage-main .item-subpage-error-imgcont img {
+  width: 100%;
+  height: auto;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
 #items-other-products .items-other-items-grid,
 #top-products .items-other-items-grid {
   width: 42.5%;
@@ -5655,6 +5745,21 @@ hr {
   padding-bottom: 2rem;
 }
 
+#partners-subpage-hero .homepage-main .homepage-main-hero {
+  width: 50%;
+}
+
+#partners-subpage-hero .homepage-main .partners-subpage-image {
+  width: 40%;
+}
+
+#partners-subpage-hero .homepage-main .partners-subpage-image img {
+  width: 100%;
+  height: auto;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
 #partners-subpage-partnerlist {
   padding-bottom: 5rem;
 }
@@ -5792,6 +5897,18 @@ hr {
 
 .profile-user-subpage-login-section .profile-user-subpage-title .section-paragraph-gray {
   padding: 2rem 0;
+}
+
+.profile-user-subpage-login-section .subpage-login-container,
+.profile-user-subpage-login-section .profile-user-subpage-heroimg {
+  width: 50%;
+}
+
+.profile-user-subpage-login-section .profile-user-subpage-heroimg img {
+  height: auto;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .profile-user-subpage-login-section .profile-login-form {

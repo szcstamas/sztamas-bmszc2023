@@ -9,7 +9,7 @@ Database::connect();
 ?>
 
 <section id="about-subpage-hero" class="section whitebg" style="padding-bottom:3rem;">
-    <div class="homepage-main maxw">
+    <div class="homepage-main maxw dfsb">
         <div class="homepage-main-hero section-text-button">
             <div class="homepage-main-title">
                 <h4 class="title-firstline">Amit tudnod kell</h4>
@@ -21,8 +21,8 @@ Database::connect();
                 <button class="button-green"><span>rólunk és gy.i.k</span><i class="bi bi-caret-down-fill"></i></button>
             </a>
         </div>
-        <div class="top-product-list">
-
+        <div class="about-subpage-imgcontainer">
+            <img src="img/main/red.jpg" alt="red fishing">
         </div>
     </div>
 </section>

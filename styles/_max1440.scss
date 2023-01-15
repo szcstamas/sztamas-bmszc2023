@@ -668,6 +668,11 @@
         .homepage-main {
             flex-direction: column;
 
+            .homepage-main-hero,
+            .homepage-main-hero+* {
+                width: 100% !important;
+            }
+
             .shop-search-bar,
             .shop-subpage-product-list {
                 width: 100% !important;
@@ -981,6 +986,19 @@
 
 }
 
+//profile subpage
+@media screen and (max-width: 900px) {
+
+    .profile-user-subpage-login-section {
+        flex-direction: column;
+
+        .subpage-login-container,
+        .profile-user-subpage-heroimg {
+            width: 100% !important;
+        }
+    }
+}
+
 //profile-logged-in subpage
 @media screen and (max-width: 1100px) {
 
@@ -1152,7 +1170,32 @@
 
             .homepage-main-hero,
             .homepage-main-hero+* {
-                width: 100%;
+                width: 100% !important;
+            }
+        }
+    }
+}
+
+//item-error subpage
+@media screen and (max-width: 950px) {
+
+    section.item-subpage-error {
+        padding: 2rem !important;
+
+        .homepage-main {
+            flex-direction: column;
+
+            .homepage-main-hero,
+            .homepage-main-hero+* {
+                width: 100% !important;
+            }
+
+            .item-subpage-error-imgcont {
+                img {
+                    width: 100%;
+                    height: auto;
+                    object-fit: cover;
+                }
             }
         }
     }

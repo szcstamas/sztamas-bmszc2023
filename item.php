@@ -266,8 +266,8 @@ $otherItems = Database::getAllProducts();
     </section>
 
 <?php else : ?>
-    <section id="shop-subpage-hero" class="section whitebg">
-        <div class="homepage-main maxw">
+    <section id="shop-subpage-hero" class="section-nopad whitebg item-subpage-error" style="padding-bottom:6rem;">
+        <div class="homepage-main maxw dfsb">
             <div class="homepage-main-hero section-text-button">
                 <div class="homepage-main-title">
                     <h4 class="title-firstline">Nincs ilyen</h4>
@@ -277,6 +277,9 @@ $otherItems = Database::getAllProducts();
                 <a href="shop.php">
                     <button class="button-green"><span>terméklista</span><i class="bi bi-caret-left-fill"></i></button>
                 </a>
+            </div>
+            <div class="item-subpage-error-imgcont">
+                <img src="img/main/404.jpg" alt="404 error fishing">
             </div>
         </div>
     </section>

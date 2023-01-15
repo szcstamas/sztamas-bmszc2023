@@ -63,89 +63,94 @@ if (isset($_POST["action"]) && $_POST["action"] === "regisztráció") {
 
 <?php if (!isset($_SESSION["userId"])) : ?>
 
-    <section class='section maxw admin-section profile-user-subpage-login-section'>
-        <div class="profile-user-subpage-title">
-            <h2 class="profile-user-subpage-title-h2">Jelentkezz be felhasználói fiókodba,</h2>
-            <h4 class="profile-user-subpage-title-h4">vagy regisztrálj oldalunkra!</h4>
+    <section class='section maxw admin-section profile-user-subpage-login-section dfsb'>
+        <div class="subpage-login-container dfcc">
+            <div class="profile-user-subpage-title">
+                <h2 class="profile-user-subpage-title-h2">Jelentkezz be felhasználói fiókodba,</h2>
+                <h4 class="profile-user-subpage-title-h4">vagy regisztrálj oldalunkra!</h4>
 
-            <?php
+                <?php
 
-            if (isset($_GET['error'])) {
+                if (isset($_GET['error'])) {
 
-                switch ($_GET['error']) {
+                    switch ($_GET['error']) {
 
-                    case "emptyfields":
-                        echo "<p style='color:#f59042;' class='section-paragraph-gray'>A regisztrációhoz kérjük, hogy töltsd ki az összes mezőt!</p>";
-                        break;
+                        case "emptyfields":
+                            echo "<p style='color:#f59042;' class='section-paragraph-gray'>A regisztrációhoz kérjük, hogy töltsd ki az összes mezőt!</p>";
+                            break;
 
-                    case "invalidmail":
-                        echo "<p style='color:#f59042;' class='section-paragraph-gray'>Helytelen email-formátum!</p>";
-                        break;
+                        case "invalidmail":
+                            echo "<p style='color:#f59042;' class='section-paragraph-gray'>Helytelen email-formátum!</p>";
+                            break;
 
-                    case "invalidmailuid":
-                        echo "<p style='color:#f59042;' class='section-paragraph-gray'>Helytelen e-mail és felhasználónév!</p>";
-                        break;
+                        case "invalidmailuid":
+                            echo "<p style='color:#f59042;' class='section-paragraph-gray'>Helytelen e-mail és felhasználónév!</p>";
+                            break;
 
-                    case "invaliduid":
-                        echo "<p style='color:#f59042;' class='section-paragraph-gray'>Helytelen felhasználónév!</p>";
-                        break;
+                        case "invaliduid":
+                            echo "<p style='color:#f59042;' class='section-paragraph-gray'>Helytelen felhasználónév!</p>";
+                            break;
 
-                    case "sqlerror":
-                        echo "<p style='color:#f59042;' class='section-paragraph-gray'>Hiba az adatbázisban!</p>";
-                        break;
+                        case "sqlerror":
+                            echo "<p style='color:#f59042;' class='section-paragraph-gray'>Hiba az adatbázisban!</p>";
+                            break;
 
-                    case "emptylogin":
-                        echo "<p style='color:#f59042;' class='section-paragraph-gray'>Üres adatokkal sajnos nem lehet bejelentkezni! Kérjük, hogy tölsd ki az összes mezőt!</p>";
-                        break;
+                        case "emptylogin":
+                            echo "<p style='color:#f59042;' class='section-paragraph-gray'>Üres adatokkal sajnos nem lehet bejelentkezni! Kérjük, hogy tölsd ki az összes mezőt!</p>";
+                            break;
 
-                    case "usertaken":
-                        echo "<p style='color:#f59042;' class='section-paragraph-gray'>A megadott adatokkal már létezik felhasználó!</p>";
-                        break;
+                        case "usertaken":
+                            echo "<p style='color:#f59042;' class='section-paragraph-gray'>A megadott adatokkal már létezik felhasználó!</p>";
+                            break;
 
-                    case "nouser":
-                        echo "<p style='color:#f59042;' class='section-paragraph-gray'>A megadott adatokkal nem létezik ilyen felhasználó!</p>";
-                        break;
+                        case "nouser":
+                            echo "<p style='color:#f59042;' class='section-paragraph-gray'>A megadott adatokkal nem létezik ilyen felhasználó!</p>";
+                            break;
+                    }
+                } else if (isset($_GET['login'])) {
+
+                    switch ($_GET['login']) {
+
+                        case "wrongpassword":
+                            echo "<p style='color:#f59042;' class='section-paragraph-gray'>Helytelen jelszó!</p>";
+                            break;
+
+                        case "success":
+                            echo "<p style='color:#65A850;' class='section-paragraph-gray'>Sikeres belépés! Üdvözlünk $username!</p>";
+                            header("Location: profile.php");
+                            break;
+                    }
+                } else if (isset($_GET['signup'])) {
+
+                    switch ($_GET['signup']) {
+
+                        case "success":
+                            echo "<p style='color:#65A850;' class='section-paragraph-gray'>Sikeres regisztráció! Most már bejelentkezhetsz az adataiddal!</p>";
+                            break;
+                    }
+                } else {
+                    echo " <p class='section-paragraph-gray'>A kért adatok beírását követően kattins a <em>Bejelentkezés</em>, vagy újonnan érkező vásárlóként a <em>Regisztráció</em> gombra.</p>";
                 }
-            } else if (isset($_GET['login'])) {
 
-                switch ($_GET['login']) {
-
-                    case "wrongpassword":
-                        echo "<p style='color:#f59042;' class='section-paragraph-gray'>Helytelen jelszó!</p>";
-                        break;
-
-                    case "success":
-                        echo "<p style='color:#65A850;' class='section-paragraph-gray'>Sikeres belépés! Üdvözlünk $username!</p>";
-                        header("Location: profile.php");
-                        break;
-                }
-            } else if (isset($_GET['signup'])) {
-
-                switch ($_GET['signup']) {
-
-                    case "success":
-                        echo "<p style='color:#65A850;' class='section-paragraph-gray'>Sikeres regisztráció! Most már bejelentkezhetsz az adataiddal!</p>";
-                        break;
-                }
-            } else {
-                echo " <p class='section-paragraph-gray'>A kért adatok beírását követően kattins a <em>Bejelentkezés</em>, vagy újonnan érkező vásárlóként a <em>Regisztráció</em> gombra.</p>";
-            }
-
-            ?>
-        </div>
-        <form method="POST" class="dfcc profile-login-form">
-            <label>Felhasználónév:</label>
-            <input name="username" type="text" placeholder="Ide írd a felhasználónevedet..."></input>
-            <label>E-mail cím:</label>
-            <input name="useremail" type="email" placeholder="Ide írd az email-címedet..."></input>
-            <label>Jelszó:</label>
-            <input name="userpassword" type="password" placeholder="Ide pedig a jelszavadat!"></input>
-            <div class="dfsb login-form-buttons">
-                <input class="button-green" type="submit" name="action" value="bejelentkezés" />
-                <input class="button-gray" type="submit" name="action" value="regisztráció" />
+                ?>
             </div>
+            <form method="POST" class="dfcc profile-login-form">
+                <label>Felhasználónév:</label>
+                <input name="username" type="text" placeholder="Ide írd a felhasználónevedet..."></input>
+                <label>E-mail cím:</label>
+                <input name="useremail" type="email" placeholder="Ide írd az email-címedet..."></input>
+                <label>Jelszó:</label>
+                <input name="userpassword" type="password" placeholder="Ide pedig a jelszavadat!"></input>
+                <div class="dfsb login-form-buttons">
+                    <input class="button-green" type="submit" name="action" value="bejelentkezés" />
+                    <input class="button-gray" type="submit" name="action" value="regisztráció" />
+                </div>
 
-        </form>
+            </form>
+        </div>
+        <div class="profile-user-subpage-heroimg">
+            <img src="img/main/blue.jpg" alt="blue fishing">
+        </div>
     </section>
 
 <?php else : ?>

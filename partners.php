@@ -28,6 +28,7 @@ $partnersArray = json_decode($partnersJson, true);
             </div>
         </div>
         <div class="partners-subpage-image">
+            <img src="img/main/softgreen3.jpg" alt="partners hero image">
         </div>
     </div>
 </section>

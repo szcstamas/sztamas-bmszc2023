@@ -1,9 +1,8 @@
 ---
 MIN
-10. Főoldalon videó a heronak, az aloldalakra pedig illusztrációk a heroknak
-12. felhasználó feltételek
-14. impresszum
-15. adatvédelmi tájékoztató
+10. Főoldalon videó a heronak
+11. üzenetküldés? ha lesz rá idő
+12. hamburger menü? ha lesz rá idő
 ---
 MUST
 14. DB Dump

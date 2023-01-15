@@ -135,7 +135,7 @@ if (isset($_GET["search"])) {
 
 ?>
 <section id="shop-subpage-hero" class="section whitebg">
-    <div class="homepage-main maxw">
+    <div class="homepage-main maxw dfsb">
         <div class="homepage-main-hero section-text-button">
             <div class="homepage-main-title">
                 <h4 class="title-firstline">Minden</h4>
@@ -145,6 +145,9 @@ if (isset($_GET["search"])) {
             <a href="#shop-product-list">
                 <button class="button-green"><span>terméklista</span><i class="bi bi-caret-down-fill"></i></button>
             </a>
+        </div>
+        <div class="shop-hero-image dffc">
+            <img src="img/main/yellow.jpg" alt="family fishing">
         </div>
     </div>
 </section>

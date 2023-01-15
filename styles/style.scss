@@ -40,8 +40,11 @@ body {
     position: relative;
 }
 
-a {
+
+a,
+button {
     text-decoration: none;
+    cursor: pointer;
 
 }
 
@@ -466,6 +469,25 @@ hr {
     }
 }
 
+#about-subpage-hero {
+    .homepage-main {
+
+        .homepage-main-hero,
+        .homepage-main-hero+* {
+            width: 50%;
+        }
+
+        .about-subpage-imgcontainer {
+            img {
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+            }
+        }
+    }
+
+}
+
 .about-subpage-container {
     gap: 3rem !important;
     align-items: flex-start !important;
@@ -789,6 +811,21 @@ hr {
 #shop-subpage-hero {
 
     padding: 6rem 0 3rem 0;
+
+    .homepage-main {
+
+        .homepage-main-hero+* {
+            width: 50%;
+        }
+
+        .shop-hero-image {
+            img {
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+            }
+        }
+    }
 }
 
 #shop-product-list {
@@ -1442,6 +1479,26 @@ hr {
 
 }
 
+.item-subpage-error {
+    padding: 0 !important;
+
+    .homepage-main {
+
+        .homepage-main-hero,
+        .homepage-main-hero+* {
+            width: 50%;
+        }
+
+        .item-subpage-error-imgcont {
+            img {
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+            }
+        }
+    }
+}
+
 #items-other-products,
 #top-products {
 
@@ -2061,6 +2118,23 @@ hr {
 
 #partners-subpage-hero {
     padding-bottom: 2rem;
+
+    .homepage-main {
+
+        .homepage-main-hero {
+            width: 50%;
+        }
+
+        .partners-subpage-image {
+            width: 40%;
+
+            img {
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+            }
+        }
+    }
 }
 
 #partners-subpage-partnerlist {
@@ -2181,6 +2255,8 @@ hr {
 }
 
 .profile-user-subpage-login-section {
+
+
     .profile-user-subpage-title {
 
         .profile-user-subpage-title-h2 {
@@ -2199,6 +2275,19 @@ hr {
 
         .section-paragraph-gray {
             padding: 2rem 0;
+        }
+    }
+
+    .subpage-login-container,
+    .profile-user-subpage-heroimg {
+        width: 50%;
+    }
+
+    .profile-user-subpage-heroimg {
+        img {
+            height: auto;
+            width: 100%;
+            object-fit: cover;
         }
     }
 
