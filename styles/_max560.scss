@@ -1550,3 +1550,119 @@
         }
     }
 }
+
+//partners subpage
+@media screen and (max-width: 560px) {
+
+    #partners-subpage-partnerlist {
+        .partners-subpage-partnerlist-container {
+            .partners-subpage-partnerlist-box {
+                .partners-subpage-titlebox {
+                    max-height: 100px !important;
+                    min-height: 100px !important;
+
+                    a {
+                        h4 {
+                            font-size: 14px;
+                            word-wrap: break-word;
+                        }
+                    }
+                }
+            }
+
+            .partners-subpage-partnerlist-box {
+                width: 100% !important;
+            }
+        }
+    }
+
+    #partners-subpage-hero,
+    #partners-subpage-partnerlist,
+    #partners-subpage-forpartners {
+
+        .homepage-main {
+            flex-direction: column;
+
+            h1 {
+                font-size: 50px !important;
+                line-height: 40px !important;
+            }
+
+            .homepage-main-hero,
+            .homepage-main-hero+* {
+                width: 100%;
+            }
+
+            .partners-subpage-forpartners-image-container {
+
+                div.partners-subpage-forpartners-image-bg {
+                    width: 70% !important;
+                    height: 70% !important;
+                }
+            }
+
+            .homepage-main-hero {
+
+
+
+                .section-paragraph-gray+.dffc {
+                    flex-direction: column;
+
+                    a {
+                        width: 100%;
+
+                        button {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    #partners-subpage-hero {
+        padding-bottom: 0 !important;
+    }
+
+    @media screen and (max-width: 350px) {
+
+        #partners-subpage-hero,
+        #partners-subpage-partnerlist,
+        #partners-subpage-forpartners {
+
+            .homepage-main {
+                flex-direction: column;
+
+                .homepage-main-title {
+
+                    .title-secondline-h1,
+                    .title-firstline {
+                        font-size: 30px !important;
+                        line-height: 30px !important;
+                    }
+                }
+            }
+        }
+
+        #partners-subpage-hero {
+
+            .homepage-main-hero {
+                .section-paragraph-gray+.dffc {
+                    flex-direction: column;
+
+                    a {
+                        width: 100%;
+
+                        button {
+                            width: 100%;
+
+                            span {
+                                font-size: 15px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

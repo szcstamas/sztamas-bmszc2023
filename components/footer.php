@@ -20,6 +20,7 @@
 
 </footer>
 
+<!-- <script type="text/javascript" src="js/counteritem.js"></script> -->
 <script type="text/javascript" src="js/currentpageclass.js"></script>
 <script type="text/javascript" src="js/copyaddress.js"></script>
 <script type="text/javascript" src="js/fish-carousel/app.js"></script>

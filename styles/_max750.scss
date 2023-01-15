@@ -353,3 +353,60 @@
         }
     }
 }
+
+//partners subpage
+@media screen and (max-width: 750px) {
+
+    #partners-subpage-partnerlist {
+        .partners-subpage-partnerlist-container {
+            .partners-subpage-partnerlist-box {
+                width: 100% !important;
+            }
+        }
+    }
+
+    #partners-subpage-hero,
+    #partners-subpage-partnerlist,
+    #partners-subpage-forpartners {
+
+
+        h1 {
+            font-size: 80px !important;
+            line-height: 80px !important;
+        }
+
+        .homepage-main {
+            flex-direction: column;
+
+            .homepage-main-hero,
+            .homepage-main-hero+* {
+                width: 100%;
+            }
+
+            .homepage-main-hero {
+                .section-paragraph-gray+.dffc {
+                    flex-direction: column;
+
+                    a {
+                        width: 100%;
+
+                        button {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+
+            .partners-subpage-forpartners-image-container {
+                .partners-subpage-forpartners-image-bg {
+                    width: 300px !important;
+                    height: 300px !important;
+                }
+            }
+        }
+    }
+
+    #partners-subpage-hero {
+        padding-bottom: 0 !important;
+    }
+}

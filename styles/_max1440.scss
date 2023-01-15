@@ -724,6 +724,28 @@
     }
 }
 
+//partners subpage
+@media screen and (max-width: 1440px) {
+
+    #partners-subpage-hero,
+    #partners-subpage-partnerlist,
+    #partners-subpage-forpartners {
+        padding: 3rem 2rem !important;
+    }
+
+    #partners-subpage-partnerlist {
+        .partners-subpage-partnerlist-container {
+            .partners-subpage-partnerlist-box {
+                .partners-subpage-descbox {
+                    a {
+                        word-break: break-word;
+                    }
+                }
+            }
+        }
+    }
+}
+
 //item subpage
 @media screen and (max-width: 1440px) {
 
@@ -1100,6 +1122,37 @@
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+//partners subpage
+@media screen and (max-width: 1100px) {
+
+    #partners-subpage-hero,
+    #partners-subpage-partnerlist,
+    #partners-subpage-forpartners {
+        padding: 3rem 2rem !important;
+    }
+
+    #partners-subpage-partnerlist {
+        .partners-subpage-partnerlist-container {
+            .partners-subpage-partnerlist-box {
+                width: calc(50% - .7rem) !important;
+            }
+        }
+    }
+
+    #partners-subpage-hero,
+    #partners-subpage-partnerlist,
+    #partners-subpage-forpartners {
+        .homepage-main {
+            flex-direction: column;
+
+            .homepage-main-hero,
+            .homepage-main-hero+* {
+                width: 100%;
             }
         }
     }

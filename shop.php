@@ -1,12 +1,11 @@
 <!-- header importálása -->
 <?php require_once("./components/header.php") ?>
-
 <?php
 
 //adatbázis meghívása
 require_once("db/database.php");
 
-//adatbázis kapcsolódás
+//adatbázis meghívása a keresés funkcióhoz
 Database::connect();
 $totalPages = "";
 

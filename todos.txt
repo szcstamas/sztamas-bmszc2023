@@ -1,15 +1,11 @@
 ---
 MIN
-9. partnereink aloldal
 10. Főoldalon videó a heronak, az aloldalakra pedig illusztrációk a heroknak
-11. item aloldalon counter
 12. felhasználó feltételek
-13. süti tájékoztató
 14. impresszum
 15. adatvédelmi tájékoztató
 ---
 MUST
-12. REST API és szerverkommunikáció
 14. DB Dump
 15. DB Diagram
 16. Rövid doksi

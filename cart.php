@@ -11,8 +11,11 @@ if (isset($_GET["id"])) {
 
   if (isset($_SESSION["cart"][$productId])) {
     $_SESSION["cart"][$productId] = $_SESSION["cart"][$productId] + 1;
-  } else {
+  } else if (!isset($_GET["value"])) {
     $_SESSION["cart"][$productId] = 1;
+  } else if (isset($_GET["value"])) {
+    $_SESSION["cart"][$productId] = $_GET["value"];
+    unset($_SESSION["countValue"]);
   }
 
   header("Location: cart.php");

@@ -2,23 +2,38 @@
 require_once('components/header.php');
 require_once("db/database.php");
 
-Database::connect();
-
 $product = "";
+$countValue = 1;
 
-if (isset($_GET["id"]) && $_GET["id"] != "") {
+//counter funkció: az "inc" vagy a "dec" paraméterek meghívására létrejön egy countValue nevű tömb a sessiönben, aminek az inc propertyje egyenlő lesz a számolt értékkel. Az inc paraméter hatására ez az érték növekszik (majd eltárolódik a sessiönben), a dec paraméter hatására pedig az érték csökken (majd szintén eltárolódik a sessiönben) 
+if (isset($_GET["inc"])) {
+    $_SESSION["countValue"]["inc"] = $_SESSION["countValue"]["inc"] + 1;
+    $countValue = $_SESSION["countValue"]["inc"];
+    $_SESSION["countValue"]["value"] = $countValue;
+} else if (isset($_GET["dec"])) {
+    $_SESSION["countValue"]["inc"] = $_SESSION["countValue"]["inc"] - 1;
+    $countValue = $_SESSION["countValue"]["inc"];
+    $_SESSION["countValue"]["value"] = $countValue;
+} else {
+    $_SESSION["countValue"]["inc"] = $countValue;
+}
+
+//ha be van állítva az id
+if (isset($_GET["id"]) && !empty($_GET["id"])) {
 
     $id = $_GET["id"];
     $product = Database::getProductById($id);
 
-    //a terméknév kettéosztása (hogy megfelelően megjelenhessen a kódban)
-    $text = $product->name;
-    //felkerekíti a névben található szavak számát
-    $half = (int)ceil(count($words = str_word_count($text, 1, 'àáãç3ÁRVÍZTŰRŐTÜKÖRFÚRÓGÉPárvíztűrőtükörfúrógép123456789')) / 2);
-    //az elnevezés első szelete (a kapott érték kettéosztása az array_slice functionnel)
-    $halfOfNameFirst = implode(' ', array_slice($words, 0, $half));
-    //az elnevezés második szelete
-    $halfOfNameSecond = implode(' ', array_slice($words, $half));
+    if ($product && !empty($product)) {
+        //a terméknév kettéosztása (hogy megfelelően megjelenhessen a kódban)
+        $text = $product->name;
+        //felkerekíti a névben található szavak számát
+        $half = (int)ceil(count($words = str_word_count($text, 1, 'àáãç3ÁRVÍZTŰRŐTÜKÖRFÚRÓGÉPárvíztűrőtükörfúrógép123456789')) / 2);
+        //az elnevezés első szelete (a kapott érték kettéosztása az array_slice functionnel)
+        $halfOfNameFirst = implode(' ', array_slice($words, 0, $half));
+        //az elnevezés második szelete
+        $halfOfNameSecond = implode(' ', array_slice($words, $half));
+    }
 }
 
 $otherItems = Database::getAllProducts();
@@ -59,12 +74,12 @@ $otherItems = Database::getAllProducts();
                     </div>
                     <div class="dffc">
                         <div class="item-subpage-counter dffc">
-                            <button class='button-border decrease' style="appearance:none;border:none;box-shadow:none;" type='button'>-</button>
-                            <input class="input-count" type='text' readonly aria-label='Example text with two button addons' value="1">
-                            <button class='button-border increase' style="appearance:none;border:none;box-shadow:none;" type='button'>+</button>
+                            <a href="item.php?id=<?= $product->id ?>&dec=<?= $countValue ?>"><button class='button-border count-button decrease' style="appearance:none;border:none;box-shadow:none;" type='button'>-</button></a>
+                            <input class="input-count" type='text' readonly aria-label='Example text with two button addons' value=<?= $countValue ?>>
+                            <a href="item.php?id=<?= $product->id ?>&inc=<?= $countValue ?>"><button class='button-border count-button increase' style="appearance:none;border:none;box-shadow:none;" type='button'>+</button></a>
                         </div>
                         <div class="item-subpage-cart">
-                            <a href='cart.php?id=<?= $product->id ?>' class='button-green dffc'>Kosárba<i class="bi bi-cart-fill"></i></a>
+                            <a href='cart.php?id=<?= $product->id ?>&value=<?= $countValue ?>' class='button-green dffc'>Kosárba<i class="bi bi-cart-fill"></i></a>
                         </div>
                     </div>
                 </div>
