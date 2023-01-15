@@ -9,7 +9,7 @@ require_once("db/database.php");
 
 //authentikáció
 if (isset($_SESSION["loginAdmin"])) {
-  $user = $_SESSION["loginAdmin"];
+  $token = $_SESSION["loginAdmin"]["token"];
 }
 
 //csatlakozás az adatbázishoz 
@@ -77,7 +77,7 @@ if (
       }
   }
 
-  Database::createProduct($newProduct, $category);
+  Database::createProduct($newProduct, $token);
 
   header("Location: admin.php");
   ob_end_flush();
@@ -178,7 +178,7 @@ if (
           <input type="number" id="discount" class="product-form-input" name="discount">
         </div>
         <input type="hidden" name="category" value="<?= $category ?>">
-        <button type="submit" class="button-green product-submit">Save</button>
+        <button type="submit" class="button-green product-submit">Mentés</button>
       </form>
     <?php else : ?>
       <form class="dfcc select-category" method="GET">

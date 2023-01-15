@@ -5,13 +5,10 @@
 
 require_once("db/database.php");
 
-
 if (isset($_SESSION["loginAdmin"])) {
-  $user = $_SESSION["loginAdmin"];
+  $user = $_SESSION["loginAdmin"]["username"];
+  $token = $_SESSION["loginAdmin"]["token"];
 }
-
-//csatlakozás az adatbázishoz
-Database::connect();
 
 if (isset($_POST["signout"])) {
 
@@ -26,7 +23,7 @@ if (isset($_POST["signout"])) {
 //if deleteproduct is set in url, call deleteProductById from db.php
 if (isset($_GET["deleteproduct"])) {
   $deleteProductId = $_GET["deleteproduct"];
-  Database::deleteProductById($deleteProductId);
+  Database::deleteProductById($deleteProductId, $token);
   header("Location: admin.php");
   ob_end_flush();
   exit();
@@ -35,7 +32,7 @@ if (isset($_GET["deleteproduct"])) {
 //if recoverproduct is set in url, call recoverProductById from db.php
 if (isset($_GET["recoverproduct"])) {
   $recoverProductId = $_GET["recoverproduct"];
-  Database::recoverProductById($recoverProductId);
+  Database::recoverProductById($recoverProductId, $token);
   header("Location: admin.php");
   ob_end_flush();
   exit();
@@ -44,7 +41,7 @@ if (isset($_GET["recoverproduct"])) {
 //if recoverproduct is set in url, call recoverProductById from db.php
 if (isset($_GET["restockproduct"])) {
   $restockProductId = $_GET["restockproduct"];
-  Database::restockProductById($restockProductId);
+  Database::restockProductById($restockProductId, $token);
   header("Location: admin.php");
   ob_end_flush();
   exit();
@@ -53,7 +50,7 @@ if (isset($_GET["restockproduct"])) {
 //if deleteorder is set in url, call deleteOrderById from db.php
 if (isset($_GET["completeorder"])) {
   $completeOrderId = $_GET["completeorder"];
-  Database::completeOrderById($completeOrderId);
+  Database::completeOrderById($completeOrderId, $token);
   header("Location: admin.php");
   ob_end_flush();
   exit();
@@ -62,15 +59,18 @@ if (isset($_GET["completeorder"])) {
 //if deleteorder is set in url, call deleteOrderById from db.php
 if (isset($_GET["deleteorder"])) {
   $deleteOrderId = $_GET["deleteorder"];
-  Database::deleteOrderById($deleteOrderId);
+  Database::deleteOrderById($deleteOrderId, $token);
   header("Location: admin.php");
   ob_end_flush();
   exit();
 }
 
-//az összes item megjelenítése az adatbázisból
-$products = Database::getAllProductsOnAdmin();
-$orders = Database::getAllOrders();
+if (isset($_SESSION["loginAdmin"])) {
+  //az összes item megjelenítése az adatbázisból
+  $products = Database::getAllProductsOnAdmin($token);
+  $orders = Database::getAllOrders($token);
+}
+
 
 ?>
 

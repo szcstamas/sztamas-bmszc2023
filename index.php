@@ -4,9 +4,7 @@
 
 require_once("db/database.php");
 
-// Database::connect();
 $otherItems = Database::getAllProducts();
-// var_dump($otherItems);
 ?>
 
 <section id="homepage-hero" class="section video-bg">

@@ -9,7 +9,7 @@ require_once("db/database.php");
 
 //authentikáció
 if (isset($_SESSION["loginAdmin"])) {
-  $user = $_SESSION["loginAdmin"];
+  $token = $_SESSION["loginAdmin"]["token"];
 }
 
 //csatlakozás az adatbázishoz 
@@ -109,7 +109,7 @@ if (
       }
   }
 
-  Database::updateProduct($editedProduct);
+  Database::updateProduct($editedProduct, $token);
 
   header("Location: admin.php");
   ob_end_flush();
@@ -217,7 +217,7 @@ if (
       <?php elseif ($product->category == "feed") : ?>
         <input type="hidden" name="category" value="feed">
       <?php endif ?>
-      <button type="submit" class="button-green product-submit">Save</button>
+      <button type="submit" class="button-green product-submit">Mentés</button>
     </form>
   </section>
 

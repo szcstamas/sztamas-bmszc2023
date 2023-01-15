@@ -23,7 +23,10 @@ if (
             $password === $_SESSION["admin"]["password"]
         ) {
             $message = "Sikeres bejelentkezés! Üdv <b>{$_SESSION["admin"]["username"]}</b>!";
-            $_SESSION["loginAdmin"] = $_SESSION["admin"]["username"];
+            $_SESSION["loginAdmin"] = [
+                "username" => $_SESSION["admin"]["username"],
+                "token" => $_SESSION["admin"]["token"]
+            ];
             $colour = "#65A850";
         } else if (
             isset($_SESSION["admin"]) &&

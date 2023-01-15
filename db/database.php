@@ -67,6 +67,7 @@ class Database
         return $products;
     }
 
+    //API KÉSZ
     public static function countProductsRows()
     {
         //cURL meghívása
@@ -98,30 +99,47 @@ class Database
         return $data;
     }
 
-    public static function getAllProductsWithLimit($startNum, $endNum)
+    //API KÉSZ
+    public static function getAllProductsWithLimit($startRowAtIndex, $renderItemAsCount)
     {
 
-        //az összes olyan termék kiválasztása amiből több van mint 0, és még nem törölték (nincsen valid dátum beállítva a deleted_at propertynél)
-        $sql = "SELECT * FROM `products` WHERE `deletedAt` = '0000-00-00' LIMIT $startNum,$endNum";
+        //cURL meghívása
+        $curl = curl_init();
 
-        //csatlakozás az adatbázishoz, majd az sql parancs elküldése
-        $result = self::$conn->prepare($sql);
-        //sql parancs végrehajtása
-        $result->execute();
-        //ebben a tömbben fognak eltárolódni a fetchelt termékek
+        //cURL beállítása (az adott URL-nek intézett kérelem)
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'http://localhost/sztamas-bmszc2023/api/rest.php?products&startRowAtIndex=' . $startRowAtIndex . '&renderItemAsCount=' . $renderItemAsCount,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json'
+            ),
+        ));
+
+        //kérelem végrehajtása (annak eltárolása egy változóba)
+        $response = curl_exec($curl);
+        //kérelem bezárása
+        curl_close($curl);
+
+        //kapott json-adat dekódolása
+        $data = json_decode($response);
+        //tömb definiálása
         $products = [];
-        //kapott sql-adat fetchelése
-        $data = $result->fetchAll();
 
-        //adatok megjelenítése (a kapott tömbön keresztül loopol)
+        //products tömb feltöltése a kapott, dekódolt json-adatokkal
         foreach ($data as $row) {
-            switch ($row["category"]) {
+            switch ($row->category) {
                 case "pellet": {
-                        $products[] = new Product($row["id"], $row["name"], $row["description"], $row["image"], $row["price"], $row["quantity"], $row["onStock"], $row["weight"], $row["unitPrice"], $row["unitSize"], $row["flavour"], $row["colour"], $row["components"], $row["category"], $row["preFishes"], $row["discount"], $row["createdAt"], $row["deletedAt"]);
+                        $products[] = new Product($row->id, $row->name, $row->description, $row->image, $row->price, $row->quantity, $row->onStock, $row->weight, $row->unitPrice, $row->unitSize, $row->flavour, $row->colour, $row->components, $row->category, $row->preFishes, $row->discount, $row->createdAt, $row->deletedAt);
                         break;
                     }
                 case "feed": {
-                        $products[] = new Product($row["id"], $row["name"], $row["description"], $row["image"], $row["price"], $row["quantity"], $row["onStock"], $row["weight"], $row["unitPrice"], $row["unitSize"], $row["flavour"], $row["colour"], $row["components"], $row["category"], $row["preFishes"], $row["discount"], $row["createdAt"], $row["deletedAt"]);
+                        $products[] = new Product($row->id, $row->name, $row->description, $row->image, $row->price, $row->quantity, $row->onStock, $row->weight, $row->unitPrice, $row->unitSize, $row->flavour, $row->colour, $row->components, $row->category, $row->preFishes, $row->discount, $row->createdAt, $row->deletedAt);
                         break;
                     }
                 default: {
@@ -134,7 +152,7 @@ class Database
     }
 
     //API KÉSZ
-    public static function getAllProductsOnAdmin()
+    public static function getAllProductsOnAdmin($token)
     {
         //cURL meghívása
         $curl = curl_init();
@@ -150,7 +168,8 @@ class Database
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
             CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json'
+                'Content-Type: application/json',
+                'Token:' . ' ' . $token
             ),
         ));
 
@@ -231,123 +250,300 @@ class Database
         }
     }
 
-    public static function deleteProductById($id)
+    //API KÉSZ
+    public static function deleteProductById($id, $token)
     {
-        $sql = "UPDATE `products` SET `deletedAt` = CURRENT_TIMESTAMP WHERE `products`.`id` = $id";
+        $curl = curl_init();
 
-        //csatlakozás az adatbázishoz, majd az sql parancs elküldése
-        $result = self::$conn->prepare($sql);
-        //sql parancs végrehajtása
-        $result->execute();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'http://localhost/sztamas-bmszc2023/api/rest.php?products&deletedAt=delete&id=' . $id,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'PUT',
+            CURLOPT_HTTPHEADER => array(
+                'Token:' . ' ' . $token
+            ),
+        ));
 
-        return $result;
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        echo $response;
     }
 
-    public static function recoverProductById($id)
+    //API KÉSZ
+    public static function recoverProductById($id, $token)
     {
-        $sql = "UPDATE `products` SET `deletedAt` = '0000-00-00' WHERE `products`.`id` = $id";
+        $curl = curl_init();
 
-        //csatlakozás az adatbázishoz, majd az sql parancs elküldése
-        $result = self::$conn->prepare($sql);
-        //sql parancs végrehajtása
-        $result->execute();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'http://localhost/sztamas-bmszc2023/api/rest.php?products&deletedAt=recover&id=' . $id,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'PUT',
+            CURLOPT_HTTPHEADER => array(
+                'Token:' . ' ' . $token
+            ),
+        ));
 
-        return $result;
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        echo $response;
     }
 
-    public static function restockProductById($id)
+    //API KÉSZ
+    public static function restockProductById($id, $token)
     {
-        $sql = "UPDATE `products` SET `quantity` = 50 WHERE `products`.`id` = $id";
+        $curl = curl_init();
 
-        //csatlakozás az adatbázishoz, majd az sql parancs elküldése
-        $result = self::$conn->prepare($sql);
-        //sql parancs végrehajtása
-        $result->execute();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'http://localhost/sztamas-bmszc2023/api/rest.php?products&deletedAt=restock&id=' . $id,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'PUT',
+            CURLOPT_HTTPHEADER => array(
+                'Token:' . ' ' . $token
+            ),
+        ));
 
-        return $result;
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        echo $response;
     }
 
-    public static function createProduct($product, $category)
+    //API KÉSZ
+    public static function createProduct($product, $token)
     {
-        $onStock = self::boolToSQL($product->onStock);
+        $postData = [
+            "name" => $product->name,
+            "description" => $product->description,
+            "image" => $product->image,
+            "price" => $product->price,
+            "quantity" => $product->quantity,
+            "onStock" => $product->onStock,
+            "weight" => $product->weight,
+            "unitPrice" => $product->unitPrice,
+            "unitSize" => $product->unitSize,
+            "flavour" => $product->flavour,
+            "colour" => $product->colour,
+            "components" => $product->components,
+            "category" => $product->category,
+            "preFishes" => $product->preFishes,
+            "discount" => $product->discount
+        ];
 
-        $sql = "INSERT INTO `products` (`name`, `description`, `image`, `price`, `quantity`, `onStock`, `weight`, `unitPrice`, `unitSize`, `flavour`, `colour`, `components`, `category`, `preFishes`, `discount`, `createdAt`) VALUES ('$product->name', '$product->description', '$product->image', '$product->price', '$product->quantity', '$onStock', '$product->weight', '$product->unitPrice', '$product->unitSize', '$product->flavour', '$product->colour', '$product->components', '$category', '$product->preFishes', '$product->discount', current_timestamp());";
+        $curl = curl_init();
 
-        $result = self::$conn->prepare($sql);
-        $result->execute();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'http://localhost/sztamas-bmszc2023/api/rest.php?products',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($postData),
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                'Token:' . ' ' . $token
+            ),
+        ));
 
-        return $result;
+        curl_exec($curl);
+        curl_close($curl);
     }
 
-    public static function updateProduct($product)
+    //API KÉSZ
+    public static function updateProduct($product, $token)
     {
-        $onStock = self::boolToSQL($product->onStock);
+        $postData = [
+            "name" => $product->name,
+            "description" => $product->description,
+            "image" => $product->image,
+            "price" => $product->price,
+            "quantity" => $product->quantity,
+            "onStock" => $product->onStock,
+            "weight" => $product->weight,
+            "unitPrice" => $product->unitPrice,
+            "unitSize" => $product->unitSize,
+            "flavour" => $product->flavour,
+            "colour" => $product->colour,
+            "components" => $product->components,
+            "preFishes" => $product->preFishes,
+            "discount" => $product->discount,
+            "id" => $product->id
+        ];
 
-        $sql = "UPDATE `products` SET `name` = '$product->name', `description` = '$product->description', `image` = '$product->image', `price` = '$product->price', `quantity` = '$product->quantity', `onStock` = '$onStock', `weight` = '$product->weight',  `unitPrice` = '$product->unitPrice', `unitSize` = '$product->unitSize', `flavour` = '$product->flavour', `colour` = '$product->colour', `components` = '$product->components', `preFishes` = '$product->preFishes', `discount` = '$product->discount' WHERE `products`.`id` = $product->id;";
+        $curl = curl_init();
 
-        $result = self::$conn->prepare($sql);
-        $result->execute();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'http://localhost/sztamas-bmszc2023/api/rest.php?products&updateProduct',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'PUT',
+            CURLOPT_POSTFIELDS => json_encode($postData),
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                'Token:' . ' ' . $token
+            ),
+        ));
 
-        return $result;
+        //kérelem végrehajtása
+        curl_exec($curl);
+        //kérelem bezárása
+        curl_close($curl);
     }
 
+    //API KÉSZ
     public static function createOrder($order)
     {
 
-        $sql = "INSERT INTO `orders` (`productName`, `productQuantity`, `name`, `date`, `email`, `totalPrice`, `deliveryPostcode`, `deliveryCity`, `deliveryStreet`, `billPostcode`, `billCity`, `billStreet`, `comment`, `completed`, `completedAt`, `isUser`, `username`) VALUES ('{$order->productName}', '{$order->productQuantity}', '{$order->name}', current_timestamp(), '{$order->email}', '{$order->totalPrice}', '{$order->deliveryPostcode}', '{$order->deliveryCity}', '{$order->deliveryStreet}', '{$order->billPostcode}', '{$order->billCity}', '{$order->billStreet}', '{$order->comment}', 0, '0000-00-00', '{$order->isUser}', '{$order->username}');";
+        $postData = [
+            "productName" => $order->productName,
+            "productQuantity" => $order->productQuantity,
+            "name" => $order->name,
+            "email" => $order->email,
+            "totalPrice" => $order->totalPrice,
+            "deliveryPostcode" => $order->deliveryPostcode,
+            "deliveryCity" => $order->deliveryCity,
+            "deliveryStreet" => $order->deliveryStreet,
+            "billPostcode" => $order->billPostcode,
+            "billCity" => $order->billCity,
+            "billStreet" => $order->billStreet,
+            "comment" => $order->comment,
+            "isUser" => $order->isUser,
+            "username" => $order->username
+        ];
 
-        $result = self::$conn->prepare($sql);
-        $result->execute();
+        $curl = curl_init();
 
-        return $result;
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'http://localhost/sztamas-bmszc2023/api/rest.php?orders',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($postData),
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+            ),
+        ));
+
+        curl_exec($curl);
+        curl_close($curl);
     }
 
-    public static function getAllOrders()
+    //API KÉSZ
+    public static function getAllOrders($token)
     {
+        //cURL meghívása
+        $curl = curl_init();
 
-        //az összes olyan termék kiválasztása amiből több van mint 0, és még nem törölték (nincsen valid dátum beállítva a deleted_at propertynél)
-        $sql = "SELECT * FROM `orders`";
+        //cURL beállítása (az adott URL-nek intézett kérelem)
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'http://localhost/sztamas-bmszc2023/api/rest.php?orders',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                'Token:' . ' ' . $token
+            ),
+        ));
 
-        //csatlakozás az adatbázishoz, majd az sql parancs elküldése
-        $result = self::$conn->prepare($sql);
-        //sql parancs végrehajtása
-        $result->execute();
-        //ebben a tömbben fognak eltárolódni a fetchelt termékek
+        //kérelem végrehajtása (annak eltárolása egy változóba)
+        $response = curl_exec($curl);
+        //kérelem bezárása
+        curl_close($curl);
+
+        //kapott json-adat dekódolása
+        $data = json_decode($response);
+        //tömb definiálása
         $orders = [];
-        //kapott sql-adat fetchelése
-        $data = $result->fetchAll();
 
-        //adatok megjelenítése (a kapott tömbön keresztül loopol)
+        //products tömb feltöltése a kapott, dekódolt json-adatokkal
         foreach ($data as $row) {
 
-            $orders[] = new Order($row["id"], $row["productName"], $row["productQuantity"], $row["name"], $row["date"], $row["email"], $row["totalPrice"], $row["deliveryPostcode"], $row["deliveryCity"], $row["deliveryStreet"], $row["billPostcode"], $row["billCity"], $row["billStreet"], $row["comment"], $row["completed"], $row["completedAt"], $row["isUser"], $row["username"],);
+            $orders[] = new Order($row->id, $row->productName, $row->productQuantity, $row->name, $row->date, $row->email, $row->totalPrice, $row->deliveryPostcode, $row->deliveryCity, $row->deliveryStreet, $row->billPostcode, $row->billCity, $row->billStreet, $row->comment, $row->completed, $row->completedAt, $row->isUser, $row->username);
         }
 
         return $orders;
     }
 
-    public static function deleteOrderById($id)
+    //API KÉSZ
+    public static function deleteOrderById($id, $token)
     {
-        $sql = "DELETE FROM `orders` WHERE `orders`.`id` = $id;";
+        $curl = curl_init();
 
-        //csatlakozás az adatbázishoz, majd az sql parancs elküldése
-        $result = self::$conn->prepare($sql);
-        //sql parancs végrehajtása
-        $result->execute();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'http://localhost/sztamas-bmszc2023/api/rest.php?orders&delete&id=' . $id,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'DELETE',
+            CURLOPT_HTTPHEADER => array(
+                'Token:' . ' ' . $token
+            ),
+        ));
 
-        return $result;
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        echo $response;
     }
 
-    public static function completeOrderById($id)
+    //API KÉSZ
+    public static function completeOrderById($id, $token)
     {
-        $sql = "UPDATE `orders` SET `completed` = '1', `completedAt` = CURRENT_TIMESTAMP WHERE `orders`.`id` = $id";
+        $curl = curl_init();
 
-        //csatlakozás az adatbázishoz, majd az sql parancs elküldése
-        $result = self::$conn->prepare($sql);
-        //sql parancs végrehajtása
-        $result->execute();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'http://localhost/sztamas-bmszc2023/api/rest.php?orders&completed&id=' . $id,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'PUT',
+            CURLOPT_HTTPHEADER => array(
+                'Token:' . ' ' . $token
+            ),
+        ));
 
-        return $result;
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        echo $response;
     }
 
     public static function registerUser($username, $password, $email)
@@ -585,73 +781,5 @@ class Database
         }
 
         return $products;
-    }
-
-    public static function getAllProductsByApi()
-    {
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'http://localhost/RESTAPI/rest.php?products',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json'
-            ),
-        ));
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-        $response = json_decode($response);
-        return $response;
-    }
-
-    public static function createProductByApi($product)
-    {
-
-        $postData = [
-            "category" => $product->category,
-            "name" => $product->name,
-            "description" => $product->description,
-            "picture" => $product->picture,
-            "price" => $product->price,
-            "stock" => $product->stock
-        ];
-
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'http://localhost/RESTAPI/rest.php?products',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => json_encode($postData),
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json'
-            ),
-        ));
-
-        curl_exec($curl);
-        curl_close($curl);
-        // echo $response;
-    }
-
-    private static function boolToSQL($bool)
-    {
-        if ($bool == true) {
-            return 1;
-        } else {
-            return 0;
-        }
     }
 }

@@ -4303,6 +4303,7 @@ hr {
 
 #shop-product-list .maxw .shop-subpage-product-list .shop-subpage-product-grid .shop-grid-item .shop-image-container img {
   height: 250px;
+  max-width: 100%;
   -o-object-fit: cover;
      object-fit: cover;
   -webkit-transition: all .1s ease-in-out;
