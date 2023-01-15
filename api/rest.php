@@ -1,8 +1,5 @@
 <?php
-require('./db/secrets.php');
-
-//csatlakozás az adatbázishoz
-$pdo = new PDO('mysql:host=localhost;dbname=' . $secrets['mysqlDB'], $secrets['mysqlUser'], $secrets['mysqlPass']);
+require('../db/secrets.php');
 
 //hibák jelentése
 if ($development) {
@@ -13,7 +10,9 @@ if ($development) {
 $resource = strtok($_SERVER['QUERY_STRING'], '=');
 // require('auth.php');
 
-if ($resource == 'products') {
+$prodWasFoundInUrl = strpos($resource, 'products');
+
+if ($prodWasFoundInUrl = true) {
     require('products.php');
 }
 if ($resource == 'users') {

@@ -24,7 +24,6 @@ if (isset($_GET["id"]) && $_GET["id"] != "") {
 $otherItems = Database::getAllProducts();
 ?>
 
-
 <?php if (!empty($product)) : ?>
 
     <section id="item-subpage-hero" class="section whitebg">

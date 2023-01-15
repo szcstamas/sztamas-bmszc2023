@@ -1,5 +1,5 @@
 <?php
-require('./db/secrets.php');
+require('../db/secrets.php');
 
 $pdo = new PDO('mysql:host=localhost;dbname=' . $secrets['mysqlDB'], $secrets['mysqlUser'], $secrets['mysqlPass']);
 

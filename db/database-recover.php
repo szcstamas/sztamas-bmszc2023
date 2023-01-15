@@ -16,93 +16,11 @@ class Database
         self::$conn = new PDO('mysql:host=localhost;dbname=' . $secrets['mysqlDB'], $secrets['mysqlUser'], $secrets['mysqlPass']);
     }
 
-    //API KÉSZ
     public static function getAllProducts()
-    {
-        //cURL meghívása
-        $curl = curl_init();
-
-        //cURL beállítása (az adott URL-nek intézett kérelem)
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'http://localhost/sztamas-bmszc2023/api/rest.php?products&deletedAt',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json'
-            ),
-        ));
-
-        //kérelem végrehajtása (annak eltárolása egy változóba)
-        $response = curl_exec($curl);
-        //kérelem bezárása
-        curl_close($curl);
-
-        //kapott json-adat dekódolása
-        $data = json_decode($response);
-        //tömb definiálása
-        $products = [];
-
-        //products tömb feltöltése a kapott, dekódolt json-adatokkal
-        foreach ($data as $row) {
-            switch ($row->category) {
-                case "pellet": {
-                        $products[] = new Product($row->id, $row->name, $row->description, $row->image, $row->price, $row->quantity, $row->onStock, $row->weight, $row->unitPrice, $row->unitSize, $row->flavour, $row->colour, $row->components, $row->category, $row->preFishes, $row->discount, $row->createdAt, $row->deletedAt);
-                        break;
-                    }
-                case "feed": {
-                        $products[] = new Product($row->id, $row->name, $row->description, $row->image, $row->price, $row->quantity, $row->onStock, $row->weight, $row->unitPrice, $row->unitSize, $row->flavour, $row->colour, $row->components, $row->category, $row->preFishes, $row->discount, $row->createdAt, $row->deletedAt);
-                        break;
-                    }
-                default: {
-                        echo "Ismeretlen kategória!";
-                    }
-            }
-        }
-
-        return $products;
-    }
-
-    public static function countProductsRows()
-    {
-        //cURL meghívása
-        $curl = curl_init();
-
-        //cURL beállítása (az adott URL-nek intézett kérelem)
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'http://localhost/sztamas-bmszc2023/api/rest.php?products&countRow',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json'
-            ),
-        ));
-
-        //kérelem végrehajtása (annak eltárolása egy változóba)
-        $response = curl_exec($curl);
-        //kérelem bezárása
-        curl_close($curl);
-
-        //kapott json-adat dekódolása
-        $data = json_decode($response);
-
-        return $data;
-    }
-
-    public static function getAllProductsWithLimit($startNum, $endNum)
     {
 
         //az összes olyan termék kiválasztása amiből több van mint 0, és még nem törölték (nincsen valid dátum beállítva a deleted_at propertynél)
-        $sql = "SELECT * FROM `products` WHERE `deletedAt` = '0000-00-00' LIMIT $startNum,$endNum";
+        $sql = "SELECT * FROM `products` WHERE `deletedAt` = '0000-00-00 00:00:00';";
 
         //csatlakozás az adatbázishoz, majd az sql parancs elküldése
         $result = self::$conn->prepare($sql);
@@ -133,46 +51,46 @@ class Database
         return $products;
     }
 
-    //API KÉSZ
-    public static function getAllProductsOnAdmin()
+    public static function countProductsRows()
     {
-        //cURL meghívása
-        $curl = curl_init();
 
-        //cURL beállítása (az adott URL-nek intézett kérelem)
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'http://localhost/sztamas-bmszc2023/api/rest.php?products',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json'
-            ),
-        ));
+        //az összes olyan termék kiválasztása amiből több van mint 0, és még nem törölték (nincsen valid dátum beállítva a deleted_at propertynél)
+        $sql = "SELECT * FROM `products`";
 
-        //kérelem végrehajtása (annak eltárolása egy változóba)
-        $response = curl_exec($curl);
-        //kérelem bezárása
-        curl_close($curl);
+        //csatlakozás az adatbázishoz, majd az sql parancs elküldése
+        $result = self::$conn->prepare($sql);
+        //sql parancs végrehajtása
+        $result->execute();
+        //kapott sql-oszlopok számának fetchelése
+        $count = $result->rowCount();
 
-        //kapott json-adat dekódolása
-        $data = json_decode($response);
-        //tömb definiálása
+        return $count;
+    }
+
+    public static function getAllProductsWithLimit($startNum, $endNum)
+    {
+
+        //az összes olyan termék kiválasztása amiből több van mint 0, és még nem törölték (nincsen valid dátum beállítva a deleted_at propertynél)
+        $sql = "SELECT * FROM `products` LIMIT $startNum,$endNum";
+
+        //csatlakozás az adatbázishoz, majd az sql parancs elküldése
+        $result = self::$conn->prepare($sql);
+        //sql parancs végrehajtása
+        $result->execute();
+        //ebben a tömbben fognak eltárolódni a fetchelt termékek
         $products = [];
+        //kapott sql-adat fetchelése
+        $data = $result->fetchAll();
 
-        //products tömb feltöltése a kapott, dekódolt json-adatokkal
+        //adatok megjelenítése (a kapott tömbön keresztül loopol)
         foreach ($data as $row) {
-            switch ($row->category) {
+            switch ($row["category"]) {
                 case "pellet": {
-                        $products[] = new Product($row->id, $row->name, $row->description, $row->image, $row->price, $row->quantity, $row->onStock, $row->weight, $row->unitPrice, $row->unitSize, $row->flavour, $row->colour, $row->components, $row->category, $row->preFishes, $row->discount, $row->createdAt, $row->deletedAt);
+                        $products[] = new Product($row["id"], $row["name"], $row["description"], $row["image"], $row["price"], $row["quantity"], $row["onStock"], $row["weight"], $row["unitPrice"], $row["unitSize"], $row["flavour"], $row["colour"], $row["components"], $row["category"], $row["preFishes"], $row["discount"], $row["createdAt"], $row["deletedAt"]);
                         break;
                     }
                 case "feed": {
-                        $products[] = new Product($row->id, $row->name, $row->description, $row->image, $row->price, $row->quantity, $row->onStock, $row->weight, $row->unitPrice, $row->unitSize, $row->flavour, $row->colour, $row->components, $row->category, $row->preFishes, $row->discount, $row->createdAt, $row->deletedAt);
+                        $products[] = new Product($row["id"], $row["name"], $row["description"], $row["image"], $row["price"], $row["quantity"], $row["onStock"], $row["weight"], $row["unitPrice"], $row["unitSize"], $row["flavour"], $row["colour"], $row["components"], $row["category"], $row["preFishes"], $row["discount"], $row["createdAt"], $row["deletedAt"]);
                         break;
                     }
                 default: {
@@ -184,44 +102,62 @@ class Database
         return $products;
     }
 
-    //API KÉSZ
-    public static function getProductById($id)
+    public static function getAllProductsOnAdmin()
     {
-        //cURL meghívása
-        $curl = curl_init();
 
-        //cURL beállítása (az adott URL-nek intézett kérelem)
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'http://localhost/sztamas-bmszc2023/api/rest.php?products&id=' . $id,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json'
-            ),
-        ));
+        //az összes termék kiválasztása
+        $sql = "SELECT * FROM `products`";
 
-        //kérelem végrehajtása (annak eltárolása egy változóba)
-        $response = curl_exec($curl);
-        //kérelem bezárása
-        curl_close($curl);
+        //csatlakozás az adatbázishoz, majd az sql parancs elküldése
+        $result = self::$conn->prepare($sql);
+        //sql parancs végrehajtása
+        $result->execute();
+        //ebben a tömbben fognak eltárolódni a fetchelt termékek
+        $products = [];
+        //kapott sql-adat fetchelése
+        $data = $result->fetchAll();
 
-        //kapott json-adat dekódolása
-        $data = json_decode($response);
-
-        //products tömb feltöltése a kapott, dekódolt json-adatokkal
+        //adatok megjelenítése (a kapott tömbön keresztül loopol)
         foreach ($data as $row) {
-            switch ($row->category) {
+            switch ($row["category"]) {
                 case "pellet": {
-                        return new Product($row->id, $row->name, $row->description, $row->image, $row->price, $row->quantity, $row->onStock, $row->weight, $row->unitPrice, $row->unitSize, $row->flavour, $row->colour, $row->components, $row->category, $row->preFishes, $row->discount, $row->createdAt, $row->deletedAt);
+                        $products[] = new Product($row["id"], $row["name"], $row["description"], $row["image"], $row["price"], $row["quantity"], $row["onStock"], $row["weight"], $row["unitPrice"], $row["unitSize"], $row["flavour"], $row["colour"], $row["components"], $row["category"], $row["preFishes"], $row["discount"], $row["createdAt"], $row["deletedAt"]);
                         break;
                     }
                 case "feed": {
-                        return new Product($row->id, $row->name, $row->description, $row->image, $row->price, $row->quantity, $row->onStock, $row->weight, $row->unitPrice, $row->unitSize, $row->flavour, $row->colour, $row->components, $row->category, $row->preFishes, $row->discount, $row->createdAt, $row->deletedAt);
+                        $products[] = new Product($row["id"], $row["name"], $row["description"], $row["image"], $row["price"], $row["quantity"], $row["onStock"], $row["weight"], $row["unitPrice"], $row["unitSize"], $row["flavour"], $row["colour"], $row["components"], $row["category"], $row["preFishes"], $row["discount"], $row["createdAt"], $row["deletedAt"]);
+                        break;
+                    }
+                default: {
+                        echo "Ismeretlen kategória!";
+                    }
+            }
+        }
+
+        return $products;
+    }
+
+    public static function getProductById($id)
+    {
+
+        $sql = "SELECT * FROM `products` WHERE `id` = $id";
+
+        //csatlakozás az adatbázishoz, majd az sql parancs elküldése
+        $result = self::$conn->prepare($sql);
+        //sql parancs végrehajtása
+        $result->execute();
+        //kapott sql-adat fetchelése
+        $data = $result->fetchAll();
+
+        //keresztül loopolás
+        foreach ($data as $row) {
+            switch ($row["category"]) {
+                case "pellet": {
+                        return new Product($row["id"], $row["name"], $row["description"], $row["image"], $row["price"], $row["quantity"], $row["onStock"], $row["weight"], $row["unitPrice"], $row["unitSize"], $row["flavour"], $row["colour"], $row["components"], $row["category"], $row["preFishes"], $row["discount"], $row["createdAt"], $row["deletedAt"]);
+                        break;
+                    }
+                case "feed": {
+                        return new Product($row["id"], $row["name"], $row["description"], $row["image"], $row["price"], $row["quantity"], $row["onStock"], $row["weight"], $row["unitPrice"], $row["unitSize"], $row["flavour"], $row["colour"], $row["components"], $row["category"], $row["preFishes"], $row["discount"], $row["createdAt"], $row["deletedAt"]);
                         break;
                     }
                 default: {

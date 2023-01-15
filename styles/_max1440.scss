@@ -716,6 +716,14 @@
     }
 }
 
+//cookies subpage
+@media screen and (max-width: 1440px) {
+
+    #cookies-section {
+        padding: 6rem 2rem !important;
+    }
+}
+
 //item subpage
 @media screen and (max-width: 1440px) {
 
@@ -952,7 +960,7 @@
 }
 
 //profile-logged-in subpage
-@media screen and (max-width: 1440px) {
+@media screen and (max-width: 1100px) {
 
     #profile-subpage-user-section {
         padding: 6rem 2rem !important;

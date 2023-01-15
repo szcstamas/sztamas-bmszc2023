@@ -4,9 +4,9 @@
 
 require_once("db/database.php");
 
-Database::connect();
+// Database::connect();
 $otherItems = Database::getAllProducts();
-
+// var_dump($otherItems);
 ?>
 
 <section id="homepage-hero" class="section video-bg">
@@ -61,7 +61,7 @@ $otherItems = Database::getAllProducts();
                                 <div class='shop-item-body'>
                                     <div class='dfcc'>
                                     <div class='dfsb shop-item-title'>
-                                    <a class='shop-link-title' style='display:inline-block;background-color:transparent;height:100%;width:100%;' href='item.php?id={$product->id}'><h4>{$product->name}</h4></a>
+                                    <a class='shop-link-title' style='display:inline-block;background-color:transparent!important;height:100%;width:100%;' href='item.php?id={$product->id}'><h4>{$product->name}</h4></a>
                                         <p>{$product->weight} g</p>   
                                     </div>
                                     <div class='dfsb'>
@@ -105,6 +105,7 @@ $otherItems = Database::getAllProducts();
 
                     if (++$i == 4) break;
                 }
+
                 ?>
             </div>
         </div>

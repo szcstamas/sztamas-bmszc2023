@@ -4,20 +4,18 @@ MIN
 10. Főoldalon videó a heronak, az aloldalakra pedig illusztrációk a heroknak
 11. item aloldalon counter
 12. felhasználó feltételek
-13. sütik
+13. süti tájékoztató
 14. impresszum
 15. adatvédelmi tájékoztató
 ---
 MUST
 12. REST API és szerverkommunikáció
-13. Reszponzív check
 14. DB Dump
 15. DB Diagram
 16. Rövid doksi
 
 ---
 POST READY
-- indexen
 11. Form authentikáció (email, stb) (?)
 
 RESP DONE:

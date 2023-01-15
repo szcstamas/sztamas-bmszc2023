@@ -35,7 +35,12 @@ if (isset($_GET["search"])) {
 </head>
 
 <body>
-    <header class="header">
+    <a href="#brobaits-header" class="go-top-button dffc">
+        <i class="bi bi-caret-up-fill"></i>
+        <span>A legtetejére!</span>
+    </a>
+
+    <header class="header" id="brobaits-header">
 
         <div class="header-row dfsb maxw">
             <div class="header-row-image-container">

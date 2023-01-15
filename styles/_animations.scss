@@ -74,6 +74,20 @@
     }
 }
 
+@keyframes go-top-button {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
 @keyframes hook-position-change {
     0% {
         transform: translateY(800px) translateX(-9px) rotate(0deg);
