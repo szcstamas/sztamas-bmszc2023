@@ -1,12 +1,11 @@
 # Dokumentáció - Fontos információk a webalkalmazással kapcsolatban
-------
-**Kliens oldali nyelvek:** HTML5, CSS (SCSS), JavaScript
-**Szerver oldali nyelv:** PHP
-**Adatbázis:** MySQL
-**Kódszerkesztő:** Visual Studio Code
-**Localhost:** Apache (XAMPP)
-**Kérelmek ellenőrzése:** Postman
-**Tervező szoftver:** Figma
+* **Kliens oldali nyelvek:** HTML5, CSS (SCSS), JavaScript
+* **Szerver oldali nyelv:** PHP
+* **Adatbázis:** MySQL
+* **Kódszerkesztő:** Visual Studio Code
+* **Localhost:** Apache (XAMPP)
+* **Kérelmek ellenőrzése:** Postman
+* **Tervező szoftver:** Figma
 ------
 **Fontos!** A projekt megtekintése előtt (megelőzve az adatbázis létrehozását) le kell ellenőrizni, hogy a forrásmappa neve teljesen pontosan **sztamas-bmszc2023**. Ez azért fontos, mert az *api* mappán belül található, az alkotott REST API működéséért felelős kérelmek a *http://localhost/sztamas-bmsz2023* linken keresztül érhetőek el. Ha a mappa más néven töltődik le (valamilyen véletlen oknál fogva), akkor *sztamas-bmsz2023* néven szükséges átnevezni.
 
@@ -15,7 +14,7 @@ Az adatbázis elkészítéséhez szükséges fájlok (beleértve a dump.sql-t is
 # BroBaits© - Minőségi pelletek és etetőanyagok
 
  A webalkalmazás a BroBaits elnevezésű, horgászatra használt pelleteket és etetőanyagokat gyártó illetve forgalmazó, *fiktív* cég webáruházát és bemutatkozó oldalát mutatja be. Az alkalmazás fő célja megegyezik a mai, egyszerűbb webshopok felépítésével, működésével és céljaival: a látogató képes megvásárolni a webáruházból kiválasztott terméket egy kosár-, majd fizetési rendszer segítségével. A weboldalt regisztrált felhasználóként is van lehetőség látogatni, ebben az esetben a felhasználó nyomon követheti az éppen teljesítésre váró vagy már teljesített rendeléseit is. Az áruházban bemutatott termékeket és leadott rendeléseket az arra jogosult személyek szerkeszthetik, jóváhagyhatják és törölhetik is az adatbázisból egy kliens-oldali "adminpanel" segítségével. A site céges bemutatkozó oldalként is funkcionál, a *Főoldalon*, a *Partnereink* és a *Rólunk* aloldalon megannyi információ látható a cég felépítésével kapcsolatban.  
-------
+
 ## Fejléc (header)
 
 A weboldal fejlécében (components/header.php) a logó mellett az öt főbb aloldal linkje, illetve ezek mellett a vásárlói kosár (bevásárlókocsi-ikon), a felhasználói profil (ember-ikon) és a keresés látható. Az éppen aktuális oldal linkje alatt látható egy "pulzáló" gömböcske, ami a jelenleg látható oldalt hivatott indikálni. A profil aloldalt tartalmazó "ember-ikon" zöld hátteret kapva pulzál, ha egy felhasználó éppen be van jelentkezve. A kereső-gombra kattintva egy input mező ugrik elő a header alatti részen, amibe ha beírjuk az éppen aktuális kereső-kifejezést, majd entert nyomunk vagy a MEHET gombra kattintunk, akkor a Webshop aloldalra jutunk, látva a keresés eredményét.
