@@ -1,13 +1,10 @@
 ---
 MIN
-12. lorem ipsumokat cserélni az about alatt
 11. üzenetküldés? ha lesz rá idő
 12. hamburger menü? ha lesz rá idő
 13. item subpage-t átgondolni mobilon? ha lesz rá idő
 ---
 MUST
-14. DB Dump
-15. DB Diagram
 16. Rövid doksi
 
 ---
