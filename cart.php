@@ -294,9 +294,9 @@ foreach ($cart as $cartItem) {
 
                 echo "<p style='color:#65A850;'>Ingyenes!</p>";
               } else if ($sum < 10000) {
-                $sum = $sum + $deliveryPrice;
+                $sum = $sum + $DELIVERY_PRICE;
 
-                echo "<p>$deliveryPrice Ft</p>";
+                echo "<p>$DELIVERY_PRICE Ft</p>";
               } else if ($sum = 10000) {
                 echo "<p style='color:#65A850;'>Ingyenes!</p>";
               }

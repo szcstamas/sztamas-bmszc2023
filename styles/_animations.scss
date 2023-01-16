@@ -17,11 +17,17 @@
 @keyframes circle {
     0% {
         transform: rotate(0deg) translate(-165px) rotate(0deg);
+        background-color: #65A850;
+    }
 
+    50% {
+        transform: rotate(180deg) translate(-165px) rotate(-180deg);
+        background-color: #f59042;
     }
 
     100% {
         transform: rotate(360deg) translate(-165px) rotate(-360deg);
+        background-color: #65A850;
     }
 }
 

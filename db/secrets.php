@@ -6,8 +6,8 @@ $development = true;
 //adatbázis kapcsolat
 $secrets = [
 
-    'mysqlUser' => 'sztamas',
-    'mysqlPass' => '(_m2X0uMXfoZMTKl',
+    'mysqlUser' => 'root',
+    'mysqlPass' => '',
     'mysqlDB' => 'sztamas',
 ];
 
@@ -19,4 +19,4 @@ $_SESSION["admin"] = [
 ];
 
 //magicnum (szállítási költség)
-$deliveryPrice = 1650;
+$DELIVERY_PRICE = 1650;
