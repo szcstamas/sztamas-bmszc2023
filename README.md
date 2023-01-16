@@ -46,6 +46,10 @@ A **Kapcsolat** aloldalon (contact.php) lehetőség van üzenetküldésre, illet
 
 A **Rólunk** aloldalon (about.php) a felhasználó a BroBaits céggel kapcsolatos információkat tekintheti meg. A hero-szekció és a garanciát ismertető rész után látható egy Kérdések-válaszok konténer, amiben a cégtulajdonosok a gyakran feltett kérdésekre válaszolnak. A **+** jelre kattintva gördülnek le a menük. Jobb oldalon a vállalkozást felépítő, magas beosztásban dolgozó, "fő-emberek" láthatóak.
 
+## Termék aloldala
+
+Egy termék aloldalára legkönnyebben a *Webshopon* keresztül juthatunk el a termék nevére, vagy a termék neve alatt látható nyílra történő kattintással. A termék aloldalán az első szekcióban a jobbra rendezett kép mellett a termék neve, leírása, illetve lejjebb görgetve az ára, kilós ára, a kosárba rakható darabszám, a termék készlete, kiszállítási idő, és a termékről szóló fontosabb információk láthatóak. A termék alatt látható szekcióban további termék-ajánlásokat lehet észrevenni. Ha az url-ben az id paraméter mögött látható számot kicseréljük egy nem létező termék id-jára, akkor egy "Nincs ilyen termék" aloldalt kapunk.
+
 ## Kosár és vásárlás
 
 A **Kosár** aloldal (cart.php) alapértelmezetten üres. Ha egy adott termék, vagy a webshop aloldalán látható **KOSÁRBA** gombra kattintunk, a beállított mennyiségű termék fog beérkezni a kosárba (ennek a darabszámnak az állítására csak a termék aloldalán van lehetőség, a webshop aloldalból közvetlenül a gombra kattintva MINDIG egy darab áru fog beérkezni). A rendelt termék darabszámának állítására természetesen utólag itt, a *Kosár* aloldalon is van lehetőség, ehhez csak a mínusz illetve plusz gombokra kell rányomni. Fontos: 10.000 Forint vásárlás alatt a kiszállítás ingyenes, a jelzett összeg alatti vásárlás esetén +1650 Forint szállítási díj fog hozzáadódni a rendeléshez. A termék kosárból való törlésére is van lehetőség, ehhez az **X** gombot kell megnyomni. 
@@ -54,9 +58,9 @@ A **Kosár** aloldal (cart.php) alapértelmezetten üres. Ha egy adott termék, 
 
 A **Rendelés** aloldal (checkout.php) csak egy esetben jeleníthető meg: ha a felhasználónak van éppen aktív kosara. Ehhez az kell, hogy valamilyen termék szerepeljen a Kosár aloldalon (cart.php). Ha a kosár üres, úgy a checkout aloldal sem érhető el. A Rendelés aloldalon egy űrlapot (form) láthatunk, amibe bele kell írni a szükséges információkat (csillaggal jelölt), majd ha ez megvan, el kell fogadnunk a felhasználási feltételeket az űrlap alján látható gomb "bekapcsolásával". Az űrlap alatt a fizetett összeg és a rendelés befejezését jelölő gomb látható. Ha a *Rendelés véglesítésére* kattintunk (és minden mező ki van töltve), akkor egy **Köszönjük rendelésedet** aloldalra jutunk át, ekkor a rendelésünk rögzítődik az adatbázis orders táblájában. Ha a felhasználó nem fűzött a megrendeléshez megjegyzést, akkor az adatbázisban a *comment* oszlopban a "No comment" feliratot fogjuk látni, illetve ha a felhasználó nem volt bejelentkezve a rendelés pillanatában, akkor az *isUser* oszlopban 0 értéket, a *username* oszlopban pedig a "no-user" értéket látjuk.
 
-## Felhasználói profil/bejelentkezés és regisztráció
+## Felhasználói profil / bejelentkezés és regisztráció
 
-
+A fejlécben látható "ember-ikonra" kattintva a profil aloldalra jutunk, ahol alapértelmezetten egy bejelentkezési felületet lát a felhasználó. A szükséges adatok beíraása után (ügyelve a felhasználónévre illetve az érvényes e-mail címre) két lehetőségünk van: vagy regisztrálunk, vagy ha már van felhasználói fiókunk, akkor bejelentkezünk. Ha már meglévő felhasználónévvel próbálunk profilt létrehozni, akkor egy hibaüzenetet kapunk, ami alapján a beírt felhasználónév már foglalt (természetesen hibaüzenetet kapunk hibás jelszó beírásakor, nem megfelelő karaktereket tartalmazó felhasználónév beírásakor, nem valid e-mail cím használatakor, stb stb). Ha sikerült bejelentkeznünk, akkor a felhasználói profilunk aloldala fog megjelenni előttünk, ahol láthatjuk a már leadott rendeléseinket - ha vannak. Rendelés leadásához ugyanazt kell tenni, mint amikor bejelentkezés nélkül rendeltünk: kosárba rakunk egy terméket, kiválasztjuk a darabszámot, majd a checkout aloldal segítségével véglesítjük a rendelést. Mivel ezúttal be voltunk jelentkezve, ezért az adatbázisban az *isUser* oszlopban 1 értéket, a *username* oszlopban pedig a felhasználónevünket látjuk majd viszont a legújabb rendelés sorában.
 
 ## Keresés
 
@@ -64,11 +68,19 @@ Az oldalon történő keresés minden esetben a *Webshop* aloldalra elkalauzolt,
 
 ## Admin felület
 
+Az adminfelület a *sztamas-bmszc2023/admin.php* navigálva érhető el (ez az aloldal érthető okokból nem szerepel sehol sem a weboldalon). Az oldal elérésehez be kell jelentkeznünk az adminlogin.php aloldal segítségével: meg kell adnunk a secrets.php-ban szereplő admin adatokat (felhasználónév és jelszó). Ha ez sikerült, akkor egy zöld színű szöveg jelzi a sikeres belépést, illetve rákattinthatunk a *Tovább* gombra, ami visszavisz az admin.php aloldalra, ám ekkor már megjelenik az elérni kívánt admin-konzol is. Fontos: a belépés után a munkamenet eltárolja az admin értékeit, ezzel együtt a kapott tokent is, amelyet a tokenre váró API-requestek hívásához használunk majd. Ilyen hívás például az is, ami az admin felületen kilistázza az adatbázis orders táblában látható összes rendelést, illetve a rendelések alatt a weboldalon elérhető összes terméket is. **Röviden:** minden admin felületen használt HTTP kérelemmel működő adatbázis-interakció (legyen az POST vagy PUT) authentikációt kér, amihez az admin felhasználóból származó tokenre van szükség. Ezen az oldalon lehetőségünk van
+1. bármely rendelés teljesítésére vagy törlésére (pipa illetve kuka-ikon), ekkor ha az adott rendelés egy felhasználóhoz van rendelve, akkor az a rendelés a felhasználó profiljában is teljesítettként jelenik meg, illetve nem lesz benne, ha véglegesen törlésre került,
+2. meglévő termék szerkesztésére (a termék ID-jának és a feltöltés dátumának kivételével) - apróság: ha új képet szeretnénk feltölteni a terméknek, és kipipáljuk az "Azonos elnevezésű képek törlése" checkboxot, akkor minden olyan kép törlődik az img/products mappából, aminek az elnevezésében megtalálható a termék neve,
+3. meglévő termék "pótlására" és "törlésére" (előbbire akkor van lehetőség ha a termék elfogyott, tehát a quantity 0; utóbbi esetében pedig a termék nem törlődik teljesen az adatbázisból, csak a deletedAt oszlop értéke kapja meg az éppen aktuális dátumot -> innentől fogva a termék inaktív, és nem jelenik meg a webshopban),
+4. új termék hozzáadására (a termék hozzáadása gombra kattintva), először ki kell választani a termék kategóriáját, majd a szükséges adatokat ki kell tölteni az űrlap beküldése előtt (az ID és a feltöltés dátumát a termék automatikusan kapja az adatbázisból)
+
 ## Footer
 
 A weboldal lábléce (footer.php) a fejléchez hasonlóan a BroBaits cég logóját, a Sütik, az Adatvédelmi tájékoztató és Impresszum aloldalak, illetve a közösségi médiára vezető linkeket tartalmazza. 
 
 ## REST API és Database
+
+Az *api* mappában öt fájl látható: **auth.php** (a kérelmek authentikációjáért felel), **orders.php** (az orders tábla kérelmeit dolgozza fel), products.php (a products tábla kérelmeit dolgozza fel), **users.php** (a users tábla kérelmeit dolgozza fel -> kezdetleges) és **rest.php**, ami az alapvető kérelmeket teszi lehetővé a kérelem elnevezésétől függően (?orders, ?products), majd JSON formátumba enkódolja azokat. Részletesebb dokumentáció a jelzett fájlokban olvasható. A *db* mappában három fájl látható: database.php, database-recover.php és secrets.php. A *database.php* fájl tartalmazza a *Database* osztályt, amelynek a gyermek-függvényei az adatbáziskapcsolatot létrehozó, API-requesteket kezelő funkciók. A *database-recover.php* egy vanilla sql hívásokat kezelő fájl (csak backup), a *secrets.php* pedig a kényes adatokat tartalmazza (adatbázis authentikáció és admin adatok, ezt jobb esetben nem szokás feltölteni semmilyen repositoryba).
 
 ## JavaScript fájlok
 
@@ -79,5 +91,15 @@ A szükséges, minimális mennyiségű JavaScript fájlok a *js* mappában tekin
 * a checkout aloldal által használt "checkoutvalidity.js" fájlnak (ez tiltja a felhasználónak az nem helyes billentyűk beütését, pl. speciális karakterek, név esetén számok beütését, stb stb),
 * a checkout űrlapban használt "copyaddress.js" fájlnak, amely a számlázási cím átmásolását teszi lehetővé a checkbox megnyomásával,
 * illetve a "currentpageclass.js" fájl is itt található meg, ami az éppen aktuális aloldal linkjére teszi rá az active-page classt (ettől jelenik meg a pulzáló, zöld gömb)
+------
+
+## Egyéb információk:
+
+* **components mappa:** a header, footer és newsletter-sávot tartalmazó mapppa
+* **img mappa:** az oldalon használt képeket tartalmazza
+* **model:** az Order és a Product osztályokat tartalmazó mappa
+* **styles:** az oldalon használt css elemeket tárolja (scss és annak al-fájlai segítségével)
+* **waitingforresp:** egy emlékeztető magamnak, ezt a mappát nem szükséges megtekinteni
+
 ------
 *fontosabb kódrészletek és kommentárok a fájlokban olvashatóak*
