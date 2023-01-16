@@ -1,3 +1,4 @@
+<?php ob_start(); ?>
 <?php
 //a munkamenet indítása
 session_start();

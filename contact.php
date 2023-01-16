@@ -1,4 +1,31 @@
+<?php ob_start(); ?>
 <?php require_once("./components/header.php") ?>
+
+<?php
+
+//ha rányomtam a submitre a formnál
+if (isset($_POST["send-form"])) {
+
+    //ha minden mező be van állítva
+    if (
+        isset($_POST["contact-name"]) && !empty($_POST["contact-name"]) &&
+        isset($_POST["contact-email"]) && !empty($_POST["contact-email"]) &&
+        isset($_POST["contact-desc"]) && !empty($_POST["contact-desc"])
+    ) {
+
+        //keresztnév kiszedése a beírt név adatból
+        $name = $_POST["contact-name"];
+        $secondName = substr($name, strpos($name, " ") + 1);
+        //ezt adja át a egy sessiön tömbnek, amit aztán a success aloldalon megjelenítünk
+        $_SESSION["contact"] = $secondName;
+        header("Location: success.php");
+        ob_end_flush();
+    } else {
+        header("Location: contact.php?error");
+        ob_end_flush();
+    }
+}
+?>
 
 <section id="contact-section-subpage" class="section whitebg">
     <div class="homepage-main maxw dfsb">
@@ -18,21 +45,25 @@
             </div>
         </div>
         <div class="subpage-contact-form-container">
-            <form class="subpage-contact-form" action="POST">
+            <?php if (isset($_GET["error"])) : ?>
+                <p style="color: #f59042;margin-bottom:2rem;">Az üzenet elküldéséhez töltsd ki az összes mezőt! Köszönjük!</p>
+            <?php else : ?>
+            <?php endif ?>
+            <form class="subpage-contact-form" method="POST">
                 <div class="dfc">
                     <label for="">NÉV:</label>
-                    <input type="text" placeholder="pl. Gipsz Jakab...">
+                    <input type="text" name="contact-name" placeholder="pl. Gipsz Jakab...">
                 </div>
                 <div class="dfc">
                     <label for="">EMAIL CÍM:</label>
-                    <input type="email" placeholder="pl. irok@uzenetet.hu...">
+                    <input type="email" name="contact-email" placeholder="pl. irok@uzenetet.hu...">
                 </div>
                 <div class="dfc">
                     <label for="">ÜZENET TÁRGYA:</label>
-                    <input type="text" placeholder="Ide írd az üzeneted tárgyát...">
+                    <input type="text" name="contact-desc" placeholder="Ide írd az üzeneted tárgyát...">
                 </div>
                 <textarea name="content" id="" style="resize: none;" placeholder="És ide írd az üzenetedet..."></textarea>
-                <input type="submit" class="button-gray" value="ELKÜLDÖM AZ ÜZENETET!">
+                <input type="submit" class="button-gray" name="send-form" value="ELKÜLDÖM AZ ÜZENETET!">
             </form>
         </div>
     </div>

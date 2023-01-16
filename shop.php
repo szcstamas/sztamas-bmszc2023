@@ -29,9 +29,19 @@ if (
             isset($_GET["sortItems"]) &&
             !empty($_GET["sortItems"])
         ) {
-            $searchName = $_GET["search"];
-            $sortBy = $_GET["sortItems"];
-            $products = Database::searchInShop($searchName, $sortBy, $discountItem, $rangeItemPrice, $onStock);
+            if (
+                isset($_GET["discountItem"]) &&
+                !empty($_GET["discountItem"])
+            ) {
+                $searchName = $_GET["search"];
+                $sortBy = $_GET["sortItems"];
+                $discountItem = $_GET["discountItem"];
+                $products = Database::searchInShop($searchName, $sortBy, $discountItem, $rangeItemPrice, $onStock);
+            } else {
+                $searchName = $_GET["search"];
+                $sortBy = $_GET["sortItems"];
+                $products = Database::searchInShop($searchName, $sortBy, $discountItem, $rangeItemPrice, $onStock);
+            }
         }
 
         if (

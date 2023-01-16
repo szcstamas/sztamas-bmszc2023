@@ -669,7 +669,7 @@ class Database
             if ($sortItems && $sortItems != []) {
 
                 if ($discountItem && $discountItem != []) {
-                    $sql = "SELECT * FROM `products` WHERE `products`.`discount` > 0";
+                    $sql = $sql . ' ' . "AND `products`.`discount` > 0";
 
                     if ($onStock && $onStock != []) {
 
@@ -685,23 +685,37 @@ class Database
                                 $sql = $sql . ' ' . "AND `price` > $rangeItemPrice";
                             }
                         }
+                    } else {
+
+                        switch ($sortItems) {
+
+                            case "sortByPriceDesc":
+                                $sql = $sql . ' ' . "ORDER BY `products`.`price` DESC;";
+                                break;
+                            case "sortByPriceAsc":
+                                $sql = $sql . ' ' . "ORDER BY `products`.`price` ASC;";
+                                break;
+                            case "sortByDiscount":
+                                $sql = $sql . ' ' . "ORDER BY `products`.`discount` DESC;";
+                                break;
+                        }
+                    }
+                } else {
+
+                    switch ($sortItems) {
+
+                        case "sortByPriceDesc":
+                            $sql = $sql . ' ' . "ORDER BY `products`.`price` DESC;";
+                            break;
+                        case "sortByPriceAsc":
+                            $sql = $sql . ' ' . "ORDER BY `products`.`price` ASC;";
+                            break;
+                        case "sortByDiscount":
+                            $sql = $sql . ' ' . "ORDER BY `products`.`discount` DESC;";
+                            break;
                     }
                 }
-
-                switch ($sortItems) {
-
-                    case "sortByPriceDesc":
-                        $sql = $sql . ' ' . "ORDER BY `products`.`price` DESC;";
-                        break;
-                    case "sortByPriceAsc":
-                        $sql = $sql . ' ' . "ORDER BY `products`.`price` ASC;";
-                        break;
-                    case "sortByDiscount":
-                        $sql = $sql . ' ' . "ORDER BY `products`.`discount` DESC;";
-                        break;
-                }
-            }
-            if ($discountItem && $discountItem != []) {
+            } else if ($discountItem && $discountItem != []) {
                 $sql = $sql . ' ' . "AND `products`.`discount` > 0;";
             }
         } else {

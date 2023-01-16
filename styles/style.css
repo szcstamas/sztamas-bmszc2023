@@ -6265,6 +6265,10 @@ hr {
   right: -35px;
 }
 
+#profile-subpage-user-section .profile-subpage-running-order .profile-subpage-order-container .cart-noitem h4 {
+  padding: 0 1rem;
+}
+
 .secondpart-of-form {
   background-color: #fff;
   width: 100%;
