@@ -1,4 +1,3 @@
-<?php ob_start(); ?>
 <?php require_once('components/header.php');
 ?>
 <section id='cookies-section' class='section whitebg'>

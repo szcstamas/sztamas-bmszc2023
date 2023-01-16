@@ -1,5 +1,6 @@
 <?php require_once("./components/header.php") ?>
 <?php
+//lokális json file fetchelése majd dekódolása
 $partnersJson = file_get_contents('./js/json/partners.json');
 $partnersArray = json_decode($partnersJson, true);
 ?>

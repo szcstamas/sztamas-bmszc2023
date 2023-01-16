@@ -1492,6 +1492,15 @@
         }
     }
 
+
+    #items-other-products .homepage-main .items-other-products-main .items-other-items-grid .shop-grid-item .shop-item-body .dfcc .dfsb {
+        flex-direction: row !important;
+
+        .shop-item-price {
+            flex-direction: row !important;
+        }
+    }
+
     @media screen and (max-width: 400px) {
         #item-subpage-hero .homepage-main .item-subpage-left-row .dffc:nth-child(2) {
             flex-direction: column !important;

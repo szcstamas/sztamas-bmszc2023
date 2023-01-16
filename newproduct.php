@@ -22,6 +22,7 @@ if (isset($_GET["category"])) {
   $category = "unknown";
 }
 
+//ha minden szükséges érték be van állítva a termék szerkesztésénél
 if (
   isset($_POST["name"]) &&
   isset($_POST["description"]) &&
@@ -64,6 +65,7 @@ if (
     $filename = $product->image;
   }
 
+  //kategória alapján mentsen egy új Product osztályt
   switch ($category) {
     case "pellet": {
 
@@ -76,7 +78,7 @@ if (
         break;
       }
   }
-
+  //az új osztályt mentse bele az adatbázisba az API-n keresztül (token szükséges)
   Database::createProduct($newProduct, $token);
 
   header("Location: admin.php");
@@ -85,7 +87,7 @@ if (
 }
 
 ?>
-
+<!-- ha nincs beállítva a loginAdmin tömb a munkamenetben -->
 <?php if (!isset($_SESSION["loginAdmin"])) : ?>
   <section class='section maxw admin-section admin-login-error'>
     <h2>Bejelentkezés szükséges!</h2>
@@ -180,6 +182,7 @@ if (
         <input type="hidden" name="category" value="<?= $category ?>">
         <button type="submit" class="button-green product-submit">Mentés</button>
       </form>
+      <!-- ha a kategória még nincs beállítva -->
     <?php else : ?>
       <form class="dfcc select-category" method="GET">
         <label for="category">Kategória kiválasztása</label>

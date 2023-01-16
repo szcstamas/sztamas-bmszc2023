@@ -1,4 +1,4 @@
-//checkout validálása (ha rossz billentyű érkezik, nem engedi)
+//checkout validálása (ha rossz billentyű érkezik, nem engedi beírni azt)
 let prevVal = "";
 document.querySelector('.checkout-name').addEventListener('input', function (e) {
     if (this.checkValidity()) {

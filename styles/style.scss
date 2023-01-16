@@ -314,6 +314,7 @@ hr {
         a {
             color: #65A850;
             transition: all .1s ease;
+            text-align: center;
 
             &:hover {
                 color: #4c7e3c;
@@ -421,6 +422,7 @@ hr {
                 height: 100%;
                 object-fit: cover;
                 animation: levitate-x 4s ease-in-out infinite;
+                pointer-events: none;
             }
         }
     }

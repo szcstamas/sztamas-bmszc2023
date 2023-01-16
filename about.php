@@ -1,13 +1,5 @@
 <?php require_once("./components/header.php") ?>
 
-<?php
-
-require_once("db/database.php");
-
-Database::connect();
-
-?>
-
 <section id="about-subpage-hero" class="section whitebg" style="padding-bottom:3rem;">
     <div class="homepage-main maxw dfsb">
         <div class="homepage-main-hero section-text-button">
@@ -26,8 +18,6 @@ Database::connect();
         </div>
     </div>
 </section>
-
-
 
 <section id="about-subpage-main" class="whitebg" style="padding-bottom:0rem;">
 

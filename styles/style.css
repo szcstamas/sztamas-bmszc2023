@@ -2876,6 +2876,18 @@
     -webkit-transform: translateX(5px);
             transform: translateX(5px);
   }
+  #items-other-products .homepage-main .items-other-products-main .items-other-items-grid .shop-grid-item .shop-item-body .dfcc .dfsb {
+    -webkit-box-orient: horizontal !important;
+    -webkit-box-direction: normal !important;
+        -ms-flex-direction: row !important;
+            flex-direction: row !important;
+  }
+  #items-other-products .homepage-main .items-other-products-main .items-other-items-grid .shop-grid-item .shop-item-body .dfcc .dfsb .shop-item-price {
+    -webkit-box-orient: horizontal !important;
+    -webkit-box-direction: normal !important;
+        -ms-flex-direction: row !important;
+            flex-direction: row !important;
+  }
 }
 
 @media screen and (max-width: 560px) and (max-width: 400px) {
@@ -3091,11 +3103,11 @@
   }
   #fish-calendar .main-container .img-container:hover ~ .img-subtext {
     left: auto !important;
-    top: -200px;
+    top: 0px;
   }
   #fish-calendar .main-container .img-link:hover ~ .img-subtext {
     left: auto !important;
-    top: -200px;
+    top: 0;
   }
   #fish-calendar .main-container .img-subtext {
     left: auto !important;
@@ -3751,6 +3763,7 @@ hr {
   color: #65A850;
   -webkit-transition: all .1s ease;
   transition: all .1s ease;
+  text-align: center;
 }
 
 .footer .footer-row-link-container a:hover {
@@ -3904,6 +3917,7 @@ hr {
      object-fit: cover;
   -webkit-animation: levitate-x 4s ease-in-out infinite;
           animation: levitate-x 4s ease-in-out infinite;
+  pointer-events: none;
 }
 
 .subpage-contact-form-container {

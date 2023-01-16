@@ -564,16 +564,20 @@ class Database
             $result->execute();
             $resultCheck = $result->fetchColumn();
 
+            //ha az sql futtatás után jön vissza eredmény a userName oszloból, akkor a user már regisztrálva van -> hibaüzenet
             if ($resultCheck > 0) {
                 header("Location: profile.php?error=usertaken&mail=" . $email);
                 exit();
-            } else {
+            }
+            //egyébként meg regisztrálja be az adatbázisba
+            else {
                 $sql = "INSERT INTO users (userName, userEmail, userPwd) VALUES (:userName, :userEmail, :userPwd)";
                 $result = self::$conn->prepare($sql);
                 if (!$result) {
                     header("Location: profile.php?error=sqlerror");
                     exit();
                 } else {
+                    //jelszó titkosítása (hash)
                     $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
 
                     $result->bindParam(':userName', $username);
@@ -603,11 +607,13 @@ class Database
             $result->bindParam(':userEmail', $email);
             $result->execute();
 
+            //ha van eredmény
             if ($result) {
                 $data = $result->fetchAll();
 
                 foreach ($data as $row) {
                     $pwdCheck = password_verify($password, $row['userPwd']);
+                    //ha a beírt jelszó nem egyezik meg az adatbázisban található, rejtett jelszóval, kapjon hibaüzenetet
                     if ($pwdCheck == false) {
                         header("Location: profile.php?login=wrongpassword");
                         exit();
@@ -619,7 +625,9 @@ class Database
                         exit();
                     }
                 }
-            } else {
+            }
+            //ha nincs eredmény (nincs ilyen user)
+            else {
                 header("Location: profile.php?error=nouser");
                 exit();
             }

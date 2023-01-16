@@ -57,8 +57,9 @@ $otherItems = Database::getAllProducts();
 
                 <div class="dfsb item-subpage-left-row">
                     <div class="dfcc">
+                        <!-- ha a termék akciós -->
                         <?php if ($product->discount > 0) {
-
+                            //számítsa ki az akciós árát
                             $discPrice = 100 - $product->discount;
                             $discPrice = $discPrice * 0.01;
                             $discPrice = $discPrice * $product->price;
@@ -255,7 +256,7 @@ $otherItems = Database::getAllProducts();
                             </div>
                             ";
                             }
-
+                            //négynél több itemet ne jelenítsen meg (ha az i elérte a 4-es értéket, akkor break loop)
                             if (++$i == 4) break;
                         }
                         ?>

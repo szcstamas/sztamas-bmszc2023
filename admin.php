@@ -5,11 +5,13 @@
 
 require_once("db/database.php");
 
+//ha a loginAdmin tömb be van állítva a munkamenetbe
 if (isset($_SESSION["loginAdmin"])) {
   $user = $_SESSION["loginAdmin"]["username"];
   $token = $_SESSION["loginAdmin"]["token"];
 }
 
+//ha a kijelentkezésre nyomunk és annak a paramétere lesz beállítva
 if (isset($_POST["signout"])) {
 
   //szedje ki az adataimat a munkamenetből
@@ -38,7 +40,7 @@ if (isset($_GET["recoverproduct"])) {
   exit();
 }
 
-//if recoverproduct is set in url, call recoverProductById from db.php
+//if recoverproduct is set in url, call recoverProductById from db.php (token szükséges)
 if (isset($_GET["restockproduct"])) {
   $restockProductId = $_GET["restockproduct"];
   Database::restockProductById($restockProductId, $token);
@@ -47,7 +49,7 @@ if (isset($_GET["restockproduct"])) {
   exit();
 }
 
-//if deleteorder is set in url, call deleteOrderById from db.php
+//if completeorder is set in url, call completeOrderById from db.php (token szükséges)
 if (isset($_GET["completeorder"])) {
   $completeOrderId = $_GET["completeorder"];
   Database::completeOrderById($completeOrderId, $token);
@@ -56,7 +58,7 @@ if (isset($_GET["completeorder"])) {
   exit();
 }
 
-//if deleteorder is set in url, call deleteOrderById from db.php
+//if deleteorder is set in url, call deleteOrderById from db.php (token szükséges)
 if (isset($_GET["deleteorder"])) {
   $deleteOrderId = $_GET["deleteorder"];
   Database::deleteOrderById($deleteOrderId, $token);
@@ -66,7 +68,7 @@ if (isset($_GET["deleteorder"])) {
 }
 
 if (isset($_SESSION["loginAdmin"])) {
-  //az összes item megjelenítése az adatbázisból
+  //az összes termék és rendelés megjelenítése az adatbázisból (token szükséges)
   $products = Database::getAllProductsOnAdmin($token);
   $orders = Database::getAllOrders($token);
 }
@@ -74,6 +76,7 @@ if (isset($_SESSION["loginAdmin"])) {
 
 ?>
 
+<!-- ha nincs beállítva a loginAdmin tömb a munkamenetben -->
 <?php if (!isset($_SESSION["loginAdmin"])) : ?>
 
   <section class='section maxw admin-section admin-login-error'>
@@ -82,6 +85,7 @@ if (isset($_SESSION["loginAdmin"])) {
     <a href='adminlogin.php'><button class='button-green'>bejelentkezés</button></a>
   </section>
 
+  <!-- ha be van állítva a tömb -->
 <?php else : ?>
 
   <section class='section-paddinglow maxw admin-section dfsb'>
@@ -122,7 +126,7 @@ if (isset($_SESSION["loginAdmin"])) {
           <td><?= $order->deliveryPostcode ?></td>
           <td><?= $order->deliveryCity ?></td>
           <td rowspan="3" style="text-align:right;">
-
+            <!-- ha a rendelésnél be van állítv a completed (1 az értéke), akkor ezt jelenítse meg: -->
             <?php
             if ($order->completed === 1) {
               echo "
@@ -135,7 +139,9 @@ if (isset($_SESSION["loginAdmin"])) {
               </a>
               </div>  
           ";
-            } else if ($order->completed === 0) {
+            }
+            //ha a rendelésnél nincs beállítva a completed (0 az értéke), akkor ezt jelenítse meg:
+            else if ($order->completed === 0) {
               echo "
               <div class='dfc'>
               <a class='admin-btn' title='Rendelés teljesítése' href='?completeorder=$order->id'>
@@ -218,6 +224,7 @@ if (isset($_SESSION["loginAdmin"])) {
             <td style="text-align:right;">
 
               <?php
+              //ha a terméknél a deletedAt NEM 0000-00-00 (tehát törölt), akkor ezt jelenítse meg:
               if ($product->deletedAt != "0000-00-00") {
                 echo "
           <div class='dffc'>
@@ -233,7 +240,9 @@ if (isset($_SESSION["loginAdmin"])) {
           </a>
           </div>
           ";
-              } else if ($product->quantity === 0) {
+              }
+              //ha a termék darabszáma 0 (elfogyott):
+              else if ($product->quantity === 0) {
                 echo "
           <div class='dffc'>
                 <span style='margin-right:10px;color: #dc3545;'>Elfogyott</span>
@@ -248,7 +257,9 @@ if (isset($_SESSION["loginAdmin"])) {
           </a>
           </div>
           ";
-              } else {
+              }
+              //ha a terméknél nincs beállítva a deletedAt (tehát NEM törölt), akkor ezt jelenítse meg:
+              else {
                 echo "
                 <div class='dfc'>
           <a class='admin-btn' title='Termék szerkesztése' href='editproduct.php?id=$product->id'>

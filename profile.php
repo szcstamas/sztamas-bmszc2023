@@ -20,6 +20,7 @@ if (isset($_POST["signout-user"])) {
     header("Location: profile.php");
 }
 
+//ha az action be van állítva (form submit), és a submit értéke regisztráció 
 if (isset($_POST["action"]) && $_POST["action"] === "regisztráció") {
 
     //értékek ellenőrzése
@@ -27,40 +28,55 @@ if (isset($_POST["action"]) && $_POST["action"] === "regisztráció") {
     $email = $_POST["useremail"];
     $password = $_POST["userpassword"];
 
+    //ha üres a username, email vagy jelszó mező, akkor jelenítsen meg egy hibát az adott url-en keresztül
     if (empty($username) || empty($email) || empty($password)) {
         header("Location: profile.php?error=emptyfields&uid=" . $username . "&mail=" . $email);
         ob_end_flush();
         exit();
-    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL) && !preg_match("/^[a-zA-Z0-9]*$/", $username)) {
+    }
+    //ha az email és a username formátuma nem felel meg
+    else if (!filter_var($email, FILTER_VALIDATE_EMAIL) && !preg_match("/^[a-zA-Z0-9]*$/", $username)) {
         header("Location: profile.php?error=invalidmailuid");
         ob_end_flush();
         exit();
-    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    }
+    //ha csak az email formátuma nem felel meg
+    else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         header("Location: profile.php?error=invalidmail&uid=" . $username);
         ob_end_flush();
         exit();
-    } else if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
+    }
+    //ha csak a username nem jó
+    else if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
         header("Location: profile.php?error=invaliduid&mail=" . $email);
         ob_end_flush();
         exit();
-    } else {
+    }
+    //ha minden stimmel, akkor regisztrálja a usert az adatbázisba
+    else {
         Database::registerUser($username, $password, $email);
     }
-} else if (isset($_POST["action"]) && $_POST["action"] === "bejelentkezés") {
+}
+
+//ha az action be van állítva (form submit), és a submit értéke bejelentkezés
+else if (isset($_POST["action"]) && $_POST["action"] === "bejelentkezés") {
 
     $username = $_POST['username'];
     $email = $_POST['useremail'];
     $password = $_POST['userpassword'];
 
+    //ha a username, pw és email mezője üres, akkor irányítson át egy hibaüzenetre
     if (empty($username) || empty($password) || empty($email)) {
         header("Location: profile.php?error=emptylogin");
         exit();
-    } else {
+    }
+    //egyébként meg jelentkeztesse be a usert
+    else {
         Database::loginUser($username, $password, $email);
     }
 }
 ?>
-
+<!-- ha nincs user beállítva (nincs bejelentkezve) -->
 <?php if (!isset($_SESSION["userId"])) : ?>
 
     <section class='section maxw admin-section profile-user-subpage-login-section dfsb'>
@@ -84,11 +100,11 @@ if (isset($_POST["action"]) && $_POST["action"] === "regisztráció") {
                             break;
 
                         case "invalidmailuid":
-                            echo "<p style='color:#f59042;' class='section-paragraph-gray'>Helytelen e-mail és felhasználónév!</p>";
+                            echo "<p style='color:#f59042;' class='section-paragraph-gray'>Helytelen e-mail és felhasználónév! A felhasználónév nem tartalmazhat ékezetet vagy speciális karaktereket!</p>";
                             break;
 
                         case "invaliduid":
-                            echo "<p style='color:#f59042;' class='section-paragraph-gray'>Helytelen felhasználónév!</p>";
+                            echo "<p style='color:#f59042;' class='section-paragraph-gray'>Helytelen felhasználónév! A felhasználónév nem tartalmazhat ékezetet vagy speciális karaktereket!</p>";
                             break;
 
                         case "sqlerror":
@@ -136,7 +152,7 @@ if (isset($_POST["action"]) && $_POST["action"] === "regisztráció") {
             </div>
             <form method="POST" class="dfcc profile-login-form">
                 <label>Felhasználónév:</label>
-                <input name="username" type="text" placeholder="Ide írd a felhasználónevedet..."></input>
+                <input name="username" type="text" placeholder="pl. halvadasz123..."></input>
                 <label>E-mail cím:</label>
                 <input name="useremail" type="email" placeholder="Ide írd az email-címedet..."></input>
                 <label>Jelszó:</label>
@@ -179,11 +195,12 @@ if (isset($_POST["action"]) && $_POST["action"] === "regisztráció") {
 
                         <?php
 
-
+                        //ha vannak a usernek rendelései, akkor az orders tömböt járja be
                         foreach ($orders as $order) {
 
                             $status = $order->completed;
 
+                            //ha a rendelés státusza 1, akkor teljesített, ha 0, akkor még kiszállítás alatt van
                             if ($status === 1) {
                                 $status = 'Teljesítve';
                             } else if ($status === 0) {
@@ -249,6 +266,7 @@ if (isset($_POST["action"]) && $_POST["action"] === "regisztráció") {
                         ?>
                 </div>
 
+                <!-- ha nincs rendelése a usernek -->
             <?php else : ?>
 
                 <div class="cart-noitem dfsb">

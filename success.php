@@ -1,6 +1,7 @@
 <?php ob_start(); ?>
 <?php require_once('components/header.php');
 
+//ha a cart tömb be van állítva a munkamenetben (jelenjen meg a html kód, majd szüntesse meg a tömböt) 
 if (isset($_SESSION["cart"])) {
 
     echo

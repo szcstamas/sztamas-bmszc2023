@@ -7,7 +7,7 @@ $error = "";
 require_once("model/product.php");
 require_once("db/database.php");
 
-//authentikáció
+//authentikáció (ha a loginAdmin tömb be van állítva, akkor adja át a tokent)
 if (isset($_SESSION["loginAdmin"])) {
   $token = $_SESSION["loginAdmin"]["token"];
 }
@@ -15,17 +15,20 @@ if (isset($_SESSION["loginAdmin"])) {
 //csatlakozás az adatbázishoz 
 Database::connect();
 
+//ha az id be van állítva az urlben, akkor jelenítse meg az adott id-jú terméket 
 if (isset($_GET["id"])) {
   $productId = $_GET["id"];
   $product = Database::getProductById($productId);
 }
 
+//ha be van állítva kategória
 if (isset($_GET["category"])) {
   $category = $_GET["category"];
 } else {
   $category = "unknown";
 }
 
+//ha minden szükséges érték be van állítva a termék szerkesztésénél
 if (
   isset($_POST["id"]) &&
   isset($_POST["name"]) &&
@@ -95,7 +98,7 @@ if (
   }
 
   $name = $_POST["name"];
-
+  //kategória alapján mentsen egy új Product osztályt
   switch ($category) {
     case "pellet": {
 
@@ -108,7 +111,7 @@ if (
         break;
       }
   }
-
+  //az új osztályt írja felül a megadott id-jú termékkel az adatbázisban az API-n keresztül (token szükséges)
   Database::updateProduct($editedProduct, $token);
 
   header("Location: admin.php");
@@ -117,13 +120,14 @@ if (
 }
 
 ?>
-
+<!-- ha a loginAdmin munkamenet nincs beállítva a munkamenetbe, akkor a bejelentkezési felület jelenjen meg -->
 <?php if (!isset($_SESSION["loginAdmin"])) : ?>
   <section class='section maxw admin-section admin-login-error'>
     <h2>Bejelentkezés szükséges!</h2>
     <p>A gomb segítségével látogass el a bejelentkezési felületre!</p>
     <a href='adminlogin.php'><button class='button-green'>bejelentkezés</button></a>
   </section>
+
 <?php else : ?>
   <section class='section maxw admin-section admin-login-error'>
     <div class="dfc">

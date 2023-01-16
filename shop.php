@@ -128,6 +128,7 @@ if (
     $products = Database::getAllProductsWithLimit($startFrom, $numOfItems);
 }
 
+//ha csak search van az url-ben (headerben való keresés)
 if (isset($_GET["search"])) {
     $searchName = $_GET["search"];
     $products = Database::searchInShop($searchName, $sortBy, $discountItem, $rangeItemPrice, $onStock);

@@ -4,16 +4,23 @@
 require_once("components/header.php");
 require_once("db/database.php");
 require_once("db/secrets.php");
+//csatlakozás az adatbázishoz
 Database::connect();
 
+//ha az urlben be van állítva az id paraméter 
 if (isset($_GET["id"])) {
   $productId = $_GET["id"];
-
+  //ha a cart tömb be van állítva a munkamenetbe (és van productId változó)
   if (isset($_SESSION["cart"][$productId])) {
+    //adjon hozzá egyet a beállított termék darabszámához (ez a plusz gombra kattintásnál)
     $_SESSION["cart"][$productId] = $_SESSION["cart"][$productId] + 1;
-  } else if (!isset($_GET["value"])) {
+  }
+  //ha nincs cart tömb (először kerül bele a termék a kosárba), akkor 1 legyen a darabszám 
+  else if (!isset($_GET["value"])) {
     $_SESSION["cart"][$productId] = 1;
-  } else if (isset($_GET["value"])) {
+  }
+  //ez akkor kell, ha a termék aloldalán adtunk hozzá az 1 darabszámhoz valamennyit (ebben az esetben a value mint paraméter megjelenik az urlben, és elmentődik) -> ezek után szüntesse meg a countValue tömböt a munkamenetben, hogy a többi termék hozzadásánál is megtörténhessen a folyamat
+  else if (isset($_GET["value"])) {
     $_SESSION["cart"][$productId] = $_GET["value"];
     unset($_SESSION["countValue"]);
   }
@@ -21,13 +28,19 @@ if (isset($_GET["id"])) {
   header("Location: cart.php");
   ob_end_flush();
   exit();
-} else if (isset($_GET["remove"])) {
+}
+//ha a remove paraméter van beállítva (tehát csökkentettem a darabszámot)
+else if (isset($_GET["remove"])) {
   $productId = $_GET["remove"];
 
+  //és a cart tömb benne van a munkamenetben a termék darabszámával
   if (isset($_SESSION["cart"][$productId])) {
+    //ha a termék darabszáma nagyobb mint 1 
     if ($_SESSION["cart"][$productId] > 1) {
+      //akkor vegyen el egyet belőle
       $_SESSION["cart"][$productId] = $_SESSION["cart"][$productId] - 1;
     } else {
+      //ha pedig kisebb mint egy, akkor szüntesse meg és vegye ki a kosárból (megszűnik a session)
       unset($_SESSION["cart"][$productId]);
     }
   }
@@ -35,9 +48,12 @@ if (isset($_GET["id"])) {
   header("Location: cart.php");
   ob_end_flush();
   exit();
-} else if (isset($_GET["delete"])) {
+}
+//ha a delete paraméter van beállítva (tehát X-eltem a terméke)
+else if (isset($_GET["delete"])) {
   $productId = $_GET["delete"];
 
+  //akkor a productId alapján vegye ki az adott productId-val rendelkező terméket a munkamenetből
   if (isset($_SESSION["cart"][$productId])) {
     unset($_SESSION["cart"][$productId]);
   }
@@ -46,7 +62,9 @@ if (isset($_GET["id"])) {
   die();
 }
 
+//ha a cart be van állítva az url-ben
 if (isset($_SESSION["cart"])) {
+  //akkor vegye ki ezt a tömböt egy változóba
   $cartIDs = $_SESSION["cart"];
 } else {
   $cartIDs = [];
@@ -54,6 +72,7 @@ if (isset($_SESSION["cart"])) {
 
 $cart = [];
 
+//majd töltse fel az üres cart tömböt product és count paraméterekkel  
 foreach ($cartIDs as $cartID => $count) {
   $cart[] = [
     "product" => Database::getProductById($cartID),
@@ -61,22 +80,28 @@ foreach ($cartIDs as $cartID => $count) {
   ];
 }
 
+//ez a végösszeg változója
 $sum = 0;
 
+//a felvett termékek bejárása
 foreach ($cart as $cartItem) {
 
   $product = $cartItem["product"];
   $count = $cartItem["count"];
 
+  //ha a termék akciós, tehát van discountja (nagyobb mint 0)
   if ($product->discount > 0) {
+    //akkor végezze el az akciós ár kiszámítását
     $discPrice = 100 - $product->discount;
     $discPrice = $discPrice * 0.01;
     $discPrice = $discPrice * $product->price;
     $discPrice = round($discPrice);
     $discPrice = ceil($discPrice / 10) * 10;
 
+    //ezt adja hozzá a végösszeghez
     $sum += $discPrice * $count;
   } else {
+    //ha meg nem akciós, akkor csak a termék alapvető árát adja hozzá
     $sum += $product->price * $count;
   }
 }
@@ -109,11 +134,13 @@ foreach ($cart as $cartItem) {
               <h4>Darabszám</h4>
             </div>
             <?php
+            //cart tömb bejárása, majd a kapott elemek listázása
             foreach ($cart as $cartItem) {
 
               $product = $cartItem["product"];
               $count = $cartItem["count"];
 
+              //ha akciós a termék, akkor azt az árat jelenítse meg
               if ($product->discount > 0) {
                 $discPrice = 100 - $product->discount;
                 $discPrice = $discPrice * 0.01;
@@ -200,7 +227,9 @@ foreach ($cart as $cartItem) {
                   
                   </div>
               ";
-              } else {
+              }
+              //amúgy meg ha nincs akció, akkor az eredeti árat mutassa
+              else {
                 echo "
                   <div class='cart-subpage-item-titlebox dffs'>
                     <div class='cart-subpage-item-titlebox-td dfcc'>
@@ -291,15 +320,19 @@ foreach ($cart as $cartItem) {
 
             <div class="cart-subpage-checkout-td dfcc">
               <h4>Szállítási költség</h4>
-
+              <!-- ha a végösszeg nagyobb mint 10000, akkor ingyenes a szállítás -->
               <?php if ($sum > 10000) {
 
                 echo "<p style='color:#65A850;'>Ingyenes!</p>";
-              } else if ($sum < 10000) {
+              }
+              //ha a végösszeg kisebb mint 10000, akkor van kiszállítási díj
+              else if ($sum < 10000) {
                 $sum = $sum + $DELIVERY_PRICE;
 
                 echo "<p>$DELIVERY_PRICE Ft</p>";
-              } else if ($sum = 10000) {
+              }
+              //ha a végösszeg egyenlő 10000-el, akkor is ingyenes a szállítás
+              else if ($sum = 10000) {
                 echo "<p style='color:#65A850;'>Ingyenes!</p>";
               }
               ?>
@@ -309,7 +342,9 @@ foreach ($cart as $cartItem) {
               <h4>Végösszeg</h4>
               <p>
                 <?php
+                //végösszeg kerekítése
                 $sum = ceil($sum / 10) * 10;
+                //ezt a végösszeget rendelje hozzá egy totalprice tömbhöz (ami el van mentve a munkamenetben)
                 $_SESSION['totalprice'] = round($sum);
                 ?>
                 <?= $_SESSION['totalprice'] ?> Ft</p>

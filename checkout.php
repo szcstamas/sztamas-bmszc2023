@@ -8,7 +8,9 @@ require_once("db/secrets.php");
 require_once("model/order.php");
 Database::connect();
 
+//ha a cart be van állítva a munkamenetben
 if (isset($_SESSION["cart"])) {
+    //akkor vegye ki ezt a tömböt egy változóba
     $cartIDs = $_SESSION["cart"];
 } else {
     $cartIDs = [];
@@ -21,6 +23,8 @@ if (empty($cartIDs)) {
 }
 
 $cart = [];
+
+//majd töltse fel az üres cart tömböt a munkamenetből már kiszedett cartID product és count paramétereivel
 foreach ($cartIDs as $cartID => $count) {
     $cart[] = [
         "product" => Database::getProductById($cartID),
@@ -28,14 +32,17 @@ foreach ($cartIDs as $cartID => $count) {
     ];
 }
 
+//ez a végösszeg
 $sum = 0;
 
+//a felvett termékek bejárása
 foreach ($cart as $cartItem) {
 
     $product = $cartItem["product"];
     $count = $cartItem["count"];
 
     if ($product->discount > 0) {
+        //ha a termék akciós, tehát van discountja (nagyobb mint 0), akkor végezze el az akciós ár kiszámítását, majd ezt adja hozzá a végösszeghez
         $discPrice = 100 - $product->discount;
         $discPrice = $discPrice * 0.01;
         $discPrice = $discPrice * $product->price;
@@ -48,41 +55,41 @@ foreach ($cart as $cartItem) {
     }
 }
 
+//errormessage változója
 $error = "";
 
+//ha a checkout be van állítva (form submit)
 if (isset($_POST["checkout"])) {
+    //és minden szükséges input mező is ki van töltve
     if (
-        isset($_POST["name"]) &&
-        isset($_POST["email"]) &&
-        isset($_POST["deliveryPostalcode"]) &&
-        isset($_POST["deliveryCity"]) &&
-        isset($_POST["deliveryStreet"]) &&
-        isset($_POST["billPostalcode"]) &&
-        isset($_POST["billCity"]) &&
-        isset($_POST["billStreet"]) &&
-        isset($_POST["cardname"]) &&
-        isset($_POST["cardnum"]) &&
-        isset($_POST["cvv"]) &&
+        isset($_POST["name"]) && !empty($_POST["name"]) &&
+        isset($_POST["email"]) && !empty($_POST["email"]) &&
+        isset($_POST["deliveryPostalcode"]) && !empty($_POST["deliveryPostalcode"]) &&
+        isset($_POST["deliveryCity"]) && !empty($_POST["deliveryCity"]) &&
+        isset($_POST["deliveryStreet"]) && !empty($_POST["deliveryStreet"]) &&
+        isset($_POST["billPostalcode"]) && !empty($_POST["billPostalcode"]) &&
+        isset($_POST["billCity"]) && !empty($_POST["billCity"]) &&
+        isset($_POST["billStreet"]) && !empty($_POST["billStreet"]) &&
+        isset($_POST["cardname"]) && !empty($_POST["cardname"]) &&
+        isset($_POST["cardnum"]) && !empty($_POST["cardnum"]) &&
+        isset($_POST["cvv"]) && !empty($_POST["cvv"]) &&
         isset($_POST["tnc"])
     ) {
-
-        if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
-            header("Location: profile.php?error=invaliduid&mail=" . $email);
-            ob_end_flush();
-            exit();
-        }
-
+        //ha a username be van állítva (tehát be van jelentkezve a user)
         if (isset($_SESSION["userName"])) {
 
             $userName = $_SESSION["userName"];
 
+            //ha fűzött hozzá kommentet is
             if (isset($_POST["comment"]) && !empty($_POST["comment"])) {
 
+                //termékek bejárása
                 foreach ($cart as $cartItem) {
 
                     $product = $cartItem["product"];
                     $count = $cartItem["count"];
 
+                    //ha akciós a termék, akkor számítsa ki az értékét, majd adja hozzá ezt egy új rendeléshez (class), majd a rendelést adja hozzá az adatbázishoz az adott API requesten keresztül
                     if ($product->discount > 0) {
                         $discPrice = 100 - $product->discount;
                         $discPrice = $discPrice * 0.01;
@@ -92,18 +99,24 @@ if (isset($_POST["checkout"])) {
 
                         $order = new Order(0, $cartItem["product"]->name, $cartItem["count"], $_POST["name"], null, $_POST["email"], ($discPrice * $cartItem["count"]), $_POST["deliveryPostalcode"], $_POST["deliveryCity"], $_POST["deliveryStreet"], $_POST["billPostalcode"], $_POST["billCity"], $_POST["billStreet"], $_POST["comment"], 0, null, 1, $userName);
                         Database::createOrder($order);
-                    } else {
+                    }
+                    //ha nincs akció a terméken
+                    else {
 
                         $order = new Order(0, $cartItem["product"]->name, $cartItem["count"], $_POST["name"], null, $_POST["email"], ($cartItem["product"]->price * $cartItem["count"]), $_POST["deliveryPostalcode"], $_POST["deliveryCity"], $_POST["deliveryStreet"], $_POST["billPostalcode"], $_POST["billCity"], $_POST["billStreet"], $_POST["comment"], 0, null, 1, $userName);
                         Database::createOrder($order);
                     }
                 }
 
+                //átirányítás a success aloldalra
                 header("Location: success.php");
                 ob_end_flush();
                 die();
-            } else {
+            }
+            //ha nincs komment (vagyis megjegyzés)
+            else {
 
+                //végezze el ugyanazt a műveletet, csak az új rendelés létrehozásánál "no-comment" lesz beállítva a database komment oszlopában
                 foreach ($cart as $cartItem) {
 
                     $product = $cartItem["product"];
@@ -129,7 +142,7 @@ if (isset($_POST["checkout"])) {
                 die();
             }
         } else {
-
+            //ha nincs bejelentkezve a user, akkor a fent említett validációk történnek meg, csak az új rendelés létrehozásánál "0" jelenik meg az isUser oszlopban, illetve "no-user" a username oszlopban 
             if (isset($_POST["comment"]) && !empty($_POST["comment"])) {
 
 
@@ -184,7 +197,9 @@ if (isset($_POST["checkout"])) {
                 die();
             }
         }
-    } else {
+    }
+    //ha nincsenek kitöltve a megfelelő inputok
+    else {
         $error = "Kérjük, hogy töltsd ki az összes mezőt, majd a rendelés véglegesítéséhez fogadd el Felhasználói Feltételeinket. Köszönjük!";
     }
 }
@@ -281,7 +296,7 @@ if (isset($_POST["checkout"])) {
                     <div class="dffc">
                         <label for="discountItem" class="container">
                             <div class="check-box">
-                                <input type="checkbox" id="tnc" name="tnc" required>
+                                <input type="checkbox" id="tnc" name="tnc">
                             </div>
                             <span style="text-align:left;">Elfogadom a <a style="color:#4c7e3c;text-decoration:underline;" href="termsconditions.php" target="_blank">felhasználói feltételeket.</a></span>
                         </label>

@@ -1,13 +1,5 @@
 <?php require_once("./components/header.php") ?>
 
-<?php
-
-require_once("db/database.php");
-
-Database::connect();
-
-?>
-
 <section id="contact-section-subpage" class="section whitebg">
     <div class="homepage-main maxw dfsb">
         <div class="homepage-main-hero section-text-button">

@@ -3,7 +3,7 @@
 <?php
 
 require_once("db/database.php");
-
+//itemek lekérdezése az adatbázisból API-on keresztül
 $otherItems = Database::getAllProducts();
 ?>
 
@@ -12,7 +12,7 @@ $otherItems = Database::getAllProducts();
         <div class="homepage-main-hero section-text-button">
             <div class="homepage-main-title">
                 <h4 class="title-firstline">Pellet?</h4>
-                <img class="title-big-green-brobaits" src="/sztamas-bmszc2023/img/brobaits-big-green.svg" alt="brobaits-green-title">
+                <img class="title-big-green-brobaits" src="img/brobaits-big-green.svg" alt="brobaits-green-title">
             </div>
             <p class="section-paragraph-gray">Ha a klassz élmények, a remek időtöltés és a kapitális fogások mellett fontos számodra a minőség is, akkor ne habozz! Cégünk által forgalmazott pelletcsomagjaink tengerentúli kvalitással és megbízhatósággal segítik horgászatodat, hogy ne maradhass hal nélkül!</p>
             <a href="#top-products">
@@ -43,8 +43,9 @@ $otherItems = Database::getAllProducts();
 
                 $i = 0;
                 foreach ($otherItems as $product) {
+                    //ha akciós a termék
                     if ($product->discount > 0) {
-
+                        //akciós ár beállítása
                         $discPrice = 100 - $product->discount;
                         $discPrice = $discPrice * 0.01;
                         $discPrice = $discPrice * $product->price;
@@ -103,7 +104,7 @@ $otherItems = Database::getAllProducts();
                             </div>
                             ";
                     }
-
+                    //4-nél több itemet ne jelenítsen meg (4-nél stop)
                     if (++$i == 4) break;
                 }
 
