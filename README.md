@@ -28,11 +28,11 @@ A főoldalon (index.php) a header-footer és feliratkozás-sáv elemeken kívül
 4. a **Kedvenc fogásaink** szekciót, aminél a webáruház tulajdonosai és alkalmazottai által legjobban kedvelt fogásokból láthatunk egy válogatást (a képekre kattintva különálló Instagram posztokra navigálna az oldal, de ezek a linkek jelenleg csak az Instagram főoldalára visznek),
 5. végül pedig a **Haltudakozó** szekciót, ahol érdekes információkat és tényeket tudhat meg a felhasználó, ha az éppen bemutatott halra viszi az egerét. A galériát (avagy carouselt) a balra- és jobbra nyilakkal lehet léptetni, illetve rá lehet kattintani egy teljesen véletlenszerű körre is. Az EN gombot megnyomva a carousel átvált angol nyelvre.
 
-Az ezután következő hírlevél-sáv szinte minden oldalon megtalálható, lényege hogy ha a felhasználó beírja az email-címét és rákattint a **Feliratkozás** gombra, akkor feliratkozik a cég hírleveleire és egyéb marketing-tartalmaira.
+Az ezután következő hírlevél-sáv szinte minden oldalon megtalálható, lényege hogy ha a felhasználó beírja az email-címét és rákattint a **Feliratkozás** gombra, akkor feliratkozik a cég hírleveleire és egyéb marketing-tartalmaira, majd az oldal átirányítja egy megköszönő-aloldalra (success.php egyik else if ága). Itt megjelenik a felhasználó számára, hogy pontosan milyen e-mail címmel is iratkozott fel.
 
 ## Webshop
 
-A **Webshop** aloldalon (shop.php) láthatóak az adatbázisban tárolt termékek (jobb felső sarokban a kiszerelés súlya, a kép alatt a termék neve, ára, kilós ára, illetve a termék aloldalára eljuttató gomb látható). A termék alatt látható Kosárba gombra kattintva a termék automatikusan bekerül a kosárba (ezzel a felhasználó átkerül a kosár aloldalára is). A webáruház aloldalán keresési funkciók is teljesülnek: keresés név szerint, rendezés legolcsóbb, legdrágább vagy akciós termék szerint, szűrés akciós vagy raktáron lévő termékek között, illetve van lehetőség egy ár-intervallum megszabására is (minimum és maximum ár). Az oldal egyszerre nyolc terméket jelenít meg, a többi termék a lista alján látható gombok segítségével tekinthető meg: egy adott számra kattintva az adott oldalára jutunk a terméklistának, a bal és jobbra nyilakkal pedig eggyel hátra vagy pedig előre tudunk menni.
+A **Webshop** aloldalon (shop.php) láthatóak az adatbázisban tárolt termékek (a termék boxában a jobb felső sarokban a kiszerelés súlya, a kép alatt a termék neve, ára, kilós ára, illetve a termék aloldalára eljuttató gomb látható). A termék alatt látható *Kosárba* gombra kattintva a termék automatikusan bekerül a kosárba (ezzel a felhasználó átkerül a kosár aloldalára is). A webáruház aloldalán keresési funkciók is teljesülnek: keresés név szerint, rendezés legolcsóbb, legdrágább vagy akciós termék szerint, szűrés akciós vagy raktáron lévő termékek között, illetve van lehetőség egy ár-intervallum megszabására is (minimum és maximum ár). Az oldal egyszerre nyolc terméket jelenít meg, a többi termék a lista alján látható gombok segítségével tekinthető meg: egy adott számra kattintva az adott oldalára jutunk a terméklistának, a bal és jobbra nyilakkal pedig eggyel hátra vagy pedig eggyel előre tudunk menni (pagination).
 
 ## Partnereink
 
@@ -40,7 +40,7 @@ A **Partnereink** aloldalon (partners.php) a BroBaits céggel kooperációban m�
  
 ## Kapcsolat
 
-A **Kapcsolat** aloldalon (contact.php) lehetőség van üzenetküldésre, illetve ezen az oldalon láthatóak a cég elérhetőségei, illetve a közösségi médiában megtalálható felületei (a contact form még építés alatt van 😐). 
+A **Kapcsolat** aloldalon (contact.php) lehetőség van üzenetküldésre, illetve ezen az oldalon láthatóak a cég elérhetőségei, illetve a közösségi médiában megtalálható felületei (a contact form még építés alatt van, egyelőre azt vizsgálja az aloldal hogy a form nem üres mezőket kap-e - ha igen, akkor hibaüzenetet dob a usernek, ha pedig sikerült kitölteni az űrlapot, akkor egy megköszönő-aloldalra (success.php egyik else if ága) jut el a felhasználó). 
 
 ## Rólunk
 
@@ -88,7 +88,7 @@ A szükséges, minimális mennyiségű JavaScript fájlok a *js* mappában tekin
 
 * a főoldalon használt haltudakozónak (amit még régebben raktam össze gyakorló-feladatként),
 * a partnerek aloldalán használt JSON fájlnak,
-* a checkout aloldal által használt "checkoutvalidity.js" fájlnak (ez tiltja a felhasználónak az nem helyes billentyűk beütését, pl. speciális karakterek, név esetén számok beütését, stb stb),
+* a checkout aloldal által használt "checkoutvalidity.js" fájlnak (ez tiltja a felhasználónak a nem helyes billentyűk beütését, pl. speciális karakterek, név esetén számok beütését, stb stb),
 * a checkout űrlapban használt "copyaddress.js" fájlnak, amely a számlázási cím átmásolását teszi lehetővé a checkbox megnyomásával,
 * illetve a "currentpageclass.js" fájl is itt található meg, ami az éppen aktuális aloldal linkjére teszi rá az active-page classt (ettől jelenik meg a pulzáló, zöld gömb)
 ------
