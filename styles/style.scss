@@ -405,6 +405,27 @@ hr {
     padding: 2rem 0;
 }
 
+#homepage-hero {
+    .homepage-main {
+
+        .homepage-main-hero,
+        .homepage-main-hero+* {
+            width: 50%;
+        }
+
+        .homepage-hero-imgcontainer {
+            width: 40%;
+
+            img {
+                width: auto;
+                height: 100%;
+                object-fit: cover;
+                animation: levitate-x 4s ease-in-out infinite;
+            }
+        }
+    }
+}
+
 .subpage-contact-form-container {
     width: 40%;
 

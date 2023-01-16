@@ -28,6 +28,36 @@
   }
 }
 
+@-webkit-keyframes levitate-x {
+  0% {
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+  }
+  50% {
+    -webkit-transform: translateX(-10px);
+            transform: translateX(-10px);
+  }
+  100% {
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+  }
+}
+
+@keyframes levitate-x {
+  0% {
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+  }
+  50% {
+    -webkit-transform: translateX(-10px);
+            transform: translateX(-10px);
+  }
+  100% {
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+  }
+}
+
 @-webkit-keyframes circle {
   0% {
     -webkit-transform: rotate(0deg) translate(-165px) rotate(0deg);
@@ -1050,6 +1080,34 @@
     color: #272727;
     width: 40px;
     height: 40px;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  #homepage-hero {
+    padding: 0 !important;
+  }
+  #homepage-hero .homepage-main {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    gap: 0 !important;
+  }
+  #homepage-hero .homepage-main .homepage-main-hero,
+  #homepage-hero .homepage-main .homepage-main-hero + * {
+    width: 100% !important;
+  }
+  #homepage-hero .homepage-main .homepage-main-hero {
+    padding: 2rem;
+  }
+  #homepage-hero .homepage-main .homepage-hero-imgcontainer img {
+    width: 100% !important;
+    height: auto !important;
+    -o-object-fit: cover;
+       object-fit: cover;
+    -webkit-animation: levitate-x 4s ease-in-out infinite;
+            animation: levitate-x 4s ease-in-out infinite;
   }
 }
 
@@ -3828,6 +3886,24 @@ hr {
 
 .section-paddinglow {
   padding: 2rem 0;
+}
+
+#homepage-hero .homepage-main .homepage-main-hero,
+#homepage-hero .homepage-main .homepage-main-hero + * {
+  width: 50%;
+}
+
+#homepage-hero .homepage-main .homepage-hero-imgcontainer {
+  width: 40%;
+}
+
+#homepage-hero .homepage-main .homepage-hero-imgcontainer img {
+  width: auto;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -webkit-animation: levitate-x 4s ease-in-out infinite;
+          animation: levitate-x 4s ease-in-out infinite;
 }
 
 .subpage-contact-form-container {

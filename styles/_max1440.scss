@@ -896,6 +896,38 @@
     }
 }
 
+//homepagehero
+@media screen and (max-width: 1100px) {
+
+    #homepage-hero {
+        padding: 0 !important;
+
+        .homepage-main {
+            flex-direction: column;
+            gap: 0 !important;
+
+            .homepage-main-hero,
+            .homepage-main-hero+* {
+                width: 100% !important;
+            }
+
+            .homepage-main-hero {
+                padding: 2rem;
+            }
+
+            .homepage-hero-imgcontainer {
+
+                img {
+                    width: 100% !important;
+                    height: auto !important;
+                    object-fit: cover;
+                    animation: levitate-x 4s ease-in-out infinite;
+                }
+            }
+        }
+    }
+}
+
 //cart subpage
 @media screen and (max-width: 1100px) {
 

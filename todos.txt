@@ -1,6 +1,5 @@
 ---
 MIN
-10. Főoldalon videó a heronak
 12. lorem ipsumokat cserélni az about alatt
 11. üzenetküldés? ha lesz rá idő
 12. hamburger menü? ha lesz rá idő

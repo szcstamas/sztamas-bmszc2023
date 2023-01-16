@@ -7,8 +7,8 @@ require_once("db/database.php");
 $otherItems = Database::getAllProducts();
 ?>
 
-<section id="homepage-hero" class="section video-bg">
-    <div class="homepage-main maxw">
+<section id="homepage-hero" class="section-nopad video-bg">
+    <div class="homepage-main maxw dfsb">
         <div class="homepage-main-hero section-text-button">
             <div class="homepage-main-title">
                 <h4 class="title-firstline">Pellet?</h4>
@@ -18,6 +18,9 @@ $otherItems = Database::getAllProducts();
             <a href="#top-products">
                 <button class="button-green"><span>top termékeink</span><i class="bi bi-caret-down-fill"></i></button>
             </a>
+        </div>
+        <div class="homepage-hero-imgcontainer dffc">
+            <img src="img/main/brobaits-main.png" alt="brobaits mainpage">
         </div>
     </div>
 </section>
