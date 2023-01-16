@@ -65,7 +65,7 @@ Database::connect();
                         <input type="checkbox">
                         <i class="bi bi-x"></i>
                         <div class="about-qa-content">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo optio voluptates non porro temporibus modi, fugit quaerat nam accusantium sit illum dolores nisi repellat beatae.
+                            Cégünket 2020-ban hoztuk létre Zsámbékon, az Alex Fémbútor Kft segítségével. Az elmúlt években töretlenül haladunk egyre feljebb és feljebb a horgásztermékek képzeletbeli ranglétráján.
                         </div>
                     </div>
                 </div>
@@ -75,7 +75,7 @@ Database::connect();
                         <input type="checkbox">
                         <i class="bi bi-x"></i>
                         <div class="about-qa-content">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo optio voluptates non porro temporibus modi, fugit quaerat nam accusantium sit illum dolores nisi repellat beatae.
+                            Az etetőanyag a horgászat elengedhetetlen része, hiszen finomabbnál finomabb, feltűnő színű, remek illatú pellet- vagy etetőanyagválogatások nélkül szinte - még ha nem is teljesen - képtelenség halat fogni. Kiváló minőségű termékeket pedig még annál is nehezebb találni a piacon, ezért elhatároztuk hogy kitöltjük ezt az űrt.
                         </div>
                     </div>
                 </div>
@@ -85,7 +85,7 @@ Database::connect();
                         <input type="checkbox">
                         <i class="bi bi-x"></i>
                         <div class="about-qa-content">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo optio voluptates non porro temporibus modi, fugit quaerat nam accusantium sit illum dolores nisi repellat beatae.
+                            A céget alkotó, profi tagjaink kivétel nélkül (!) gyerekkoruk óta horgásznak. Rekordok: Botond 18.2kg, Balázs 21kg, Árpi 16kg, Geri pedig 17.5kg.
                         </div>
                     </div>
                 </div>
@@ -95,7 +95,7 @@ Database::connect();
                         <input type="checkbox">
                         <i class="bi bi-x"></i>
                         <div class="about-qa-content">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo optio voluptates non porro temporibus modi, fugit quaerat nam accusantium sit illum dolores nisi repellat beatae.
+                            Dunaharasztit szeretjük mint egyfajta horgászparadicsom, az itteni tavak közül szoktunk legtöbbször válogatni (Csendespart horgásztó, Joker, Carp Centrum, Bázis Horgásztó, stb).
                         </div>
                     </div>
                 </div>
@@ -105,7 +105,7 @@ Database::connect();
                         <input type="checkbox">
                         <i class="bi bi-x"></i>
                         <div class="about-qa-content">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo optio voluptates non porro temporibus modi, fugit quaerat nam accusantium sit illum dolores nisi repellat beatae.
+                            A legtöbb termék rák- és halliszt alapú, minden termékünk tartalmaz adalékanyagokat, tartósítószereket, olajat és sót, illetve a legtöbb terméket betain hozzáadásával készítjük mi és a partnereink is.
                         </div>
                     </div>
                 </div>
@@ -115,7 +115,7 @@ Database::connect();
                         <input type="checkbox">
                         <i class="bi bi-x"></i>
                         <div class="about-qa-content">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo optio voluptates non porro temporibus modi, fugit quaerat nam accusantium sit illum dolores nisi repellat beatae.
+                            <a href="contact.php" style="color: #65A850;">Erre a linkre</a> kattintva veheted fel velünk a kapcsolatot!
                         </div>
                     </div>
                 </div>
@@ -125,7 +125,7 @@ Database::connect();
                         <input type="checkbox">
                         <i class="bi bi-x"></i>
                         <div class="about-qa-content">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo optio voluptates non porro temporibus modi, fugit quaerat nam accusantium sit illum dolores nisi repellat beatae.
+                            A legtöbb termék kiszállítása általában 1-3 munkanapot vesz igénybe. A kiszállítás időtartama a raktáron lévő darabszámtól, és a megtett távolságtól függ.
                         </div>
                     </div>
                 </div>
@@ -136,7 +136,7 @@ Database::connect();
                         <input type="checkbox">
                         <i class="bi bi-x"></i>
                         <div class="about-qa-content">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo optio voluptates non porro temporibus modi, fugit quaerat nam accusantium sit illum dolores nisi repellat beatae.
+                            Perfektó! Látogass el Facebook vagy Instagram oldalunkra, és küldj egy üzenetet amin éppen pózolsz szeretett haladdal!
                         </div>
                     </div>
                 </div>

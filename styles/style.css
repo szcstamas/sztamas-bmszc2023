@@ -4043,10 +4043,12 @@ hr {
 .about-second-section .about-qa-container .about-qa-box {
   background-color: #fff;
   padding: 1.5rem;
+  width: 100%;
 }
 
 .about-second-section .about-qa-container .about-qa-box .about-qa-q {
   position: relative;
+  width: 100%;
 }
 
 .about-second-section .about-qa-container .about-qa-box .about-qa-q h4 {
