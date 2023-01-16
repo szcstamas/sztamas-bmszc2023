@@ -39,6 +39,8 @@ foreach ($cart as $cartItem) {
         $discPrice = 100 - $product->discount;
         $discPrice = $discPrice * 0.01;
         $discPrice = $discPrice * $product->price;
+        $discPrice = round($discPrice);
+        $discPrice = ceil($discPrice / 10) * 10;
 
         $sum += $discPrice * $count;
     } else {
@@ -79,6 +81,8 @@ if (isset($_POST["checkout"])) {
                         $discPrice = 100 - $product->discount;
                         $discPrice = $discPrice * 0.01;
                         $discPrice = $discPrice * $product->price;
+                        $discPrice = round($discPrice);
+                        $discPrice = ceil($discPrice / 10) * 10;
 
                         $order = new Order(0, $cartItem["product"]->name, $cartItem["count"], $_POST["name"], null, $_POST["email"], ($discPrice * $cartItem["count"]), $_POST["deliveryPostalcode"], $_POST["deliveryCity"], $_POST["deliveryStreet"], $_POST["billPostalcode"], $_POST["billCity"], $_POST["billStreet"], $_POST["comment"], 0, null, 1, $userName);
                         Database::createOrder($order);
@@ -103,6 +107,8 @@ if (isset($_POST["checkout"])) {
                         $discPrice = 100 - $product->discount;
                         $discPrice = $discPrice * 0.01;
                         $discPrice = $discPrice * $product->price;
+                        $discPrice = round($discPrice);
+                        $discPrice = ceil($discPrice / 10) * 10;
 
                         $order = new Order(0, $cartItem["product"]->name, $cartItem["count"], $_POST["name"], null, $_POST["email"], ($discPrice * $cartItem["count"]), $_POST["deliveryPostalcode"], $_POST["deliveryCity"], $_POST["deliveryStreet"], $_POST["billPostalcode"], $_POST["billCity"], $_POST["billStreet"], "No comment", 0, null, 1, $userName);
                         Database::createOrder($order);
@@ -130,6 +136,8 @@ if (isset($_POST["checkout"])) {
                         $discPrice = 100 - $product->discount;
                         $discPrice = $discPrice * 0.01;
                         $discPrice = $discPrice * $product->price;
+                        $discPrice = round($discPrice);
+                        $discPrice = ceil($discPrice / 10) * 10;
 
                         $order = new Order(0, $cartItem["product"]->name, $cartItem["count"], $_POST["name"], null, $_POST["email"], ($discPrice * $cartItem["count"]), $_POST["deliveryPostalcode"], $_POST["deliveryCity"], $_POST["deliveryStreet"], $_POST["billPostalcode"], $_POST["billCity"], $_POST["billStreet"], $_POST["comment"], 0, null, 0, "no-user");
                         Database::createOrder($order);
@@ -154,6 +162,8 @@ if (isset($_POST["checkout"])) {
                         $discPrice = 100 - $product->discount;
                         $discPrice = $discPrice * 0.01;
                         $discPrice = $discPrice * $product->price;
+                        $discPrice = round($discPrice);
+                        $discPrice = ceil($discPrice / 10) * 10;
 
                         $order = new Order(0, $cartItem["product"]->name, $cartItem["count"], $_POST["name"], null, $_POST["email"], ($discPrice * $cartItem["count"]), $_POST["deliveryPostalcode"], $_POST["deliveryCity"], $_POST["deliveryStreet"], $_POST["billPostalcode"], $_POST["billCity"], $_POST["billStreet"], "No comment", 0, null, 0, "no-user");
                         Database::createOrder($order);

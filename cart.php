@@ -72,6 +72,8 @@ foreach ($cart as $cartItem) {
     $discPrice = 100 - $product->discount;
     $discPrice = $discPrice * 0.01;
     $discPrice = $discPrice * $product->price;
+    $discPrice = round($discPrice);
+    $discPrice = ceil($discPrice / 10) * 10;
 
     $sum += $discPrice * $count;
   } else {
