@@ -121,21 +121,28 @@ prevButton.addEventListener("click", prevCircle);
 nextButton.addEventListener("click", nextCircle);
 circles.forEach((circle) => {
 
+    //ha rákattintunk egy kép alatt lévő gombra (körre), akkor a kör indexével egyenlő indexű képet és tartalmat jelenítünk meg
     circle.addEventListener('click', () => {
 
+        //a timeout szüneteltetése
         clearTimeout(timer);
 
+        //hozzáadja az aktuális körhöz az 'active' osztályt
         const currentCircle = document.getElementsByClassName("active");
         let circleIndex = circles.indexOf((circle));
 
         current = circleIndex;
         i = circleIndex;
 
+        //az előző körtől elveszi az active osztályt
         currentCircle[0].className = currentCircle[0].className.replace(" active", "");
         circle.className += " active";
+        //beállítja a magyar oldalt
         hunOnCurrent();
+        //beállítja az aktuális képnek megfelelő hátteret
         setFishBackground();
 
+        //ha az engClicked változónak true az értéke, akkor angol tartalmat jelenít meg
         if (engClicked == true) {
 
             engOnCurrent();
@@ -143,22 +150,28 @@ circles.forEach((circle) => {
     });
 
 });
+//a linkre történő hover megszünteti a timeoutot ami a képek váltakozásáért felelős
 imgLink.addEventListener("mouseover", () => {
     clearTimeout(timer);
 });
+//ha az egér már nincs a linken, a timeout folytatódik
 imgLink.addEventListener("mouseout", () => {
 
     resumeChangeByTime();
 });
+//a képre történő hover megszünteti a timeoutot ami a képek váltakozásáért felelős
 imgCont.addEventListener("mouseover", () => {
     clearTimeout(timer);
 });
+//ha az egér már nincs a képen, a timeout folytatódik
 imgCont.addEventListener("mouseout", () => {
 
     resumeChangeByTime();
 });
+//nyelvi gombok bejárása
 languageButtons.forEach((button) => {
 
+    //a kattintás után a következő történik: a gomb megkapja a .language-active class-t, illetve ha a gomb osztályában megtalálható a 'hungarian' kifejezés, akkor átváltja az adott html elemek contentjét magyar nyelvű elemekre (illetve elveszi a másik gombtól a language-active class-t). Az 'english' osztállyal rendelkező gombra kattintáskor ugyanez történik meg, csak angol nyelvű contentet kap a rész
     button.addEventListener("click", () => {
 
         const current = document.getElementsByClassName("language-active");
@@ -193,6 +206,7 @@ languageButtons.forEach((button) => {
 })
 
 //FUNCTIONS
+//ha egy gombra kattintunk a hal képe alatt, akkor az éppen aktuális gomb megkapja az 'active' osztályt
 function moveCircle() {
 
     circles.forEach((circle, index) => {
@@ -201,22 +215,28 @@ function moveCircle() {
     })
 }
 
+//a 'következő' gombra kattinva a soron következő gomb kapja meg az 'active' osztályt, illetve a hal képe is megváltozik
 function nextCircle() {
 
+    //a képeket váltakoztató timeout megszüntetése
     clearTimeout(timer);
 
+    //a kép alatti gömb léptetése
     current += 1;
     moveCircle()
 
+    //a kép léptetése
     i += 1;
     changeImgText();
 
+    //ha a végére ért a léptetésnek, akkor kezdje előlről (gömb)
     if (current > circles.length - 1) {
 
         current = 0;
         moveCircle()
     }
 
+    //ha a végére ért a léptetésnek, akkor kezdje előlről (kép)
     if (i > images.length - 1) {
 
         i = 0;
@@ -224,6 +244,7 @@ function nextCircle() {
     }
 }
 
+//az 'előző' gombra kattinva az előző gomb kapja meg az 'active' osztályt, illetve a hal képe is megváltozik
 function prevCircle() {
 
     clearTimeout(timer);
@@ -234,12 +255,14 @@ function prevCircle() {
     i += -1;
     changeImgText();
 
+    //ha az elejére ért a léptetésnek, akkor folytassa hátulról (gömb)
     if (current < 0) {
 
         current = circles.length - 1;
         moveCircle()
     }
 
+    //ha az elejére ért a léptetésnek, akkor folytassa hátulról (kép)
     if (i < 0) {
 
         i = images.length - 1;
@@ -247,6 +270,7 @@ function prevCircle() {
     }
 }
 
+//minden léptetés után kezdődjön újra a timeout (ez indul el alapértelmezetten az oldal betöltésekor)
 function changeByTime() {
 
     current += 1;
@@ -271,14 +295,17 @@ function changeByTime() {
     timer = setTimeout("changeByTime()", 2000);
 };
 
+//képek léptetése
 function changeImgText() {
 
     imgMain.src = images[i];
 
+    //ez a funkció váltja át az angol tartalmat magyar nyelvűre
     hunIsClicked();
 
     if (engClicked == true) {
 
+        //ez a funkció váltja át a magyar tartalmat angol nyelvűre
         engIsClicked();
     }
 
@@ -291,6 +318,7 @@ function changeImgText() {
 
 }
 
+//ez a funkció az éppen soron következő hal szöveges tartalmát váltja át magyarra
 function hunIsClicked() {
 
     imgHeader.textContent = hunImageHeaderText[i];
@@ -301,6 +329,7 @@ function hunIsClicked() {
     imgLink.href = hunImageLinkWiki[i];
 }
 
+//ez a funkció az éppen soron következő hal szöveges tartalmát váltja át angolra
 function engIsClicked() {
 
     imgHeader.textContent = engImageHeaderText[i];
@@ -310,6 +339,7 @@ function engIsClicked() {
     imgLink.href = engImageLinkWiki[i];
 }
 
+//ha nem sorban lépkedünk, hanem rákattintunk egy általunk választott gombra, akkor a gomb indexének megfelelő indexű képet és tartalmat jelenítjük meg (magyarul)
 function hunOnCurrent() {
 
     imgMain.src = images[current];
@@ -321,6 +351,7 @@ function hunOnCurrent() {
     imgLink.href = hunImageLinkWiki[current];
 }
 
+//ha nem sorban lépkedünk, hanem rákattintunk egy általunk választott gombra, akkor a gomb indexének megfelelő indexű képet és tartalmat jelenítjük meg (angolul)
 function engOnCurrent() {
 
     imgHeader.textContent = engImageHeaderText[current];
@@ -330,6 +361,7 @@ function engOnCurrent() {
     imgLink.href = engImageLinkWiki[current];
 }
 
+//a kép mögött látható halvány háttérkép léptetése
 function setFishBackground() {
 
     fishBookBg.style.background = `url(${images[i]})`;
@@ -337,6 +369,7 @@ function setFishBackground() {
     fishBookBg.style.backgroundSize = "cover";
 }
 
+//ez az a funkció, ami folytatja a timeoutot ha elvesszük az egeret a linkről vagy a képről
 function resumeChangeByTime() {
 
     current += -1;
@@ -344,4 +377,5 @@ function resumeChangeByTime() {
     changeByTime();
 }
 
+//az oldal betöltésekor elindul a képeket léptető timeout
 window.onload = changeByTime();

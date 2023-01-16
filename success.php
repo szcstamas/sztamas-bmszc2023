@@ -6,7 +6,7 @@ if (isset($_SESSION["cart"])) {
     echo
     "
     <section id='checkout-section-thankyou' class='section whitebg'>
-        <div class='homepage-main maxw'>
+        <div class='homepage-main maxw dfsb'>
             <div class='homepage-main-hero section-text-button'>
                 <div class='homepage-main-title'>
                     <h4 class='title-firstline'>Köszönjük</h4>
@@ -16,6 +16,9 @@ if (isset($_SESSION["cart"])) {
                 <a href='index.php'>
                     <button class='button-green'><span>főoldal</span><i class='bi bi-caret-left-fill'></i></button>
                 </a>
+            </div>
+            <div class='checkout-section-image'>
+                <img src='img/main/purple.jpg' alt='thank you image' />
             </div>
         </div>
     </section>

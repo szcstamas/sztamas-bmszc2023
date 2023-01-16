@@ -1,3 +1,6 @@
+<!-- -------------------- -->
+<!-- az egész oldalon használt Database osztály, azon belül pedig az API hívásokat tartalmazó funkciók helye -->
+<!-- JELENLEG HASZNÁLATBAN -->
 <?php
 
 require_once("model/product.php");

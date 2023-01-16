@@ -2116,6 +2116,27 @@ hr {
 
 }
 
+#checkout-section-thankyou {
+    .homepage-main {
+        flex-direction: row;
+        gap: 2rem;
+
+        .homepage-main-hero {
+            width: 50%;
+        }
+
+        .checkout-section-image {
+            width: 35%;
+
+            img {
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+            }
+        }
+    }
+}
+
 #partners-subpage-hero {
     padding-bottom: 2rem;
 

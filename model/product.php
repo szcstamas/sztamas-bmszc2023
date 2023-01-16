@@ -1,5 +1,5 @@
 <?php
-
+//Product osztály definiálása
 class Product
 {
     public $id;

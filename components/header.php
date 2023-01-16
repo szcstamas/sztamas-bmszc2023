@@ -1,13 +1,16 @@
 <?php
+//a munkamenet indítása
 session_start();
 
+//hibák jelzése
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+//a keresési mező alapvető értéke mindig 0 (úgy is lehet keresni hogy nincs beírt érték a mezőben)
 $searchValueInHeader = "";
 if (isset($_GET["search"])) {
-
+    //ha a search param be van állítva az url-ben, akkor a form actionje is felveszi ezt az értéket (így a shop.php aloldal url-ben is látható lesz a beérkező paraméter)
     $searchValueInHeader = $_GET["search"];
 }
 ?>
@@ -35,6 +38,7 @@ if (isset($_GET["search"])) {
 </head>
 
 <body>
+    <!-- go-top gomb -->
     <a href="#brobaits-header" class="go-top-button dffc">
         <i class="bi bi-caret-up-fill"></i>
         <span>A legtetejére!</span>

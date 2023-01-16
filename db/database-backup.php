@@ -1,3 +1,6 @@
+<!-- -------------------- -->
+<!-- ez a php fájl mindössze az sql-kérelmek API nélkül megvalósított metódusait tartalmazza (egyfajta backup-file)  -->
+<!-- NINCS HASZNÁLATBAN -->
 <?php
 
 require_once("model/product.php");

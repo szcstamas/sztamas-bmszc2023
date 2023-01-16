@@ -53,7 +53,7 @@ $otherItems = Database::getAllProducts();
                     <h4 class="title-firstline"><?= $halfOfNameFirst ?></h4>
                     <h1 class="title-secondline-h1 greencolor"><?= $halfOfNameSecond ?></h1>
                 </div>
-                <p class="section-paragraph-gray"><?= $product->description ?></p>
+                <p id="item-counter" class="section-paragraph-gray"><?= $product->description ?></p>
 
                 <div class="dfsb item-subpage-left-row">
                     <div class="dfcc">
@@ -74,9 +74,9 @@ $otherItems = Database::getAllProducts();
                     </div>
                     <div class="dffc">
                         <div class="item-subpage-counter dffc">
-                            <a href="item.php?id=<?= $product->id ?>&dec=<?= $countValue ?>"><button class='button-border count-button decrease' style="appearance:none;border:none;box-shadow:none;" type='button'>-</button></a>
+                            <a href="item.php?id=<?= $product->id ?>&dec=<?= $countValue ?>#item-counter"><button class='button-border count-button decrease' style="appearance:none;border:none;box-shadow:none;" type='button'>-</button></a>
                             <input class="input-count" type='text' readonly aria-label='Example text with two button addons' value=<?= $countValue ?>>
-                            <a href="item.php?id=<?= $product->id ?>&inc=<?= $countValue ?>"><button class='button-border count-button increase' style="appearance:none;border:none;box-shadow:none;" type='button'>+</button></a>
+                            <a href="item.php?id=<?= $product->id ?>&inc=<?= $countValue ?>#item-counter"><button class='button-border count-button increase' style="appearance:none;border:none;box-shadow:none;" type='button'>+</button></a>
                         </div>
                         <div class="item-subpage-cart">
                             <a href='cart.php?id=<?= $product->id ?>&value=<?= $countValue ?>' class='button-green dffc'>Kosárba<i class="bi bi-cart-fill"></i></a>

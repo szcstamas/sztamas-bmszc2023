@@ -1200,3 +1200,27 @@
         }
     }
 }
+
+//thankyou
+@media screen and (max-width: 950px) {
+
+    #checkout-section-thankyou {
+        .homepage-main {
+            flex-direction: column !important;
+            gap: 1rem;
+
+            .homepage-main-hero,
+            .homepage-main-hero+* {
+                width: 100% !important;
+            }
+
+            .checkout-section-image {
+                img {
+                    width: 100%;
+                    height: auto;
+                    object-fit: cover;
+                }
+            }
+        }
+    }
+}

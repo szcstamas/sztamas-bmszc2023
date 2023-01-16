@@ -1,5 +1,5 @@
 <?php
-
+//Order osztály definiálása 
 class Order
 {
 
