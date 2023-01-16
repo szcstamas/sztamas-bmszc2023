@@ -66,6 +66,12 @@ if (isset($_POST["checkout"])) {
         isset($_POST["tnc"])
     ) {
 
+        if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
+            header("Location: profile.php?error=invaliduid&mail=" . $email);
+            ob_end_flush();
+            exit();
+        }
+
         if (isset($_SESSION["userName"])) {
 
             $userName = $_SESSION["userName"];
@@ -196,11 +202,11 @@ if (isset($_POST["checkout"])) {
             <div class="dfsb checkout-firstrow">
                 <div class="dfcc">
                     <label for="name" class="">Megrendelő neve<span class="star">*</span></label>
-                    <input type="text" id="name" class="" name="name">
+                    <input type="text" class='checkout-name' placeholder="pl. Gipsz Jakab" id="name" pattern="[a-zA-Z\W+]{0,}" name="name">
                 </div>
                 <div class="dfcc">
                     <label for="email" class="">Megrendelő e-mail címe<span class="star">*</span></label>
-                    <input type="email" id="email" class="" name="email">
+                    <input type="email" id="email" class="" placeholder="pl. info@brobaits.hu" name="email" required>
                 </div>
             </div>
             <div class="checkout-description-container">
@@ -216,17 +222,17 @@ if (isset($_POST["checkout"])) {
                     <div class="dffc">
                         <div class="dfcc">
                             <label for="deliveryPostalcode" class="">Irányítószám<span class="star">*</span></label>
-                            <input type="number" id="deliveryPostalcode" class="" name="deliveryPostalcode">
+                            <input type="text" id="deliveryPostalcode" class="del-postal" pattern="[0-9]{0,4}" name="deliveryPostalcode">
                         </div>
                         <div class="dfcc">
                             <label for="deliveryCity" class="">Város<span class="star">*</span></label>
-                            <input type="text" id="deliveryCity" class="" name="deliveryCity">
+                            <input type="text" id="deliveryCity" class="del-city" pattern="[a-zA-Z\W+]{0,}" name="deliveryCity">
                         </div>
                     </div>
                     <div class="dffc">
                         <div class="dfcc">
                             <label for="deliveryStreet" class="">Utca, házszám (emelet)<span class="star">*</span></label>
-                            <input type="text" id="deliveryStreet" class="" name="deliveryStreet">
+                            <input type="text" id="deliveryStreet" class="" name="deliveryStreet" required>
                         </div>
                         <div class="dfcc">
                             <label for="copydelivery" class="">Számlázási cím megegyezik a szállítási címmel</label>
@@ -242,17 +248,17 @@ if (isset($_POST["checkout"])) {
                     <div class="dffc">
                         <div class="dfcc">
                             <label for="billPostcode" class="">Irányítószám<span class="star">*</span></label>
-                            <input type="number" id="billPostcode" class="" name="billPostalcode">
+                            <input type="text" id="billPostcode" class="bill-postal" pattern="[0-9]{0,4}" name="billPostalcode">
                         </div>
                         <div class="dfcc">
                             <label for="billCity" class="">Város<span class="star">*</span></label>
-                            <input type="text" id="billCity" class="" name="billCity">
+                            <input type="text" id="billCity" class="bill-city" pattern="[a-zA-Z\W+]{0,}" name="billCity">
                         </div>
                     </div>
                     <div class="dffc checkout-billstreet">
                         <div class="dfcc">
                             <label for="billStreet" class="">Utca, házszám (emelet)<span class="star">*</span></label>
-                            <input type="text" id="billStreet" class="" name="billStreet">
+                            <input type="text" id="billStreet" class="" name="billStreet" required>
                         </div>
                     </div>
 
@@ -262,20 +268,20 @@ if (isset($_POST["checkout"])) {
                 <div class="checkout-form-payment dfcc">
                     <div class="dfcc">
                         <label for="cardnum" class="form-label">Kártyaszám<span class="star">*</span></label>
-                        <input type="number" id="cardnum" class="" name="cardnum">
+                        <input type="text" id="cardnum" class="card-number" pattern="[0-9\s]{0,24}" name="cardnum" maxlength="24" placeholder="XXXXXXXX - XXXXXXXX - XXXXXXXX">
                     </div>
                     <div class="dfcc">
                         <label for="cardname" class="form-label">Kártyán szereplő név<span class="star">*</span></label>
-                        <input type="text" id="cardname" class="" name="cardname">
+                        <input type="text" id="cardname" class="card-name" placeholder="pl. Gipsz Jakab" pattern="[a-zA-Z\W+]{0,}" name="cardname">
                     </div>
                     <div class="dfcc">
                         <label for="cvv" class="form-label">CVV<span class="star">*</span></label>
-                        <input type="number" id="cvv" class="" name="cvv">
+                        <input type="text" id="cvv" class="cvv-checkout" placeholder="XXX" pattern="[0-9]{0,3}" name="cvv">
                     </div>
                     <div class="dffc">
                         <label for="discountItem" class="container">
                             <div class="check-box">
-                                <input type="checkbox" id="tnc" name="tnc">
+                                <input type="checkbox" id="tnc" name="tnc" required>
                             </div>
                             <span style="text-align:left;">Elfogadom a <a style="color:#4c7e3c;text-decoration:underline;" href="termsconditions.php" target="_blank">felhasználói feltételeket.</a></span>
                         </label>

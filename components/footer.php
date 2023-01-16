@@ -22,6 +22,7 @@
 </footer>
 
 <!-- js fileok meghívása -->
+<script type="text/javascript" src="js/checkoutvalidity.js"></script>
 <script type="text/javascript" src="js/currentpageclass.js"></script>
 <script type="text/javascript" src="js/copyaddress.js"></script>
 <script type="text/javascript" src="js/fish-carousel/app.js"></script>
