@@ -10,7 +10,8 @@ if (isset($_POST["send-form"])) {
     if (
         isset($_POST["contact-name"]) && !empty($_POST["contact-name"]) &&
         isset($_POST["contact-email"]) && !empty($_POST["contact-email"]) &&
-        isset($_POST["contact-desc"]) && !empty($_POST["contact-desc"])
+        isset($_POST["contact-desc"]) && !empty($_POST["contact-desc"]) &&
+        isset($_POST["contact-content"]) && !empty($_POST["contact-content"])
     ) {
 
         //keresztnév kiszedése a beírt név adatból
@@ -62,7 +63,7 @@ if (isset($_POST["send-form"])) {
                     <label for="">ÜZENET TÁRGYA:</label>
                     <input type="text" name="contact-desc" placeholder="Ide írd az üzeneted tárgyát...">
                 </div>
-                <textarea name="content" id="" style="resize: none;" placeholder="És ide írd az üzenetedet..."></textarea>
+                <textarea id="" name="contact-content" style="resize: none;" placeholder="És ide írd az üzenetedet..."></textarea>
                 <input type="submit" class="button-gray" name="send-form" value="ELKÜLDÖM AZ ÜZENETET!">
             </form>
         </div>

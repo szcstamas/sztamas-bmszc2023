@@ -1,7 +1,5 @@
 ---
 MIN
-11. üzenetküldés? ha lesz rá idő
-12. hamburger menü? ha lesz rá idő
 13. item subpage-t átgondolni mobilon? ha lesz rá idő
 ---
 MUST
