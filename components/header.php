@@ -74,6 +74,42 @@ if (isset($_GET["search"])) {
                     <span></span>
                 </form>
             </div>
+
+            <div id="menuToggle">
+                <input type="checkbox" />
+                <span></span>
+                <span></span>
+                <span></span>
+                <ul id="menu">
+                    <a href="index.php">
+                        <li>Főoldal</li>
+                    </a>
+                    <a href="shop.php">
+                        <li>Webshop</li>
+                    </a>
+                    <a href="partners.php">
+                        <li>Partnereink</li>
+                    </a>
+                    <a href="about.php">
+                        <li>Rólunk</li>
+                    </a>
+                    <div class="hamburger-social dffc">
+                        <a href="cart.php" class="header-row-link"><i class="bi bi-cart-fill"></i></a>
+                        <?php if (isset($_SESSION["userName"])) : ?>
+                            <a href="profile.php" class="header-row-link user-profile-active">
+                                <i class="bi bi-person-fill"></i></a>
+                        <?php else : ?>
+                            <a href="profile.php" class="header-row-link"><i class="bi bi-person-fill"></i></a>
+                        <?php endif ?>
+                    </div>
+                    <div class="hamburger-search dffc">
+                        <form action="shop.php?search=<?= $searchValueInHeader ?>" method="GET" class="header-search-bar dffc">
+                            <input type="text" name="search" placeholder="Ide írd be amit keresel...">
+                            <input type="submit" class="button-green" value="mehet">
+                        </form>
+                    </div>
+                </ul>
+            </div>
         </div>
 
     </header>

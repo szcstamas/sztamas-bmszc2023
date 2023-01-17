@@ -275,6 +275,10 @@ hr {
             animation: pulse-animation 1s infinite;
         }
     }
+
+    #menuToggle {
+        display: none;
+    }
 }
 
 .footer {
