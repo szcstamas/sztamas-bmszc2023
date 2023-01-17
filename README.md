@@ -17,7 +17,7 @@ Az adatbázis elkészítéséhez szükséges fájlok (beleértve a dump.sql-t is
 
 ## Fejléc (header)
 
-A weboldal fejlécében (components/header.php) a logó mellett az öt főbb aloldal linkje, illetve ezek mellett a vásárlói kosár (bevásárlókocsi-ikon), a felhasználói profil (ember-ikon) és a keresés látható. Az éppen aktuális oldal linkje alatt látható egy "pulzáló" gömböcske, ami a jelenleg látható oldalt hivatott indikálni. A profil aloldalt tartalmazó "ember-ikon" zöld hátteret kapva pulzál, ha egy felhasználó éppen be van jelentkezve. A kereső-gombra kattintva egy input mező ugrik elő a header alatti részen, amibe ha beírjuk az éppen aktuális kereső-kifejezést, majd entert nyomunk vagy a MEHET gombra kattintunk, akkor a Webshop aloldalra jutunk, látva a keresés eredményét.
+A weboldal fejlécében (components/header.php) a logó mellett az öt főbb aloldal linkje, illetve ezek mellett a vásárlói kosár (bevásárlókocsi-ikon), a felhasználói profil (ember-ikon) és a keresés látható. Az éppen aktuális oldal linkje alatt látható egy "pulzáló" gömböcske, ami a jelenleg látható oldalt hivatott indikálni. A profil aloldalt tartalmazó "ember-ikon" zöld hátteret kapva pulzál, ha egy felhasználó éppen be van jelentkezve. A kereső-gombra kattintva egy input mező ugrik elő a header alatti részen, amibe ha beírjuk az éppen aktuális kereső-kifejezést, majd entert nyomunk vagy a MEHET gombra kattintunk, akkor a Webshop aloldalra jutunk, látva a keresés eredményét. A fejlécben 450 vagy annál kevesebb pixelnyi szélességű eszköz esetében egy "hamburger-menü" jelenik meg, amire kattintva lenyílik az asztali verzióban látható menüsáv (másmilyen elrendezésben). 
 
 ## Főoldal
 
