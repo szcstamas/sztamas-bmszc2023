@@ -1,5 +1,6 @@
-### Attention! This project can be viewed only in Hungarian language. Previews of website are in the folder called "demos" (go ahead and download those mkv/mp4 files if you interested).
+#### Attention! This project can be viewed only in Hungarian language. Previews of website are in the folder called "demos" (go ahead and download those mkv/mp4 files if you interested).
 
+------
 # Dokumentáció - Fontos információk a webalkalmazással kapcsolatban
 * **Kliens oldali nyelvek:** HTML5, CSS (SCSS), JavaScript
 * **Szerver oldali nyelv:** PHP
