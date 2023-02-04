@@ -1,4 +1,4 @@
-#### Attention! This project can be viewed only in Hungarian language. Previews of website are in the folder called "demos" (go ahead and download those mkv/mp4 files if you interested).
+#### Attention! This project can be viewed only in Hungarian language. You can download previews (mkv/mp4 files) of website from folder called "demos" if you interested.
 
 ------
 # Dokumentáció - Fontos információk a webalkalmazással kapcsolatban
